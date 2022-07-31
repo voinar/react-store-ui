@@ -1,0 +1,20 @@
+@import './reset.scss'; //css reset
+@import './normalize.scss';  // normalize styles
+@import './variables.scss'; // global style variables: fonts, colors
+
+//components
+@import '../components/styles/navbar.scss';
+
+//pages
+
+html * {
+    // outline: 1px solid teal;
+}
+
+body {
+    font-family: $--font-main;
+    color: $--c-text;
+    background-color: $--c-white;
+    min-width: 600px;
+}
+
