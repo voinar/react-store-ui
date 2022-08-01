@@ -1,4 +1,5 @@
 import React from "react";
+import ProductImage from '../../assets/product-image.png'
 
 class ProductDescription extends React.Component {
   render() {
@@ -6,15 +7,21 @@ class ProductDescription extends React.Component {
       <div className="product-description section-container">
         <div className="product-description__images">
           <div className="product-description__images-small">
-            <div className="product-description__image-small">1</div>
-            <div className="product-description__image-small">2</div>
-            <div className="product-description__image-small">3</div>
+            <div className="product-description__image-small">
+                <img src={ProductImage} alt='product image'/>
+            </div>
+            <div className="product-description__image-small">
+                <img src={ProductImage} alt='product image'/>
+            </div>
+            <div className="product-description__image-small">
+                <img src={ProductImage} alt='product image'/>
+            </div>
           </div>
-          <div className="product-description__images-large">
-            <div className="product-description__image-large">4</div>
+          <div className="product-description__image-large">
+                <img src={ProductImage} alt='product image'/>
           </div>
         </div>
-        <div className="product-descriptio__attributes">
+        <div className="product-description__attributes">
           <div className="product-description__attribute-name">
             <span>Apollo</span>
           </div>
@@ -22,27 +29,31 @@ class ProductDescription extends React.Component {
             <span>Running Short</span>
           </div>
           <div className="product-description__attributes-select-size">
-            <span>Size:</span>
-            <div className="product-description__attributes-size">XS</div>
-            <div className="product-description__attributes-size">S</div>
-            <div className="product-description__attributes-size">M</div>
-            <div className="product-description__attributes-size">L</div>
-          </div>
-          <div className="product-description__attributes-select-color">
-            <span>Color:</span>
-            <div className="product-description__attributes-color">grey</div>
-            <div className="product-description__attributes-color">black</div>
-            <div className="product-description__attributes-color">green</div>
-          </div>
-          <div className="product-description__attributes-price">
-            <h2>Price:</h2>
-            <div className="product-description__attributes-price-amount">
-              $50.00
+            <span className="product-description__attribute-category">Size:</span>
+            <div className="product-description__attributes-select-size-options">
+              <div className="product-description__attributes-size">XS</div>
+              <div className="product-description__attributes-size">S</div>
+              <div className="product-description__attributes-size">M</div>
+              <div className="product-description__attributes-size">L</div>
             </div>
           </div>
-          <div className="product-description__button">
-            <button>Add to cart</button>
+          <div className="product-description__attributes-select-color">
+            <span className="product-description__attribute-category">Color:</span>
+            <div className="product-description__attributes-select-color-options">
+              <div className="product-description__attributes-color">1</div>
+              <div className="product-description__attributes-color">2</div>
+              <div className="product-description__attributes-color">3</div>
+            </div>
           </div>
+          <div className="product-description__attributes-price">
+            <span className="product-description__attribute-category">Price:</span>
+            <span className="product-description__attributes-price-amount">
+              $50.00
+            </span>
+          </div>
+          <button className="product-description__button">
+            Add to cart
+          </button>
           <div className="product-description__contents">
             <span>
               Find stunning women's cocktail dresses and party dresses. Stand

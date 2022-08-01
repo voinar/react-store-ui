@@ -4,6 +4,7 @@ import "./styles/style.css";
 import Navbar from "./components/Navbar"
 import ProductListing from "./pages/storefront/ProductListing"
 import ProductDescription from "./pages/storefront/ProductDescription"
+import Cart from './pages/storefront/Cart'
 
 class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ class App extends React.Component {
         <Navbar />
         {/* <ProductListing /> */}
         <ProductDescription />
+        <Cart />
       </div>
     );
   }

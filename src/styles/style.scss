@@ -5,12 +5,15 @@
 //components
 @import '../components/styles/Navbar';
 @import '../components/styles/ProductListingCard';
+@import '../components/styles/CartItem';
 
 //pages
 @import '../pages/storefront/styles/ProductListing';
+@import '../pages/storefront/styles/ProductDescription';
+@import '../pages/storefront/styles/Cart';
 
 html * {
-    outline: 1px solid teal;
+    // outline: 1px solid saddlebrown;
 }
 
 body {
