@@ -1,0 +1,12 @@
+.product-listing {
+}
+
+.product-listing__cards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    // align-items: flex-start;
+    gap: 40px;
+    // border: 1px solid red;
+    margin-top: 100px;
+}

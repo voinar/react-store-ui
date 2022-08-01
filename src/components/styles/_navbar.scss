@@ -2,16 +2,17 @@
     display: flex;
     // flex-direction: row;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 80px;
     left: 0px;
     top: 0px;
     align-items: center;
-    padding: 0 80px;
+    background-color: $--c-white;
     text-transform: uppercase;
     cursor: pointer;
     font-size: 16px;
+    padding: 0 80px;
 
     ul {
         display: flex;
@@ -23,6 +24,7 @@
         li {
             line-height: 80px;
             padding: 0 16px;
+            font-weight: 300;
         }
 
         img {
@@ -34,8 +36,8 @@
 
         li:hover {
             // border-bottom: 3px solid $--c-primary;
+            font-weight: 500;
             box-shadow: 0 4px 0px -2px $--c-primary;
-
         }
     }
 

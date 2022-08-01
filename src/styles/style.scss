@@ -1,14 +1,16 @@
-@import './reset.scss'; //css reset
-@import './normalize.scss';  // normalize styles
-@import './variables.scss'; // global style variables: fonts, colors
+@import './reset'; //css reset
+@import './normalize';  // normalize styles
+@import './variables'; // global style variables: fonts, colors
 
 //components
-@import '../components/styles/navbar.scss';
+@import '../components/styles/Navbar';
+@import '../components/styles/ProductListingCard';
 
 //pages
+@import '../pages/storefront/styles/ProductListing';
 
 html * {
-    // outline: 1px solid teal;
+    outline: 1px solid teal;
 }
 
 body {
@@ -18,3 +20,11 @@ body {
     min-width: 600px;
 }
 
+h1 {
+    font-weight: 300;
+    font-size: 42px;
+}
+
+.section-container {
+    padding: 120px 80px 0;
+}
