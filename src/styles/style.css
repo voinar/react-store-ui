@@ -23,9 +23,9 @@ dd {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role='list'],
-ol[role='list'] {
+ul, ol {
   list-style: none;
+  padding: 0;
 }
 
 /* Set core root defaults */
@@ -533,55 +533,45 @@ template {
           align-items: center;
   background-color: #FFFFFF;
   text-transform: uppercase;
-  cursor: pointer;
   font-size: 16px;
   padding: 0 80px;
   z-index: 10;
 }
 
-.navbar ul {
+.navbar .navbar-categories {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   list-style-type: none;
   padding: 0;
   height: 100%;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.navbar ul li {
+.navbar .navbar-categories li {
   line-height: 80px;
   padding: 0 16px;
   font-weight: 300;
 }
 
-.navbar ul img {
-  height: 100%;
-  width: 24px;
-}
-
-.navbar ul li:hover {
+.navbar .navbar-categories li:hover {
   font-weight: 500;
   -webkit-box-shadow: 0 4px 0px -2px #5ECE7B;
           box-shadow: 0 4px 0px -2px #5ECE7B;
 }
 
-.navbar .currency-select {
+.navbar .navbar-actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: auto;
+  height: 100%;
+  gap: 10px;
 }
 
-.navbar .currency-select span {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: auto;
-}
-
-.navbar .currency-select img {
-  width: 10px;
-  margin: 2px 0 0 6px;
+.navbar .navbar-actions li img {
+  height: 100%;
+  width: 24px;
 }
 
 .product-listing-card {
@@ -662,10 +652,6 @@ template {
   cursor: pointer;
 }
 
-.cart-item hr {
-  border-top: 1px solid #E5E5E5;
-}
-
 .cart-item .cart-item__contents {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -725,13 +711,95 @@ template {
 }
 
 .cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-prev, .cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-next {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-prev img, .cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-next img {
   height: 28px;
   width: 28px;
   padding: 6px 10px;
+}
+
+/* Dropdown Button */
+.currency-select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 18px;
+  position: relative;
+}
+
+.currency-select button {
+  border: none;
+  background-color: #FFFFFF;
+}
+
+.currency-select .currency-select__dropdown {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 40px;
+  padding: 8px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.currency-select .currency-select__dropdown img {
+  margin: 0 2px;
+}
+
+.currency-select__dropdown-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  top: 60px;
+  padding: 4px 0;
+  -webkit-box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.4);
+          box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.4);
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition-property: visibility, opacity;
+  transition-property: visibility, opacity;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 0s, 0.2s;
+          transition-duration: 0s, 0.2s;
+  -webkit-transition-delay: 0s, 0s;
+          transition-delay: 0s, 0s;
+}
+
+.currency-select__dropdown-content span {
+  background-color: #FFFFFF;
+  font-weight: 500;
+  width: 100px;
+  padding: 12px;
+}
+
+.currency-select__dropdown-content span:hover {
+  background-color: #EEEEEE;
+}
+
+.currency-select:hover .currency-select__dropdown-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.currency-select:hover .currency-select__dropdown img {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  -webkit-transition: ease-in-out 0.3s;
+  transition: ease-in-out 0.3s;
 }
 
 .product-listing__cards-container {
@@ -940,17 +1008,17 @@ template {
   }
 }
 
-.cart hr {
-  border-top: 1px solid #E5E5E5;
-}
-
 .cart .cart__summary {
-  margin-top: 30px;
+  margin: 30px 0;
 }
 
 .cart .cart__summary .cart__summary__tax td, .cart .cart__summary .cart__summary__quantity td, .cart .cart__summary .cart__summary__total td {
   font-size: 24px;
   font-weight: 300;
+}
+
+.cart .cart__summary .cart__summary__tax strong, .cart .cart__summary .cart__summary__quantity strong, .cart .cart__summary .cart__summary__total strong {
+  font-weight: 600;
 }
 
 .cart .cart__summary button {
@@ -981,5 +1049,10 @@ h1 {
 
 .section-container {
   padding: 120px 80px 0;
+}
+
+hr {
+  border-top: 1px solid #E5E5E5;
+  margin: 0 0 36px 0;
 }
 /*# sourceMappingURL=style.css.map */

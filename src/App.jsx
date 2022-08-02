@@ -6,12 +6,13 @@ import ProductListing from "./pages/storefront/ProductListing"
 import ProductDescription from "./pages/storefront/ProductDescription"
 import Cart from './pages/storefront/Cart'
 
+
 class App extends React.Component {
   render() {
     return (
       <div className="App">
         <Navbar />
-        {/* <ProductListing /> */}
+        <ProductListing />
         <ProductDescription />
         <Cart />
       </div>

@@ -1,0 +1,118 @@
+
+/* Dropdown Button */
+.currency-select {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    // font-weight: 500;
+    font-size: 18px;
+    position: relative;
+
+    button {
+      border: none;
+      background-color: $--c-white;
+    }
+
+    .currency-select__dropdown {
+      display: flex;
+      width: 40px;
+      padding: 8px;
+      align-items: center;
+
+      img {
+        margin: 0 2px;
+      }
+    }
+  }
+
+.currency-select__dropdown-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  padding: 4px 0;
+  box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.40);
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  transition-property: visibility, opacity;
+  transition-timing-function: linear;
+  transition-duration: 0s, 0.2s;
+  transition-delay: 0s, 0s;
+
+  span {
+    background-color: $--c-white;
+    font-weight: 500;
+    width: 100px;
+    padding: 12px
+  }
+
+  span:hover {
+    background-color: #EEEEEE;
+  }
+}
+
+.currency-select:hover .currency-select__dropdown-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+.currency-select:hover .currency-select__dropdown img {
+  transform: rotate(180deg);
+  transition: ease-in-out 0.3s;
+}
+
+
+
+  // .currency-select__dropdown {
+  //   display: flex;
+  //   border: none;
+  //   background-color: $--c-white;
+  //   height: 100%;
+
+  //   span {
+  //     font-size: 18px;
+  //   }
+
+  //   img {
+  //     width: 10px !important;
+  //     align-items: center;
+
+  //     // border: 1px solid red;
+  //   }
+  // }
+
+  // /* The container <div> - needed to position the dropdown content */
+  // .currency-select__dropdown {
+  //   // position: relative;
+  //   // display: inline-block;
+  //   // color: red;
+  // }
+
+  // /* Dropdown Content (Hidden by Default) */
+  // .currency-select__dropdown-content {
+  //   display: none;
+  //   position: absolute;
+  //   background-color: #f1f1f1;
+  //   min-width: 160px;
+  //   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  //   z-index: 1;
+  // }
+
+  // /* Links inside the dropdown */
+  // .currency-select__dropdown-content a {
+  //   color: black;
+  //   padding: 12px 16px;
+  //   text-decoration: none;
+  //   display: block;
+  // }
+
+  // /* Change color of dropdown links on hover */
+  // .currency-select__dropdown-content a:hover {background-color: #ddd;}
+
+  // /* Show the dropdown menu on hover */
+  // .currency-select__dropdown:hover .currency-select__dropdown-content {display: block;}
+
+  // /* Change the background color of the dropdown button when the dropdown content is shown */
+  // .currency-select__dropdown:hover .currency-select__dropbtn {background-color: #3e8e41;}
+

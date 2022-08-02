@@ -1,8 +1,4 @@
 .cart-item {
-    hr {
-        border-top: 1px solid #E5E5E5;
-    }
-
     .cart-item__contents {
         display: flex;
         justify-content: space-between;
@@ -46,7 +42,8 @@
         }
 
         .cart-item__controls__preview-prev, .cart-item__controls__preview-next {
-            background-color: black;
+            background-color: rgba(0, 0, 0, 0.7);
+
             img {
                 height: 28px;
                 width: 28px;

@@ -1,11 +1,12 @@
 @import './reset'; //css reset
-@import './normalize';  // normalize styles
-@import './variables'; // global style variables: fonts, colors
+@import './normalize';  //normalize styles
+@import './variables'; //global style variables: fonts, colors, shadows etc
 
 //components
 @import '../components/styles/Navbar';
 @import '../components/styles/ProductListingCard';
 @import '../components/styles/CartItem';
+@import '../components/styles/CurrencySelect';
 
 //pages
 @import '../pages/storefront/styles/ProductListing';
@@ -30,4 +31,9 @@ h1 {
 
 .section-container {
     padding: 120px 80px 0;
+}
+
+hr {
+    border-top: 1px solid #E5E5E5;
+    margin: 0 0 36px 0;
 }
