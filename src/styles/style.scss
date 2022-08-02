@@ -4,9 +4,11 @@
 
 //components
 @import '../components/styles/Navbar';
+@import '../components/styles/ModalOverlayMask';
 @import '../components/styles/ProductListingCard';
 @import '../components/styles/CartItem';
 @import '../components/styles/CurrencySelect';
+@import '../components/styles/CartOverlay';
 
 //pages
 @import '../pages/storefront/styles/ProductListing';
@@ -14,7 +16,7 @@
 @import '../pages/storefront/styles/Cart';
 
 html * {
-    // outline: 1px solid saddlebrown;
+    outline: 1px solid saddlebrown;
 }
 
 body {
@@ -37,3 +39,4 @@ hr {
     border-top: 1px solid #E5E5E5;
     margin: 0 0 36px 0;
 }
+

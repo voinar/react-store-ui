@@ -1,8 +1,8 @@
 import React from "react";
 import CurrencySelect from "./CurrencySelect";
+import CartOverlay from "./CartOverlay";
 
 import Logo from "../../src/assets/icon_logo.svg";
-import ChevronDown from "../../src/assets/icon_chevron-down.svg";
 import IconCart from "../../src/assets/icon_empty-cart.svg";
 
 class Navbar extends React.Component {
@@ -22,12 +22,9 @@ class Navbar extends React.Component {
           <li>
             <CurrencySelect />
           </li>
-          {/* <li className="currency-select">
-            <span>$</span>
-            <img src={ChevronDown} />
-          </li> */}
           <li>
-            <img src={IconCart} alt="view cart" />
+            <img className="nav-cart-icon" src={IconCart} alt="view cart" />
+            <CartOverlay />
           </li>
         </ul>
       </nav>

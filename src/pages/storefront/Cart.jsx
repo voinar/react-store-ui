@@ -6,6 +6,9 @@ class Cart extends React.Component {
   render() {
     return (
       <div className="cart section-container">
+        <div>
+          <h1>Cart</h1>
+        </div>
         <CartItem />
         <CartItem />
         <hr/>
