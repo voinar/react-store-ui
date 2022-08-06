@@ -1,9 +1,12 @@
 import React from 'react';
 import ProductListingCard from '../../components/ProductListingCard'
-
 import { data } from '../../data/data.js'
 
-// const names = data.map((obj) => <h2><Welcome name={obj.name} /></h2>)
+import { ApolloProvider, Query } from '@apollo/client'
+import { GET_PRODUCTS } from '../../graphql/Queries';
+
+// const { error, loading, data } = useQuery(GET_PRODUCTS)
+
 // const ProductsList = data.map((obj) => <ProductListingCard name={obj.name} img={obj.img} key={obj.count} />)
 const ProductsList = data.map((obj) => <ProductListingCard {...obj} key={obj.count} />)
 
@@ -25,6 +28,9 @@ class ProductListing extends React.Component {
                 {/* <ProductListingCard name={data.name} /> */}
                 {ProductsList}
             </div>
+            <Query query={GET_PRODUCTS}>
+
+            </Query>
         </div>
     }
 }

@@ -1279,10 +1279,6 @@ template {
   cursor: pointer;
 }
 
-html * {
-  outline: 1px solid saddlebrown;
-}
-
 body {
   font-family: "Raleway", sans-serif;
   color: #1D1F22;
