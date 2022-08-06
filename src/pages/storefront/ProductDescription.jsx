@@ -8,17 +8,17 @@ class ProductDescription extends React.Component {
         <div className="product-description__images">
           <div className="product-description__images-small">
             <div className="product-description__image-small">
-                <img src={ProductImage} alt='product image'/>
+                <img src={ProductImage} alt='product'/>
             </div>
             <div className="product-description__image-small">
-                <img src={ProductImage} alt='product image'/>
+                <img src={ProductImage} alt='product'/>
             </div>
             <div className="product-description__image-small">
-                <img src={ProductImage} alt='product image'/>
+                <img src={ProductImage} alt='product'/>
             </div>
           </div>
           <div className="product-description__image-large">
-                <img src={ProductImage} alt='product image'/>
+                <img src={ProductImage} alt='product'/>
           </div>
         </div>
         <div className="product-description__attributes">

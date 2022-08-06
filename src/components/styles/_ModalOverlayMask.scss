@@ -1,9 +1,7 @@
 .modal-overlay-mask {
     position: absolute;
-    // top: 0;
-    // left: 0;
     background-color: #3937483b;
-    width: 100vw;
-    height: 100vh;
-    z-index: 2;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 8;
 }

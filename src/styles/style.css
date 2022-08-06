@@ -546,7 +546,6 @@ template {
   padding: 0;
   height: 100%;
   gap: 10px;
-  cursor: pointer;
 }
 
 .navbar .navbar-categories li {
@@ -573,12 +572,25 @@ template {
   width: 24px;
 }
 
+.navbar .navbar-actions .nav-cart-icon__item-count {
+  position: absolute;
+  top: 16px;
+  right: 66px;
+  width: 22px;
+  height: 22px;
+  background-color: #1D1F22;
+  color: #FFFFFF;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 100px;
+}
+
 .modal-overlay-mask {
   position: absolute;
   background-color: #3937483b;
-  width: 100vw;
-  height: 100vh;
-  z-index: 2;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 8;
 }
 
 .product-listing-card {
@@ -687,6 +699,7 @@ template {
       -ms-flex-pack: justify;
           justify-content: space-between;
   height: 310px;
+  width: 24px;
 }
 
 .cart-item .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-button {
@@ -738,6 +751,7 @@ template {
           align-items: center;
   font-size: 18px;
   position: relative;
+  cursor: pointer;
 }
 
 .currency-select button {
@@ -785,16 +799,17 @@ template {
           transition-duration: 0s, 0.2s;
   -webkit-transition-delay: 0s, 0s;
           transition-delay: 0s, 0s;
+  border: none;
 }
 
-.currency-select__dropdown-content span {
+.currency-select__dropdown-content option {
   background-color: #FFFFFF;
   font-weight: 500;
   width: 90px;
   padding: 16px;
 }
 
-.currency-select__dropdown-content span:hover {
+.currency-select__dropdown-content option:hover {
   background-color: #EEEEEE;
 }
 
@@ -811,19 +826,23 @@ template {
 }
 
 .cart-overlay {
-  position: relative;
-  top: -16px;
+  position: absolute;
+  top: 56px;
+  right: 60px;
   text-transform: none;
-  z-index: 3;
+  z-index: 9;
+  position: fixed;
+  overflow-x: hidden;
+  height: 80vh;
+  width: 340px;
 }
 
 .cart-overlay .cart-overlay__items-container {
   position: absolute;
-  top: 50px;
   right: -16px;
-  width: 325px;
+  width: 340px;
   height: auto;
-  padding: 14px;
+  padding: 14px 32px 14px 14px;
   background-color: #FFFFFF;
 }
 
@@ -1009,6 +1028,22 @@ template {
   background-color: #5ECE7B;
   color: #FFFFFF;
   background-color: #1D1F22;
+}
+
+.cart-overlay::-webkit-scrollbar {
+  width: 10px;
+}
+
+.cart-overlay::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.cart-overlay::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.cart-overlay::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .product-listing__cards-container {
@@ -1258,6 +1293,11 @@ body {
 h1 {
   font-weight: 300;
   font-size: 42px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .section-container {

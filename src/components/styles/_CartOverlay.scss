@@ -1,18 +1,23 @@
 .cart-overlay {
-    // display: flex;
-    // align-items: center;
-    position: relative;
-    top: -16px;
+    position: absolute;
+    top: 56px;
+    right: 60px;
     text-transform: none;
-    z-index: 3;
+    z-index: 9;
+    position: fixed;
+    // overflow-y: auto;
+    overflow-x: hidden;
+    height: 80vh;
+    width: 340px;
+    // transition: fade-in 0.2s;
 
     .cart-overlay__items-container {
         position: absolute;
-        top: 50px;
+        // top: 36px;
         right: -16px;
-        width: 325px;
+        width: 340px;
         height: auto;
-        padding: 14px;
+        padding: 14px 32px 14px 14px;
         background-color: $--c-white;
 
         hr {
@@ -337,4 +342,23 @@
             }
         }
     }
+}
+
+
+//scrollbar
+
+.cart-overlay::-webkit-scrollbar {
+    width: 10px;
+}
+
+.cart-overlay::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.cart-overlay::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.cart-overlay::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

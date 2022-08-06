@@ -13,13 +13,13 @@
     padding: 0 80px;
     z-index: 10;
 
+
     .navbar-categories {
         display: flex;
         list-style-type: none;
         padding: 0;
         height: 100%;
         gap: 10px;
-        cursor: pointer;
 
         li {
             line-height: 80px;
@@ -38,32 +38,24 @@
         // height: 100%;
         gap: 10px;
 
-
         li {
             img {
                 height: 100%;
                 width: 24px;
             }
         }
+
+        .nav-cart-icon__item-count {
+            position: absolute;
+            top: 16px;
+            right: 66px;
+            width: 22px;
+            height: 22px;
+            background-color: $--c-black;
+            color: $--c-white;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 100px;
+        }
     }
-
-    // .currency-select {
-    //     display: flex;
-    //     // flex-direction: row;
-    //     // height: 100%;
-    //     // width: auto;
-
-    //     span {
-    //         display: flex;
-    //         width: auto;
-    //         // border: 1px solid red;
-    //     }
-
-    //     img {
-    //         // height: 100%;
-    //         width: 10px;
-    //         margin: 2px 0 0 6px;
-    //         // background: red;
-    //     }
-    // }
 }
