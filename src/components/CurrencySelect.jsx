@@ -2,7 +2,6 @@ import React from "react";
 
 import ChevronDown from "../../src/assets/icon_chevron-down.svg";
 
-
 class CurrencySelect extends React.Component {
   // constructor(props) {
   //   super(props);

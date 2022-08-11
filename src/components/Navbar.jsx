@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ProductCategories from './ProductCategories';
 import CurrencySelect from "./CurrencySelect";
 import CartOverlay from "../components/CartOverlay";
 
@@ -19,11 +20,8 @@ class Navbar extends React.Component {
               : null
           }
         >
-          <ul className="navbar-categories">
-            <li>Women</li>
-            <li>Men</li>
-            <li>Kids</li>
-          </ul>
+        <ProductCategories />
+
           <Link to="/">
             <div className="nav-logo">
               <img src={Logo} alt="site logo" />

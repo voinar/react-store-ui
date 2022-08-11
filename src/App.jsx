@@ -17,20 +17,21 @@ import ProductListing from "./pages/storefront/ProductListing";
 import ProductDescription from "./pages/storefront/ProductDescription";
 import Cart from "./pages/storefront/Cart";
 
-const errorLink = onError(({ graphqlErrors, networkError }) => {
-  if (graphqlErrors) {
-    graphqlErrors.map(({ message, location, path }) => {
-      alert(`Graphql error ${message}`);
-    });
-  }
-});
+// APOLLO CLIENT
+// const errorLink = onError(({ graphqlErrors, networkError }) => {
+//   if (graphqlErrors) {
+//     graphqlErrors.map(({ message, location, path }) => {
+//       alert(`Graphql error ${message}`);
+//     });
+//   }
+// });
 
-const link = from([errorLink, new HttpLink({ uri: "http://localhost:4000" })]);
+// const link = from([errorLink, new HttpLink({ uri: "http://localhost:4000" })]);
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: link,
-});
+// const client = new ApolloClient({
+//   cache: new InMemoryCache(),
+//   link: link,
+// });
 
 class App extends React.Component {
   constructor(props) {
@@ -63,25 +64,25 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <ApolloProvider client={client}>
-          <Navbar
-            toggleCartOverlay={this.toggleCartOverlay}
-            cartOverlayVisibility={this.state.cartOverlayVisibility}
-            onClick={this.toggleCartOverlay}
-            currency={this.state.currency}
-            handleCurrencyChange={this.handleCurrencyChange}
-          />
-          {/* <ModalOverlayMask /> */}
-          {this.state.modalOverlayMaskVisibility && (
-            <ModalOverlayMask toggleCartOverlay={this.toggleCartOverlay} />
-          )}
-
-          <Routes>
-            <Route path="/" element={<ProductListing />} />
-            <Route path="/products" element={<ProductDescription />} />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-        </ApolloProvider>
+        {/* <ApolloProvider client={client}> */}
+        <Navbar
+          toggleCartOverlay={this.toggleCartOverlay}
+          cartOverlayVisibility={this.state.cartOverlayVisibility}
+          onClick={this.toggleCartOverlay}
+          currency={this.state.currency}
+          handleCurrencyChange={this.handleCurrencyChange}
+        />
+        {/* <ModalOverlayMask /> */}
+        {this.state.modalOverlayMaskVisibility && (
+          <ModalOverlayMask toggleCartOverlay={this.toggleCartOverlay} />
+        )}
+        <Routes>
+          <Route path="/" element={<ProductListing />} />
+          <Route path="/all" element={<ProductListing />} />
+          <Route path="/products" element={<ProductDescription />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+        {/* </ApolloProvider> */}
       </>
     );
   }

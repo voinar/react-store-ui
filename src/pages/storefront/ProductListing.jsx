@@ -1,14 +1,9 @@
 import React from 'react';
-import ProductListingCard from '../../components/ProductListingCard'
-import { data } from '../../data/data.js'
+import ProductCard from '../../components/ProductCard'
+// import { data } from '../../data/data.js'
+import Products from '../../graphql/utils/Products'
 
-import { ApolloProvider, Query } from '@apollo/client'
-import { GET_PRODUCTS } from '../../graphql/Queries';
-
-// const { error, loading, data } = useQuery(GET_PRODUCTS)
-
-// const ProductsList = data.map((obj) => <ProductListingCard name={obj.name} img={obj.img} key={obj.count} />)
-const ProductsList = data.map((obj) => <ProductListingCard {...obj} key={obj.count} />)
+// const ProductsListLocalData = data.map((obj) => <ProductCard {...obj} key={obj.count} />)
 
 class ProductListing extends React.Component {
     render()
@@ -17,20 +12,11 @@ class ProductListing extends React.Component {
             <header>
                 <h1>Category name</h1>
             </header>
-            <div className="test">
-            {/* <h1>{data[0].name}</h1> */}
-            {/* {names} */}
-                {/* <Welcome name={data[0].name} /> */}
-                {/* <Welcome name="Cahal" /> */}
-                {/* <Welcome name="Edite" /> */}
-            </div>
             <div className="product-listing__cards-container">
-                {/* <ProductListingCard name={data.name} /> */}
-                {ProductsList}
+                {/* <ProductCard name={data.name} /> */}
+                {/* {ProductsListLocalData} */}
+                <Products />
             </div>
-            <Query query={GET_PRODUCTS}>
-
-            </Query>
         </div>
     }
 }
