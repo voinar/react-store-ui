@@ -1,14 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ProductCategories from './ProductCategories';
+import ProductCategories from "./ProductCategories";
 import CurrencySelect from "./CurrencySelect";
 import CartOverlay from "../components/CartOverlay";
+import ModalOverlayMask from "./ModalOverlayMask";
 
 import Logo from "../../src/assets/icon_logo.svg";
 import IconCart from "../../src/assets/icon_empty-cart.svg";
 
-
 class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cartOverlayVisibility: false,
+      modalOverlayMaskVisibility: false,
+      currency: "usd",
+    };
+    this.toggleCartOverlay = this.toggleCartOverlay.bind(this);
+    this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+  }
+
+  toggleCartOverlay() {
+    this.setState({
+      cartOverlayVisibility: !this.state.cartOverlayVisibility,
+    });
+    this.setState({
+      modalOverlayMaskVisibility: !this.state.modalOverlayMaskVisibility,
+    });
+    console.log(this.state);
+  }
+
+  handleCurrencyChange(e) {
+    this.setState({ currency: e.target.value });
+  }
   render() {
     return (
       <>
@@ -20,7 +44,10 @@ class Navbar extends React.Component {
               : null
           }
         >
-        <ProductCategories />
+          {this.state.modalOverlayMaskVisibility && (
+            <ModalOverlayMask toggleCartOverlay={this.toggleCartOverlay} />
+          )}
+          <ProductCategories loadProducts={this.props.loadProducts}/>
 
           <Link to="/">
             <div className="nav-logo">
@@ -30,8 +57,8 @@ class Navbar extends React.Component {
           <ul className="navbar-actions">
             <li>
               <CurrencySelect
-                currency={this.props.currency}
-                handleCurrencyChange={this.props.handleCurrencyChange}
+                currency={this.state.currency}
+                handleCurrencyChange={this.handleCurrencyChange}
               />
             </li>
             <li>
@@ -39,15 +66,13 @@ class Navbar extends React.Component {
                 className="nav-cart-icon"
                 src={IconCart}
                 alt="view cart"
-                onClick={this.props.toggleCartOverlay}
+                onClick={this.toggleCartOverlay}
               />
               <div className="nav-cart-icon__item-count">3</div>
-              {this.props.cartOverlayVisibility && <CartOverlay />}
-              {/* <CartOverlay /> */}
+              {this.state.cartOverlayVisibility && <CartOverlay />}
             </li>
           </ul>
         </nav>
-        {/* {this.props.modalOverlayMaskVisibility && <ModalOverlayMask onClick={this.props.toggleCartOverlay} />} */}
       </>
     );
   }

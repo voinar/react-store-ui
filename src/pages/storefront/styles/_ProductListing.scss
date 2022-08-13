@@ -1,4 +1,7 @@
 .product-listing {
+    h1 {
+        text-transform: capitalize;
+    }
 }
 
 .product-listing__cards-container {
@@ -9,4 +12,6 @@
     gap: 40px;
     // border: 1px solid red;
     margin-top: 100px;
+
+
 }
