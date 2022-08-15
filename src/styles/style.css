@@ -544,7 +544,6 @@ template {
   display: flex;
   list-style-type: none;
   padding: 0;
-  height: 100%;
   gap: 10px;
 }
 
@@ -565,6 +564,8 @@ template {
   display: -ms-flexbox;
   display: flex;
   gap: 10px;
+  -ms-flex-line-pack: right;
+      align-content: right;
 }
 
 .navbar .navbar-actions li img {
@@ -572,15 +573,15 @@ template {
   width: 24px;
 }
 
-.navbar .navbar-actions .nav-cart-icon__item-count {
-  position: absolute;
-  top: 16px;
-  right: 66px;
-  width: 22px;
-  height: 22px;
+.navbar .navbar-actions .navbar-cart-icon__item-count {
+  position: relative;
+  top: -44px;
+  right: -16px;
+  width: 20px;
+  height: 20px;
   background-color: #1D1F22;
   color: #FFFFFF;
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
   border-radius: 100px;
 }
@@ -603,7 +604,7 @@ template {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 444px;
+  height: 450px;
   width: 386px;
   margin-bottom: 60px;
   padding: 18px;
@@ -623,7 +624,8 @@ template {
 }
 
 .product-card img {
-  height: 350px;
+  min-height: 350px;
+  width: 440px;
   -o-object-fit: contain;
      object-fit: contain;
 }
@@ -636,33 +638,38 @@ template {
 }
 
 .product-card__cart-add {
-  opacity: 1;
+  opacity: 0;
   position: relative;
-  bottom: 110px;
-  right: -280px;
-  width: 74px;
+  top: -110px;
+  left: 270px;
+  width: 80px;
 }
 
-.product-card:hover .product-card__cart-add, .product-card__out-of-stock {
+.product-card__cart-add img {
+  min-height: 80px;
+}
+
+.product-card:hover .product-card__cart-add {
   opacity: 1;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
   cursor: pointer;
 }
 
 .product-card__out-of-stock {
+  opacity: 0;
   position: relative;
   text-transform: uppercase;
-  top: -472px;
+  top: -504px;
   width: 350px;
+  height: 460px;
   color: #8D8F9A;
   text-align: center;
   -webkit-backdrop-filter: blur(1px);
           backdrop-filter: blur(1px);
   background-color: rgba(255, 255, 255, 0.7);
   margin: 0 auto;
-  padding: 190px 0;
-  opacity: 0;
+  padding: 196px 0;
 }
 
 .product-card__out-of-stock span {
@@ -673,7 +680,7 @@ template {
 }
 
 .product-card:hover .product-card__out-of-stock {
-  opacity: 1;
+  opacity: 0;
   -webkit-transition: 0.2s;
   transition: 0.2s;
   cursor: pointer;
@@ -1070,6 +1077,9 @@ template {
       flex-wrap: wrap;
   gap: 40px;
   margin-top: 100px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .product-description {

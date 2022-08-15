@@ -31,44 +31,34 @@ class Products extends React.Component {
 
   render() {
     const { data } = this.state || null;
- 
+
     const categoryIndex = this.props.categoryIndex;
-    // console.log((window.location.pathname).substring(1))
+    // const categoryIndex = this.props.categoryIndex;
+    // console.log((window.location.pathname).substring(9))
+    // console.log(this.state.data)
     return (
-        <div>
-          {this.state.loading || !this.state.data ? (
-            <div>loading...</div>
-          ) : (
-            <div className="product-listing__cards-container">
-              {data.categories[categoryIndex].products.map((obj) => {
-                return (
-                    <div className="product-card" key={obj.name}>
-                      <img src={obj.gallery[0]} alt="product" />
-                      <div className="product-card__content">
-                        <h2 className="product-card__content-title">
-                          {obj.name}
-                        </h2>
-                        <span className="product-card__content-price">
-                          {obj.prices[0].amount}
-                        </span>
-                      </div>
-                      <div className="product-card__cart-add">
-                        <img src={ProductCartAdd} alt="add product to cart" />
-                      </div>
-                      <div className="product-card__out-of-stock">
-                        <span>Out of stock</span>
-                      </div>
-                    </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+      <div>
+        {this.state.loading || !this.state.data ? (
+          <div>loading...</div>
+        ) : (
+          <div className="product-listing__cards-container">
+            {data.categories[categoryIndex].products.map((obj) => {
+              return <ProductCard
+              key={obj.id}
+              productUrl={obj.id}
+              name={obj.name}
+              image={obj.gallery[0]}
+              priceSymbol={obj.prices[0].currency.symbol}
+              priceAmount={obj.prices[0].amount}
+              />;
+            })}
+          </div>
+        )}
+      </div>
     );
   }
 
   // (window.location.pathname).substring(1)
-
 
   componentDidMount() {
     this.renderProducts();
@@ -82,6 +72,25 @@ class Products extends React.Component {
 }
 
 export default Products;
+
+{
+  /* <div className="product-card" key={obj.name}>
+                  <img src={obj.gallery[0]} alt="product" />
+                  <div className="product-card__content">
+                    <h2 className="product-card__content-title">{obj.name}</h2>
+                    <span className="product-card__content-price">
+                      {obj.prices[0].currency.symbol}
+                      {obj.prices[0].amount}
+                    </span>
+                  </div>
+                  <div className="product-card__cart-add">
+                    <img src={ProductCartAdd} alt="add product to cart" />
+                  </div>
+                  <div className="product-card__out-of-stock">
+                    <span>Out of stock</span>
+                  </div>
+                </div> */
+}
 
 // APOLLO
 // export default function Products() {

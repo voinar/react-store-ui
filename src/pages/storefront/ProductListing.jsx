@@ -7,8 +7,6 @@ import Products from "../../components/Products";
 
 class ProductListing extends React.Component {
   render() {
-
-
     return (
       <div className="product-listing section-container">
         <header>

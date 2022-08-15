@@ -47,13 +47,15 @@ class Navbar extends React.Component {
           {this.state.modalOverlayMaskVisibility && (
             <ModalOverlayMask toggleCartOverlay={this.toggleCartOverlay} />
           )}
+          
           <ProductCategories loadProducts={this.props.loadProducts}/>
 
           <Link to="/">
-            <div className="nav-logo">
+            <div className="navbar-logo">
               <img src={Logo} alt="site logo" />
             </div>
           </Link>
+
           <ul className="navbar-actions">
             <li>
               <CurrencySelect
@@ -63,12 +65,12 @@ class Navbar extends React.Component {
             </li>
             <li>
               <img
-                className="nav-cart-icon"
+                className="navbar-cart-icon"
                 src={IconCart}
                 alt="view cart"
                 onClick={this.toggleCartOverlay}
               />
-              <div className="nav-cart-icon__item-count">3</div>
+              <div className="navbar-cart-icon__item-count">3</div>
               {this.state.cartOverlayVisibility && <CartOverlay />}
             </li>
           </ul>

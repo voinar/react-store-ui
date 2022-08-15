@@ -1,21 +1,21 @@
 export const GET_CATEGORIES = fetch("http://localhost:4000/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    query: `
         query GET_CATEGORIES {
         categories {
           name
         }
       }`,
-    }),
-  });
+  }),
+});
 
 export const GET_PRODUCTS = fetch("http://localhost:4000/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query: `
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    query: `
         query GET_PRODUCTS {
           categories {
             name
@@ -48,5 +48,5 @@ export const GET_PRODUCTS = fetch("http://localhost:4000/", {
           }
         }
         `,
-    }),
-  });
+  }),
+});
