@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { GET_CATEGORIES } from "./graphql/Queries";
 
@@ -9,6 +9,8 @@ import Navbar from "./components/Navbar";
 import ProductListing from "./pages/storefront/ProductListing";
 import ProductDescription from "./pages/storefront/ProductDescription";
 import Cart from "./pages/storefront/Cart";
+import Counter from "./components/Counter";
+
 
 class App extends React.Component {
     state = {
@@ -47,6 +49,7 @@ class App extends React.Component {
             handleCurrencyChange={this.handleCurrencyChange}
             loadProducts={this.loadProducts}
           />
+          <Counter />
           <Routes>
             <Route
               path="/"
