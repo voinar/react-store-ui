@@ -5,13 +5,11 @@ import ProductCard from "./ProductCard";
 import ProductCartAdd from "../assets/icon_add-to-cart.svg";
 
 class Products extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       loading: true,
       categories: null,
     };
-  }
+
 
   renderProducts = async () => {
     try {

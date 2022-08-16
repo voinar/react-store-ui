@@ -1110,14 +1110,14 @@ template {
 
 .product-description__images-small img {
   width: 80px;
+  cursor: pointer;
 }
 
 .product-description__image-large img {
   position: relative;
-  height: 100%;
+  width: 600px;
   -o-object-fit: contain;
      object-fit: contain;
-  bottom: 0;
 }
 
 .product-description__attributes {
@@ -1250,9 +1250,22 @@ template {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-align: justify;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+}
+
+.product-description__contents h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.product-description__contents h3 {
+  margin: 20px 0 10px;
 }
 
 @media (max-width: 768px) {

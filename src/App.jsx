@@ -11,16 +11,13 @@ import ProductDescription from "./pages/storefront/ProductDescription";
 import Cart from "./pages/storefront/Cart";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       loading: true,
       categories: {
         categories: [],
       },
       categoryIndex: 0,
     };
-  }
 
   getCategories = async () => {
     try {

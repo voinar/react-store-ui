@@ -1,5 +1,5 @@
 import React from "react";
-import ProductImage from "../../assets/product-image.png";
+import parse from "html-react-parser";
 
 // const GET_PRODUCT_DESCRIPTION = fetch("http://localhost:4000/", {
 //   signal: signal,
@@ -101,6 +101,7 @@ class ProductDescription extends React.Component {
     // console.log("product url: " + `${window.location.pathname.substring(1)}`);
     console.log("fetched");
     // this.fetchController.abort();
+    let imageIndex = 0;
 
     return (
       <>
@@ -108,7 +109,30 @@ class ProductDescription extends React.Component {
           <div className="product-description section-container">
             <div className="product-description__images">
               <div className="product-description__images-small">
-                <div className="product-description__image-small">
+                {/* {data.categories[categoryIndex].products.map((obj) => {
+              return <ProductCard
+              key={obj.id}
+              productUrl={obj.id}
+              name={obj.name}
+              image={obj.gallery[0]}
+              priceSymbol={obj.prices[0].currency.symbol}
+              priceAmount={obj.prices[0].amount}
+              />;
+            })} */}
+                {this.state.product.product.gallery.map((image) => {
+                  return (
+                    <div
+                      key={image}
+                      className="product-description__image-small"
+                      onClick={(e) =>
+                        console.log(e.target.src)
+                      }
+                    >
+                      <img src={image} alt="product" />
+                    </div>
+                  );
+                })}
+                {/* <div className="product-description__image-small">
                   <img
                     src={this.state.product.product.gallery[0]}
                     alt="product"
@@ -116,19 +140,26 @@ class ProductDescription extends React.Component {
                 </div>
                 <div className="product-description__image-small">
                   <img
-                    src={this.state.product.product.gallery[1]}
+                    src={
+                      this.state.product.product.gallery[1]
+                        ? "exists"
+                        : "doesnt"
+                    }
                     alt="product"
                   />
-                </div>
-                <div className="product-description__image-small">
+                </div> */}
+                {/* <div className="product-description__image-small">
                   <img
                     src={this.state.product.product.gallery[2]}
                     alt="product"
                   />
-                </div>
+                </div> */}
               </div>
               <div className="product-description__image-large">
-                <img src={this.state.product.product.gallery} alt="product" />
+                <img
+                  src={this.state.product.product.gallery[imageIndex]}
+                  alt="product"
+                />
               </div>
             </div>
             <div className="product-description__attributes">
@@ -164,14 +195,16 @@ class ProductDescription extends React.Component {
                   Price:
                 </span>
                 <span className="product-description__attributes-price-amount">
-                  {this.state.product.product.prices.amount}
+                  {this.state.product.product.prices[0].currency.symbol}
+                  {this.state.product.product.prices[0].amount}
                 </span>
               </div>
               <button className="product-description__button">
                 Add to cart
               </button>
               <div className="product-description__contents">
-                <span>{this.state.product.product.description}</span>
+                <span>{parse(this.state.product.product.description)}</span>
+                {/* <span>{JSON.stringify(this.state.product.product.description)}</span> */}
               </div>
             </div>
           </div>
