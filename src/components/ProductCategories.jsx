@@ -26,10 +26,6 @@ class ProductCategories extends React.Component {
     }
   };
 
-  //   renderState = () => {
-  //     console.log(this.state);
-  //   };
-
   render() {
     const { categories } = this.state || null;
     // console.log(categories);
@@ -60,9 +56,9 @@ class ProductCategories extends React.Component {
     this.renderCategories();
   }
 
-  componentDidUpdate() {
-    this.renderCategories();
-  }
+  // componentDidUpdate() {
+  //   this.renderCategories();
+  // }
 }
 
 export default ProductCategories;

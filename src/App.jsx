@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import axios from "axios";
 
 import { GET_CATEGORIES } from "./graphql/Queries";
 
@@ -11,29 +12,55 @@ import ProductDescription from "./pages/storefront/ProductDescription";
 import Cart from "./pages/storefront/Cart";
 import Counter from "./components/Counter";
 
-
 class App extends React.Component {
-    state = {
-      loading: true,
-      categories: {
-        categories: [],
-      },
-      categoryIndex: 0,
-    };
+  state = {
+    loading: true,
+    categories: {
+      categories: [],
+    },
+    categoryIndex: 0,
+  };
 
   getCategories = async () => {
     try {
-      const res = await GET_CATEGORIES;
-      const data = await res.clone().json();
-      this.setState({
-        loading: false,
-        categories: data.data,
-      });
+      const query = await axios({
+        url: "http://localhost:4000",
+        method: "POST",
+        data: {
+          query: `
+          query GET_CATEGORIES {
+            categories {
+              name
+            }
+          }
+          `,
+        },
+      }).then((result) => {
+        console.log(result.data.data)
+        this.setState({
+          loading: false,
+          categories: result.data.data
+        })
+      })
+      // });
     } catch (err) {
       console.log(err);
     }
-    // console.log('getCategories' + JSON.stringify(this.state.categories));
   };
+
+  // getCategories = async () => {
+  //   try {
+  //     const res = await GET_CATEGORIES;
+  //     const data = await res.clone().json();
+  //     this.setState({
+  //       loading: false,
+  //       categories: data.data,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   // console.log('getCategories' + JSON.stringify(this.state.categories));
+  // };
 
   render() {
     // const { categories } = this.state || null;

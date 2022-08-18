@@ -1,39 +1,75 @@
 import React from "react";
-// import { ApolloProvider, useQuery, gql } from '@apollo/client'
+import { connect } from "react-redux";
+import { loadProducts } from "../redux/reducers/products";
+import axios from "axios";
+import { qgl } from '@apollo/client'
+
 import { GET_PRODUCTS } from "../graphql/Queries";
 import ProductCard from "./ProductCard";
-import ProductCartAdd from "../assets/icon_add-to-cart.svg";
+
 
 class Products extends React.Component {
-    state = {
-      loading: true,
-      categories: null,
-    };
-
+  state = {
+    loading: true,
+    categories: null,
+  };
 
   renderProducts = async () => {
     try {
-      const res = await GET_PRODUCTS;
-      const data = await res.clone().json();
-
-      this.setState({
-        loading: false,
-        data: data.data,
+      const query = await axios({
+        url: "http://localhost:4000/",
+        method: "POST",
+        data: {
+          query: `
+          query GET_PRODUCTS {
+            categories {
+              name
+              products {
+                id
+                name
+                inStock
+                gallery
+                description
+                category
+                attributes {
+                  type
+                  name
+                  id
+                  items {
+                    id
+                    value
+                    displayValue
+                  }
+                }
+                brand
+                prices {
+                  amount
+                  currency {
+                    label
+                    symbol
+                  }
+                }
+              }
+            }
+          }
+          `,
+        },
+      }).then((result) => {
+        console.log(result.data.data);
+        this.setState({
+          loading: false,
+          data: result.data.data,
+        });
       });
     } catch (err) {
       console.log(err);
     }
-    // console.log('fetch successful')
-    // console.log(this.props.category.indexOf(this.props.category))
   };
 
   render() {
     const { data } = this.state || null;
 
     const categoryIndex = this.props.categoryIndex;
-    // const categoryIndex = this.props.categoryIndex;
-    // console.log((window.location.pathname).substring(9))
-    // console.log(this.state.data)
     return (
       <div>
         {this.state.loading || !this.state.data ? (
@@ -41,14 +77,16 @@ class Products extends React.Component {
         ) : (
           <div className="product-listing__cards-container">
             {data.categories[categoryIndex].products.map((obj) => {
-              return <ProductCard
-              key={obj.id}
-              productUrl={obj.id}
-              name={obj.name}
-              image={obj.gallery[0]}
-              priceSymbol={obj.prices[0].currency.symbol}
-              priceAmount={obj.prices[0].amount}
-              />;
+              return (
+                <ProductCard
+                  key={obj.id}
+                  productUrl={obj.id}
+                  name={obj.name}
+                  image={obj.gallery[0]}
+                  priceSymbol={obj.prices[0].currency.symbol}
+                  priceAmount={obj.prices[0].amount}
+                />
+              );
             })}
           </div>
         )}
@@ -56,65 +94,175 @@ class Products extends React.Component {
     );
   }
 
-  // (window.location.pathname).substring(1)
-
   componentDidMount() {
     this.renderProducts();
     console.log("mounted");
-  }
-
-  componentDidUpdate() {
-    this.renderProducts();
-    // console.log('updated')
   }
 }
 
 export default Products;
 
-{
-  /* <div className="product-card" key={obj.name}>
-                  <img src={obj.gallery[0]} alt="product" />
-                  <div className="product-card__content">
-                    <h2 className="product-card__content-title">{obj.name}</h2>
-                    <span className="product-card__content-price">
-                      {obj.prices[0].currency.symbol}
-                      {obj.prices[0].amount}
-                    </span>
-                  </div>
-                  <div className="product-card__cart-add">
-                    <img src={ProductCartAdd} alt="add product to cart" />
-                  </div>
-                  <div className="product-card__out-of-stock">
-                    <span>Out of stock</span>
-                  </div>
-                </div> */
-}
+//------------------------------
+// AXIOS
+//------------------------------
 
-// APOLLO
-// export default function Products() {
-//   const { error, data, loading } = useQuery(GET_PRODUCTS)
-//   console.log({ error, data, loading })
+// class Products extends React.Component {
+//   state = {
+//     loading: true,
+//     categories: null,
+//   };
 
-//   if (loading) return <div>Loading...</div>
-//   if (error) return <div>Something went wrong..</div>
-//   return (
-//     <>
-//     {data.categories[0].products.map(obj => {
-//     return <div className="product-card">
-//             <img src={obj.gallery[0]} alt="product" />
-//             <div className="product-card__content">
-//                 <h2 className="product-card__content-title">{obj.name}</h2>
-//                 <span className="product-card__content-price">{obj.prices[0].amount}</span>
-//             </div>
-//             <div className="product-card__cart-add">
-//                 <img src={ProductCartAdd} alt="add product to cart" />
-//             </div>
-//             <div className="product-card__out-of-stock">
-//                 <span>Out of stock</span>
-//             </div>
-//         </div>
-//       })
+//   renderProducts = async () => {
+//     try {
+//       const query = await axios({
+//         url: "http://localhost:4000/",
+//         method: "POST",
+//         data: {
+//           query: `
+//           query GET_PRODUCTS {
+//             categories {
+//               name
+//               products {
+//                 id
+//                 name
+//                 inStock
+//                 gallery
+//                 description
+//                 category
+//                 attributes {
+//                   type
+//                   name
+//                   id
+//                   items {
+//                     id
+//                     value
+//                     displayValue
+//                   }
+//                 }
+//                 brand
+//                 prices {
+//                   amount
+//                   currency {
+//                     label
+//                     symbol
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//           `,
+//         },
+//       }).then((result) => {
+//         console.log(result.data.data);
+//         this.setState({
+//           loading: false,
+//           data: result.data.data,
+//         });
+//       });
+//     } catch (err) {
+//       console.log(err);
 //     }
-//     </>
-//   )
+//     // console.log('fetch successful')
+//     // console.log(this.props.category.indexOf(this.props.category))
+//   };
+
+//   render() {
+//     const { data } = this.state || null;
+
+//     const categoryIndex = this.props.categoryIndex;
+//     return (
+//       <div>
+//         {this.state.loading || !this.state.data ? (
+//           <div>loading...</div>
+//         ) : (
+//           <div className="product-listing__cards-container">
+//             {data.categories[categoryIndex].products.map((obj) => {
+//               return (
+//                 <ProductCard
+//                   key={obj.id}
+//                   productUrl={obj.id}
+//                   name={obj.name}
+//                   image={obj.gallery[0]}
+//                   priceSymbol={obj.prices[0].currency.symbol}
+//                   priceAmount={obj.prices[0].amount}
+//                 />
+//               );
+//             })}
+//           </div>
+//         )}
+//       </div>
+//     );
+//   }
+
+//   componentDidMount() {
+//     this.renderProducts();
+//     console.log("mounted");
+//   }
 // }
+
+// export default Products;
+
+//------------------------------
+// FETCH API
+//------------------------------
+
+// class Products extends React.Component {
+//     state = {
+//       loading: true,
+//       categories: null,
+//     };
+
+//   renderProducts = async () => {
+//     try {
+//       const res = await GET_PRODUCTS;
+//       const data = await res.clone().json();
+
+//       this.setState({
+//         loading: false,
+//         data: data.data,
+//       });
+//     } catch (err) {
+//       console.log(err);
+//     }
+//     // console.log('fetch successful')
+//     // console.log(this.props.category.indexOf(this.props.category))
+//   };
+
+//   render() {
+//     const { data } = this.state || null;
+
+//     const categoryIndex = this.props.categoryIndex;
+//     return (
+//       <div>
+//         {this.state.loading || !this.state.data ? (
+//           <div>loading...</div>
+//         ) : (
+//           <div className="product-listing__cards-container">
+//             {data.categories[categoryIndex].products.map((obj) => {
+//               return <ProductCard
+//               key={obj.id}
+//               productUrl={obj.id}
+//               name={obj.name}
+//               image={obj.gallery[0]}
+//               priceSymbol={obj.prices[0].currency.symbol}
+//               priceAmount={obj.prices[0].amount}
+//               />;
+//             })}
+//           </div>
+//         )}
+//       </div>
+//     );
+//   }
+
+//   componentDidMount() {
+//     this.renderProducts();
+//     console.log("mounted");
+//   }
+
+//   // componentDidUpdate() {
+//   //   this.renderProducts();
+//   //   // console.log('updated')
+//   // }
+// }
+
+// export default Products;
