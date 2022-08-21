@@ -8,7 +8,12 @@ import ModalOverlayMask from "./ModalOverlayMask";
 import Logo from "../../src/assets/icon_logo.svg";
 import IconCart from "../../src/assets/icon_empty-cart.svg";
 
+import AppContext, { AppProvider } from "../context/AppContext";
+
+
 class Navbar extends React.Component {
+  static contextType = AppContext
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,17 +32,19 @@ class Navbar extends React.Component {
     this.setState({
       modalOverlayMaskVisibility: !this.state.modalOverlayMaskVisibility,
     });
-    console.log(this.state);
   }
 
   handleCurrencyChange(e) {
     this.setState({ currency: e.target.value });
   }
   render() {
+    // console.log('state: ' + JSON.stringify(this.state));
+    // console.log('context: ' + JSON.stringify(this.context));
     return (
       <>
         <nav
           className="navbar container"
+          onLoad={this.context.logPrompt}
           onClick={
             this.props.cartOverlayVisibility
               ? this.props.toggleCartOverlay
@@ -47,8 +54,12 @@ class Navbar extends React.Component {
           {this.state.modalOverlayMaskVisibility && (
             <ModalOverlayMask toggleCartOverlay={this.toggleCartOverlay} />
           )}
-          
-          <ProductCategories loadProducts={this.props.loadProducts}/>
+
+          <ProductCategories
+            loadProducts={this.props.loadProducts}
+            categories={this.props.categories}
+            loading={this.props.loading}
+          />
 
           <Link to="/">
             <div className="navbar-logo">
@@ -79,5 +90,6 @@ class Navbar extends React.Component {
     );
   }
 }
+
 
 export default Navbar;

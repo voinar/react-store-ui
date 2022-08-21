@@ -1,38 +1,14 @@
 import React from "react";
 
-import { GET_CATEGORIES } from "../graphql/Queries";
 import { Link } from "react-router-dom";
 
 class ProductCategories extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      categories: null,
-    };
-  }
-
-  renderCategories = async () => {
-    try {
-      const res = await GET_CATEGORIES;
-      const data = await res.clone().json();
-
-      this.setState({
-        loading: false,
-        categories: data.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   render() {
-    const { categories } = this.state || null;
-    // console.log(categories);
+    const { categories } = this.props || null;
     return (
       <>
         <div>
-          {this.state.loading || !this.state.categories ? (
+          {this.props.loading || !this.props.categories ? (
             <div>loading...</div>
           ) : (
             <div>
@@ -51,14 +27,6 @@ class ProductCategories extends React.Component {
       </>
     );
   }
-
-  componentDidMount() {
-    this.renderCategories();
-  }
-
-  // componentDidUpdate() {
-  //   this.renderCategories();
-  // }
 }
 
 export default ProductCategories;

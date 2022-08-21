@@ -32,20 +32,20 @@ import parse from "html-react-parser";
 //   }),
 // });
 
-const fetchController = new AbortController();
 
 class ProductDescription extends React.Component {
   state = {
     loading: true,
     product: null,
+    imageIndex: 0
   };
   // productId = window.location.pathname.substring(9) //get product id w/o '/product/' prefix for use in database query
 
   getProductDescription = async () => {
-    const { signal } = fetchController;
+
     try {
       const res = await fetch("http://localhost:4000/", {
-        signal: signal,
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -101,7 +101,7 @@ class ProductDescription extends React.Component {
     // console.log("product url: " + `${window.location.pathname.substring(1)}`);
     console.log("fetched");
     // this.fetchController.abort();
-    let imageIndex = 0;
+    let imageIndex = this.state.imageIndex;
 
     return (
       <>
@@ -125,7 +125,9 @@ class ProductDescription extends React.Component {
                       key={image}
                       className="product-description__image-small"
                       onClick={(e) =>
-                        console.log(e.target.src)
+                        // console.log(e.target.src)
+                        this.setState({imageIndex: 3
+                        })
                       }
                     >
                       <img src={image} alt="product" />

@@ -12,6 +12,9 @@ import ProductDescription from "./pages/storefront/ProductDescription";
 import Cart from "./pages/storefront/Cart";
 import Counter from "./components/Counter";
 
+import context from "./context/AppContext";
+import AppContext, { AppProvider } from "./context/AppContext";
+
 class App extends React.Component {
   state = {
     loading: true,
@@ -36,16 +39,17 @@ class App extends React.Component {
           `,
         },
       }).then((result) => {
-        console.log(result.data.data)
+        // console.log(result.data.data)
         this.setState({
           loading: false,
-          categories: result.data.data
-        })
-      })
+          categories: result.data.data,
+        });
+      });
       // });
     } catch (err) {
       console.log(err);
     }
+    // console.log(this.state.categories)
   };
 
   // getCategories = async () => {
@@ -67,52 +71,55 @@ class App extends React.Component {
     // console.log(JSON.stringify(this.state.categories));
     return (
       <>
-        <BrowserRouter>
-          <Navbar
-            toggleCartOverlay={this.toggleCartOverlay}
-            cartOverlayVisibility={this.state.cartOverlayVisibility}
-            onClick={this.toggleCartOverlay}
-            currency={this.state.currency}
-            handleCurrencyChange={this.handleCurrencyChange}
-            loadProducts={this.loadProducts}
-          />
-          <Counter />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <ProductListing
-                  category={""}
-                  categoryIndex={this.state.categoryIndex}
-                  loadProducts={this.loadProducts}
-                />
-              }
+        <AppProvider>
+          <BrowserRouter>
+            <Navbar
+              toggleCartOverlay={this.toggleCartOverlay}
+              cartOverlayVisibility={this.state.cartOverlayVisibility}
+              onClick={this.toggleCartOverlay}
+              currency={this.state.currency}
+              handleCurrencyChange={this.handleCurrencyChange}
+              loadProducts={this.loadProducts}
+              categories={this.state.categories}
+              loading={this.state.loading}
             />
-            {this.state.categories.categories.map((obj) => {
-              return (
-                <Route
-                  key={`${obj.name}`}
-                  path={`${obj.name}`}
-                  element={
-                    <ProductListing
-                      category={`${obj.name}`}
-                      categoryIndex={this.state.categoryIndex}
-                    />
-                  }
-                />
-              );
-            })}
-            {/* <Route
+            {/* <Counter /> */}
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <ProductListing
+                    category={""}
+                    categoryIndex={this.state.categoryIndex}
+                    loadProducts={this.loadProducts}
+                  />
+                }
+              />
+              {this.state.categories.categories.map((obj) => {
+                return (
+                  <Route
+                    key={`${obj.name}`}
+                    path={`${obj.name}`}
+                    element={
+                      <ProductListing
+                        category={`${obj.name}`}
+                        categoryIndex={this.state.categoryIndex}
+                      />
+                    }
+                  />
+                );
+              })}
+              {/* <Route
               path="/product/description"
               element={<ProductDescription />}
             /> */}
-            <Route
-              path="/product/:productId"
-              element={<ProductDescription />}
-            />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-          {/* <div>
+              <Route
+                path="/product/:productId"
+                element={<ProductDescription />}
+              />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+            {/* <div>
           {this.state.loading || !this.state.categories ? (
             <div>loading...</div>
           ) : (
@@ -127,14 +134,14 @@ class App extends React.Component {
             </div>
           )}
         </div> */}
-        </BrowserRouter>
+          </BrowserRouter>
+        </AppProvider>
       </>
     );
   }
 
   componentDidMount() {
     this.getCategories();
-    // console.log("getting categories");
   }
 
   loadProducts = (e) => {
@@ -145,5 +152,7 @@ class App extends React.Component {
     this.setState({ categoryIndex: categoryIndex });
   };
 }
+
+App.contextType = AppContext;
 
 export default App;
