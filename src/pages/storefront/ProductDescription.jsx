@@ -1,94 +1,30 @@
 import React from "react";
 import parse from "html-react-parser";
+import AppContext, { AppProvider } from "../../context/AppContext";
+import axios from "axios";
 
-// const GET_PRODUCT_DESCRIPTION = fetch("http://localhost:4000/", {
-//   signal: signal,
-//   method: "POST",
-//   headers: { "Content-Type": "application/json" },
-//   body: JSON.stringify({
-//     query: `
-//       query GET_PRODUCTS($productId: String!) {
-//         product(id: $productId) {
-//           id
-//           name
-//           inStock
-//           gallery
-//           description
-//           category
-//           prices {
-//             currency {
-//               label
-//               symbol
-//             }
-//             amount
-//           }
-//           brand
-//         }
-//       }
-//     `,
-//     variables: {
-//       productId: productId
-//     }
-//   }),
-// });
-
+import { GET_PRODUCT_DETAILS } from "../../graphql/Queries";
 
 class ProductDescription extends React.Component {
+  static contextType = AppContext;
   state = {
     loading: true,
     product: null,
-    imageIndex: 0
+    expandImagePreviewIndex: 0,
   };
   // productId = window.location.pathname.substring(9) //get product id w/o '/product/' prefix for use in database query
 
   getProductDescription = async () => {
-
+    const productId = window.location.pathname.substring(9);
     try {
-      const res = await fetch("http://localhost:4000/", {
-
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query: `query GET_PRODUCT_DEATILS($productId: String!) {
-            product(id: $productId) {
-              id
-              name
-              inStock
-              gallery
-              description
-              category
-              prices {
-                currency {
-                  label
-                  symbol
-                }
-                amount
-              }
-              brand
-              attributes {
-                id
-                name
-                type
-                items {
-                  displayValue
-                  value
-                  id
-                }
-              }
-            }
-          }
-          `,
-          variables: {
-            productId: window.location.pathname.substring(9),
-          },
-        }),
+      const getProductDetails = await axios(
+        GET_PRODUCT_DETAILS(productId)
+      ).then((response) => {
+        this.setState({
+          loading: false,
+          product: response.data.data,
+        });
       });
-      const data = await res.json();
-      this.setState({
-        loading: false,
-        product: data.data,
-      });
-      // this.fetchController?.abort();
     } catch (err) {
       console.log(err);
     }
@@ -97,11 +33,23 @@ class ProductDescription extends React.Component {
   };
 
   render() {
-    // console.log("product state: " + JSON.stringify(this.state.product));
-    // console.log("product url: " + `${window.location.pathname.substring(1)}`);
-    console.log("fetched");
-    // this.fetchController.abort();
-    let imageIndex = this.state.imageIndex;
+    const expandImagePreviewIndex = this.state.expandImagePreviewIndex;
+
+    const expandImagePreview = (e) => {
+      return this.setState({
+        expandImagePreviewIndex: this.state.product.product.gallery.indexOf(
+          e.target.src
+        ),
+      });
+    };
+
+    const currencySelectedIndex = this.context.currencies
+      .map((element) => {
+        return element.symbol;
+      })
+      .indexOf(this.context.currency);
+
+    // const currencySelectedIndex = this.context.currencies.map(element => {return element.symbol}).indexOf(this.context.currency);
 
     return (
       <>
@@ -124,42 +72,18 @@ class ProductDescription extends React.Component {
                     <div
                       key={image}
                       className="product-description__image-small"
-                      onClick={(e) =>
-                        // console.log(e.target.src)
-                        this.setState({imageIndex: 3
-                        })
-                      }
+                      onClick={expandImagePreview}
                     >
                       <img src={image} alt="product" />
                     </div>
                   );
                 })}
-                {/* <div className="product-description__image-small">
-                  <img
-                    src={this.state.product.product.gallery[0]}
-                    alt="product"
-                  />
-                </div>
-                <div className="product-description__image-small">
-                  <img
-                    src={
-                      this.state.product.product.gallery[1]
-                        ? "exists"
-                        : "doesnt"
-                    }
-                    alt="product"
-                  />
-                </div> */}
-                {/* <div className="product-description__image-small">
-                  <img
-                    src={this.state.product.product.gallery[2]}
-                    alt="product"
-                  />
-                </div> */}
               </div>
               <div className="product-description__image-large">
                 <img
-                  src={this.state.product.product.gallery[imageIndex]}
+                  src={
+                    this.state.product.product.gallery[expandImagePreviewIndex]
+                  }
                   alt="product"
                 />
               </div>
@@ -197,8 +121,14 @@ class ProductDescription extends React.Component {
                   Price:
                 </span>
                 <span className="product-description__attributes-price-amount">
-                  {this.state.product.product.prices[0].currency.symbol}
-                  {this.state.product.product.prices[0].amount}
+                  {
+                    this.state.product.product.prices[currencySelectedIndex]
+                      .currency.symbol
+                  }
+                  {
+                    this.state.product.product.prices[currencySelectedIndex]
+                      .amount
+                  }
                 </span>
               </div>
               <button className="product-description__button">
@@ -206,7 +136,6 @@ class ProductDescription extends React.Component {
               </button>
               <div className="product-description__contents">
                 <span>{parse(this.state.product.product.description)}</span>
-                {/* <span>{JSON.stringify(this.state.product.product.description)}</span> */}
               </div>
             </div>
           </div>
@@ -221,19 +150,6 @@ class ProductDescription extends React.Component {
     this.getProductDescription();
     console.log("getting product description");
     console.log(JSON.stringify(this.state));
-    // this.fetchController.abort();
-  }
-
-  componentWillUnmount() {
-    // this.setState = null;
-    // console.log(JSON.stringify(this.state));
-
-    //   console.log("unmounting + abort controller");
-    //   this.setState(null);
-    console.log("unmounting: " + JSON.stringify(this.state));
-    // console.log("res: " + this.res)
-    this.setState(null);
-    console.log("unmounted: " + JSON.stringify(this.state));
   }
 }
 

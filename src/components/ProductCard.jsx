@@ -1,8 +1,6 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import ProductImage from "../assets/product-image.png";
 import ProductCartAdd from "../assets/icon_add-to-cart.svg";
 
 class ProductCard extends React.Component {

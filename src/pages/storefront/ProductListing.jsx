@@ -2,10 +2,13 @@ import React from "react";
 import ProductCard from "../../components/ProductCard";
 // import { data } from '../../data/data.js'
 import Products from "../../components/Products";
+import AppContext, { AppProvider } from "../../context/AppContext";
 
 // const ProductsListLocalData = data.map((obj) => <ProductCard {...obj} key={obj.count} />)
 
 class ProductListing extends React.Component {
+  static contextType = AppContext;
+
   render() {
     return (
       <div className="product-listing section-container">
@@ -16,9 +19,9 @@ class ProductListing extends React.Component {
         <div className="product-listing__cards-container">
           {/* {ProductsListLocalData} */}
           <Products
-            category={this.props.category}
-            categoryIndex={this.props.categoryIndex}
-            loadProducts={this.props.loadProducts}
+            // category={this.context.category}
+            // categoryIndex={this.context.categoryIndex}
+            // loadProducts={this.props.loadProducts}
           />
         </div>
       </div>

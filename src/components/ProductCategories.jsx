@@ -1,22 +1,28 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import AppContext, { AppProvider } from "../context/AppContext";
 
 class ProductCategories extends React.Component {
+  static contextType = AppContext;
+
   render() {
-    const { categories } = this.props || null;
+    const { productCategories } = this.context || null;
+
     return (
       <>
         <div>
-          {this.props.loading || !this.props.categories ? (
+          {this.context.loading || !this.context.productCategories ? (
             <div>loading...</div>
           ) : (
             <div>
               <ul className="navbar-categories">
-                {categories.categories.map((obj) => {
+                {productCategories.categories.map((category) => {
                   return (
-                    <Link key={obj.name} to={`${obj.name}`}>
-                      <li onClick={this.props.loadProducts}>{obj.name}</li>
+                    <Link key={category.name} to={`${category.name}`}>
+                      <li onClick={this.context.loadProductCategory}>
+                        {category.name}
+                      </li>
                     </Link>
                   );
                 })}
@@ -26,6 +32,10 @@ class ProductCategories extends React.Component {
         </div>
       </>
     );
+  }
+  componentDidMount() {
+    this.context.getProductCategories();
+    // console.log("mounted");
   }
 }
 

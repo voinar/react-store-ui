@@ -11,35 +11,34 @@ import AppContext, { AppProvider } from "../context/AppContext";
 //------------------------------
 
 class Products extends React.Component {
-  static contextType = AppContext
-
-  // state = {
-  //   loading: true,
-  //   categories: null,
-  // };
-
+  static contextType = AppContext;
 
   render() {
-    console.log('products context' + JSON.stringify(this.context))
+    // console.log('currency: ' + this.context.currency)
+    // console.log('computed currency: ' + this.context.currency)
 
-    const { data } = this.context || null;
+    const { productsData } = this.context || null;
 
-    const categoryIndex = this.props.categoryIndex;
+    const productCategoryIndex = this.context.productCategoryIndex;
+    const currencySelectedIndex = this.context.currencies.map(element => {return element.symbol}).indexOf(this.context.currency);
+
     return (
       <div>
-        {this.context.loading || !this.context.data ? (
+        {this.context.productsDataLoading || !this.context.productsData ? (
           <div>loading...</div>
         ) : (
           <div className="product-listing__cards-container">
-            {data.categories[categoryIndex].products.map((obj) => {
+            {productsData.categories[productCategoryIndex].products.map((product) => {
               return (
                 <ProductCard
-                  key={obj.id}
-                  productUrl={obj.id}
-                  name={obj.name}
-                  image={obj.gallery[0]}
-                  priceSymbol={obj.prices[0].currency.symbol}
-                  priceAmount={obj.prices[0].amount}
+                  key={product.id}
+                  productUrl={product.id}
+                  name={product.name}
+                  image={product.gallery[0]}
+                  priceSymbol={product.prices[currencySelectedIndex].currency.symbol}
+                  priceAmount={product.prices[currencySelectedIndex].amount}
+                  // priceSymbol={product.prices[0].currency.symbol}
+                  // priceAmount={product.prices[0].amount}
                 />
               );
             })}
@@ -51,12 +50,11 @@ class Products extends React.Component {
 
   componentDidMount() {
     this.context.getProducts();
-    console.log("mounted");
+    // console.log("mounted");
   }
 }
 
 export default Products;
-
 
 // //------------------------------
 // // AXIOS

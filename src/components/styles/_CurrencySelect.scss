@@ -35,18 +35,19 @@
   padding: 4px 0;
   box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.40);
   cursor: pointer;
-  visibility: hidden;
+  // visibility: hidden;
   opacity: 0;
   transition-property: visibility, opacity;
   transition-timing-function: linear;
   transition-duration: 0s, 0.2s;
   transition-delay: 0s, 0s;
   border: none;
+  overflow-y: hidden;
 
   option {
     background-color: $--c-white;
     font-weight: 500;
-    width: 90px;
+    width: 110px;
     padding: 16px;
     // margin: 10px;
   }

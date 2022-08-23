@@ -14,29 +14,17 @@ import AppContext, { AppProvider } from "../context/AppContext";
 class Navbar extends React.Component {
   static contextType = AppContext
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      cartOverlayVisibility: false,
-      modalOverlayMaskVisibility: false,
-      currency: "usd",
-    };
-    this.toggleCartOverlay = this.toggleCartOverlay.bind(this);
-    this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.toggleCartOverlay = this.toggleCartOverlay.bind(this);
+  //   // this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+  // }
 
-  toggleCartOverlay() {
-    this.setState({
-      cartOverlayVisibility: !this.state.cartOverlayVisibility,
-    });
-    this.setState({
-      modalOverlayMaskVisibility: !this.state.modalOverlayMaskVisibility,
-    });
-  }
+  // state = {
+  //   currency: "usd",
+  // };
 
-  handleCurrencyChange(e) {
-    this.setState({ currency: e.target.value });
-  }
+
   render() {
     // console.log('state: ' + JSON.stringify(this.state));
     // console.log('context: ' + JSON.stringify(this.context));
@@ -44,21 +32,20 @@ class Navbar extends React.Component {
       <>
         <nav
           className="navbar container"
-          onLoad={this.context.logPrompt}
           onClick={
-            this.props.cartOverlayVisibility
-              ? this.props.toggleCartOverlay
+            this.context.cartOverlayVisibility
+              ? this.context.toggleCartOverlay
               : null
           }
         >
-          {this.state.modalOverlayMaskVisibility && (
-            <ModalOverlayMask toggleCartOverlay={this.toggleCartOverlay} />
+          {this.context.modalOverlayMaskVisibility && (
+            <ModalOverlayMask toggleCartOverlay={this.context.toggleCartOverlay} />
           )}
 
           <ProductCategories
-            loadProducts={this.props.loadProducts}
-            categories={this.props.categories}
-            loading={this.props.loading}
+            // loadProducts={this.props.loadProducts}
+            // categories={this.context.categories}
+            // loading={this.context.loading}
           />
 
           <Link to="/">
@@ -69,20 +56,17 @@ class Navbar extends React.Component {
 
           <ul className="navbar-actions">
             <li>
-              <CurrencySelect
-                currency={this.state.currency}
-                handleCurrencyChange={this.handleCurrencyChange}
-              />
+              <CurrencySelect />
             </li>
             <li>
               <img
                 className="navbar-cart-icon"
                 src={IconCart}
                 alt="view cart"
-                onClick={this.toggleCartOverlay}
+                onClick={this.context.toggleCartOverlay}
               />
               <div className="navbar-cart-icon__item-count">3</div>
-              {this.state.cartOverlayVisibility && <CartOverlay />}
+              {this.context.cartOverlayVisibility && <CartOverlay />}
             </li>
           </ul>
         </nav>

@@ -16,13 +16,16 @@ import context from "./context/AppContext";
 import AppContext, { AppProvider } from "./context/AppContext";
 
 class App extends React.Component {
+  static contextType = AppContext;
+
   state = {
     loading: true,
-    categories: {
+    productCategories: {
       categories: [],
     },
     categoryIndex: 0,
   };
+
 
   getCategories = async () => {
     try {
@@ -39,49 +42,24 @@ class App extends React.Component {
           `,
         },
       }).then((result) => {
-        // console.log(result.data.data)
         this.setState({
           loading: false,
-          categories: result.data.data,
+          productCategories: result.data.data,
         });
       });
-      // });
     } catch (err) {
       console.log(err);
     }
-    // console.log(this.state.categories)
   };
 
-  // getCategories = async () => {
-  //   try {
-  //     const res = await GET_CATEGORIES;
-  //     const data = await res.clone().json();
-  //     this.setState({
-  //       loading: false,
-  //       categories: data.data,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   // console.log('getCategories' + JSON.stringify(this.state.categories));
-  // };
-
   render() {
-    // const { categories } = this.state || null;
-    // console.log(JSON.stringify(this.state.categories));
+
     return (
       <>
         <AppProvider>
           <BrowserRouter>
             <Navbar
-              toggleCartOverlay={this.toggleCartOverlay}
-              cartOverlayVisibility={this.state.cartOverlayVisibility}
-              onClick={this.toggleCartOverlay}
-              currency={this.state.currency}
-              handleCurrencyChange={this.handleCurrencyChange}
-              loadProducts={this.loadProducts}
-              categories={this.state.categories}
-              loading={this.state.loading}
+              // handleCurrencyChange={this.handleCurrencyChange}
             />
             {/* <Counter /> */}
             <Routes>
@@ -89,21 +67,18 @@ class App extends React.Component {
                 path="/"
                 element={
                   <ProductListing
-                    category={""}
-                    categoryIndex={this.state.categoryIndex}
-                    loadProducts={this.loadProducts}
+                    category={''}
                   />
                 }
               />
-              {this.state.categories.categories.map((obj) => {
+              {this.state.productCategories.categories.map((category) => {
                 return (
                   <Route
-                    key={`${obj.name}`}
-                    path={`${obj.name}`}
+                    key={`${category.name}`}
+                    path={`${category.name}`}
                     element={
                       <ProductListing
-                        category={`${obj.name}`}
-                        categoryIndex={this.state.categoryIndex}
+                        category={`${category.name}`}
                       />
                     }
                   />
@@ -142,17 +117,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getCategories();
+    // this.context.getProductCategories();
   }
 
-  loadProducts = (e) => {
-    const categoryIndex = this.state.categories.categories
-      .map((category) => category.name)
-      .indexOf(e.target.textContent);
-    // .indexOf((window.location.pathname).substring(1));
-    this.setState({ categoryIndex: categoryIndex });
-  };
 }
-
-App.contextType = AppContext;
 
 export default App;
