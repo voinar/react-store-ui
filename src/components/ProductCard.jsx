@@ -6,7 +6,7 @@ import ProductCartAdd from "../assets/icon_add-to-cart.svg";
 class ProductCard extends React.Component {
   render() {
     return (
-      <Link to={`/product/${this.props.productUrl}` }>
+      <Link to={`/product/${this.props.productUrl}`}>
         <div className="product-card" key={this.props.id}>
           <img src={this.props.image} alt="product" />
           <div className="product-card__content">
@@ -19,8 +19,12 @@ class ProductCard extends React.Component {
           <div className="product-card__cart-add">
             <img src={ProductCartAdd} alt="add product to cart" />
           </div>
-          <div className="product-card__out-of-stock">
-            <span>Out of stock</span>
+          <div
+            className={
+              this.props.inStock ? "" : `${"product-card__out-of-stock"}`
+            }
+          >
+            {this.props.inStock ? "" : <span>Out of stock</span>}
           </div>
         </div>
       </Link>

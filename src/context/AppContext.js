@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { GET_PRODUCT_DETAILS } from "../graphql/Queries";
 
 import {
   GET_PRODUCT_CATEGORIES,
@@ -11,19 +12,29 @@ const AppContext = React.createContext();
 
 export class AppProvider extends Component {
   static contextType = AppContext;
+
   state = {
     loading: true,
     productCategories: {
       categories: [],
     },
     productCategoryIndex: 0,
+    loadingProductDescription: true,
+    product: null,
+    expandImagePreviewIndex: 0,
 
     cartOverlayVisibility: false,
     modalOverlayMaskVisibility: false,
     currencies: [],
     currency: "$",
     productsDataLoading: true,
-    productsData: {},
+
+    productCartContents: [
+      { productId: "huarache-x-stussy-le",
+      category: null,
+      otherValues: null },
+      // {productId:"xbox-series-s",otherValues:null}
+    ],
   };
 
   logPrompt = () => {
@@ -37,7 +48,7 @@ export class AppProvider extends Component {
     this.setState({
       modalOverlayMaskVisibility: !this.state.modalOverlayMaskVisibility,
     });
-    console.log("clicked");
+    // console.log("clicked");
   };
 
   getProductCategories = async () => {
@@ -81,6 +92,28 @@ export class AppProvider extends Component {
     // console.log("products fetch successful");
   };
 
+  getProductDescription = async () => {
+    const productId = window.location.pathname.substring(9);
+    try {
+      const getProductDetails = await axios(
+        GET_PRODUCT_DETAILS(productId)
+      ).then((response) => {
+        this.setState({
+          loadingProductDescription: false,
+          product: response.data.data,
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    console.log("getProductDescription: " + JSON.stringify(this.state.product));
+    console.log(
+      "loadingProductDescription: " +
+        JSON.stringify(this.state.loadingProductDescription)
+    );
+  };
+
   getCurrencies = async () => {
     try {
       const query = await axios(GET_CURRENCIES).then((result) => {
@@ -101,6 +134,33 @@ export class AppProvider extends Component {
     console.log("handle curency change: " + this.state.currency);
   };
 
+  addToCart = () => {
+    const productId = window.location.pathname.substring(9);
+    console.log("product clicked: " + productId);
+    this.setState({
+      productCartContents: [
+        ...this.state.productCartContents,
+        {
+          productId: productId,
+          otherValues: null,
+        },
+      ],
+    });
+    console.log(
+      "product added: " + JSON.stringify(this.state.productCartContents)
+    );
+    console.log(
+      "cart array length: " +
+        JSON.stringify(this.state.productCartContents.length)
+    );
+    console.log("current state: " + JSON.stringify(this.state));
+
+    // this.setState({...this.state.productCartContents.productId.push(window.location.pathname.substring(9))})
+
+    // this.setState({productId: productId})
+    // console.log(this.state.productCartContents)
+  };
+
   render() {
     const {
       loading,
@@ -112,6 +172,7 @@ export class AppProvider extends Component {
       currency,
       productsDataLoading,
       productsData,
+      productCartContents,
     } = this.state;
     const {
       logPrompt,
@@ -119,8 +180,10 @@ export class AppProvider extends Component {
       getProductCategories,
       loadProductCategory,
       getProducts,
+      getProductDescription,
       getCurrencies,
       handleCurrencyChange,
+      addToCart,
     } = this;
     return (
       <AppContext.Provider
@@ -134,13 +197,16 @@ export class AppProvider extends Component {
           currency,
           productsDataLoading,
           productsData,
+          productCartContents,
           logPrompt,
           toggleCartOverlay,
           getProductCategories,
           loadProductCategory,
           getProducts,
+          getProductDescription,
           getCurrencies,
           handleCurrencyChange,
+          addToCart,
         }}
       >
         {this.props.children}

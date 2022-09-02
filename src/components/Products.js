@@ -37,8 +37,7 @@ class Products extends React.Component {
                   image={product.gallery[0]}
                   priceSymbol={product.prices[currencySelectedIndex].currency.symbol}
                   priceAmount={product.prices[currencySelectedIndex].amount}
-                  // priceSymbol={product.prices[0].currency.symbol}
-                  // priceAmount={product.prices[0].amount}
+                  inStock={product.inStock}
                 />
               );
             })}

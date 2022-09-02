@@ -52,7 +52,7 @@
 }
 
 .product-card__out-of-stock {
-    opacity: 0;
+    opacity: 1;
     position: relative;
     text-transform: uppercase;
     top: -504px;
@@ -74,7 +74,11 @@
 }
 
 .product-card:hover .product-card__out-of-stock {
-    opacity: 0;
+    opacity: 1;
     transition: 0.2s;
     cursor: pointer;
+}
+
+.product-card--inactive {
+
 }

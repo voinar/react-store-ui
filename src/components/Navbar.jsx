@@ -65,7 +65,7 @@ class Navbar extends React.Component {
                 alt="view cart"
                 onClick={this.context.toggleCartOverlay}
               />
-              <div className="navbar-cart-icon__item-count">3</div>
+              <div className="navbar-cart-icon__item-count">{this.context.productCartContents.length}</div>
               {this.context.cartOverlayVisibility && <CartOverlay />}
             </li>
           </ul>

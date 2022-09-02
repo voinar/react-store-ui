@@ -13,7 +13,6 @@
     padding: 0 80px;
     z-index: 10;
 
-
     .navbar-categories {
         display: flex;
         list-style-type: none;
@@ -39,6 +38,7 @@
         // height: 100%;
         gap: 10px;
         align-content: right;
+        cursor: pointer;
 
         li {
             img {
@@ -51,11 +51,11 @@
             position: relative;
             top: -44px;
             right: -16px;
-            width: 20px;
-            height: 20px;
+            width: 21px;
+            height: 21px;
             background-color: $--c-black;
             color: $--c-white;
-            font-size: 12px;
+            font-size: 14px;
             text-align: center;
             border-radius: 100px;
         }
