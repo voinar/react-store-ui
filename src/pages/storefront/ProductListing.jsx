@@ -4,8 +4,6 @@ import ProductCard from "../../components/ProductCard";
 import Products from "../../components/Products";
 import AppContext, { AppProvider } from "../../context/AppContext";
 
-// const ProductsListLocalData = data.map((obj) => <ProductCard {...obj} key={obj.count} />)
-
 class ProductListing extends React.Component {
   static contextType = AppContext;
 
@@ -17,12 +15,7 @@ class ProductListing extends React.Component {
         </header>
 
         <div className="product-listing__cards-container">
-          {/* {ProductsListLocalData} */}
-          <Products
-            // category={this.context.category}
-            // categoryIndex={this.context.categoryIndex}
-            // loadProducts={this.props.loadProducts}
-          />
+          <Products />
         </div>
       </div>
     );

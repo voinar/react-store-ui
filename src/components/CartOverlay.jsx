@@ -19,13 +19,11 @@ class CartOverlay extends React.Component {
             return (
               <CartItem
               key={uuid()}
-              productId={cartItem.productId}
+              productId={cartItem.id} //id used to query graphql for product details
               />
             );
           })}
           {/* <CartItem />
-          <CartItem />
-          <CartItem />
           <CartItem /> */}
           <div className="cart-overlay__summary">
             <div className="cart-overlay__summary__total">

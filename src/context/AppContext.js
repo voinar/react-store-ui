@@ -15,9 +15,7 @@ export class AppProvider extends Component {
 
   state = {
     loading: true,
-    productCategories: {
-      categories: [],
-    },
+    productCategories: [],
     productCategoryIndex: 0,
     loadingProductDescription: true,
     product: null,
@@ -29,12 +27,65 @@ export class AppProvider extends Component {
     currency: "$",
     productsDataLoading: true,
 
+    productDescription: null,
+
     productCartContents: [
-      { productId: "huarache-x-stussy-le",
-      category: null,
-      otherValues: null },
+      // template for product details, shape of data equal to full product query shown in product description page
+      {
+        id: "huarache-x-stussy-le",
+        name: null,
+        inStock: null,
+        gallery: null,
+        brand: null,
+        prices: {
+          amount: null,
+          currency: {
+            label: null,
+            symbol: null,
+          },
+          attributes: {
+            type: null,
+            items: {
+              id: null,
+              value: null,
+              displayValue: null,
+            },
+            name: null,
+            id: null,
+          },
+          description: null,
+          category: null,
+        },
+        quantity: 0,
+      },
+
       // {productId:"xbox-series-s",otherValues:null}
     ],
+  };
+
+  getCategories = async () => {
+    try {
+      const query = await axios({
+        url: "http://localhost:4000",
+        method: "POST",
+        data: {
+          query: `
+          query GET_CATEGORIES {
+            categories {
+              name
+            }
+          }
+          `,
+        },
+      }).then((result) => {
+        this.setState({
+          loading: false,
+          productCategories: result.data.data,
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   logPrompt = () => {
@@ -62,9 +113,6 @@ export class AppProvider extends Component {
     } catch (err) {
       console.log(err);
     }
-    console.log(
-      "categories from context" + JSON.stringify(this.state.productCategories)
-    );
   };
 
   loadProductCategory = (e) => {
@@ -73,9 +121,9 @@ export class AppProvider extends Component {
       .indexOf(e.target.textContent);
     // .indexOf((window.location.pathname).substring(1));
     this.setState({ productCategoryIndex: productCategoryIndex });
-    console.log(
-      "load category" + e.target.textContent + this.state.productCategoryIndex
-    );
+    // console.log(
+    //   "load category" + e.target.textContent + this.state.productCategoryIndex
+    // );
   };
 
   getProducts = async () => {
@@ -100,7 +148,7 @@ export class AppProvider extends Component {
       ).then((response) => {
         this.setState({
           loadingProductDescription: false,
-          product: response.data.data,
+          productDescription: response.data.data,
         });
       });
     } catch (err) {
@@ -124,9 +172,9 @@ export class AppProvider extends Component {
     } catch (err) {
       console.log(err);
     }
-    console.log(
-      "currencies fetch successful" + JSON.stringify(this.state.currencies)
-    );
+    // console.log(
+    //   "currencies fetch successful" + JSON.stringify(this.state.currencies)
+    // );
   };
 
   handleCurrencyChange = (e) => {
@@ -136,13 +184,36 @@ export class AppProvider extends Component {
 
   addToCart = () => {
     const productId = window.location.pathname.substring(9);
-    console.log("product clicked: " + productId);
+    console.log("product added to cart: " + productId);
     this.setState({
       productCartContents: [
         ...this.state.productCartContents,
         {
-          productId: productId,
-          otherValues: null,
+          id: productId,
+          name: null,
+          inStock: null,
+          gallery: null,
+          brand: null,
+          prices: {
+            amount: null,
+            currency: {
+              label: null,
+              symbol: null,
+            },
+            attributes: {
+              type: null,
+              items: {
+                id: null,
+                value: null,
+                displayValue: null,
+              },
+              name: null,
+              id: null,
+            },
+            description: null,
+            category: null,
+          },
+          quantity: 1,
         },
       ],
     });
@@ -166,15 +237,18 @@ export class AppProvider extends Component {
       loading,
       productCategories,
       productCategoryIndex,
+      expandImagePreviewIndex,
       cartOverlayVisibility,
       modalOverlayMaskVisibility,
       currencies,
       currency,
       productsDataLoading,
       productsData,
+      productDescription,
       productCartContents,
     } = this.state;
     const {
+      getCategories,
       logPrompt,
       toggleCartOverlay,
       getProductCategories,
@@ -191,13 +265,16 @@ export class AppProvider extends Component {
           loading,
           productCategories,
           productCategoryIndex,
+          expandImagePreviewIndex,
           cartOverlayVisibility,
           modalOverlayMaskVisibility,
           currencies,
           currency,
           productsDataLoading,
           productsData,
+          productDescription,
           productCartContents,
+          getCategories,
           logPrompt,
           toggleCartOverlay,
           getProductCategories,

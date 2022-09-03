@@ -36,8 +36,6 @@ class CartItem extends React.Component {
   render() {
     const productDetails = this.state.productDetails;
 
-
-    console.log("cart state at render: " + JSON.stringify(this.state));
     return (
       <>
         {productDetails !== null ? (
@@ -45,7 +43,7 @@ class CartItem extends React.Component {
             <hr />
             <div className="cart-item__contents">
               <div className="product-description__attributes">
-                <span>{this.props.productId}</span>
+                {/* <span>{this.props.productId}</span> */}
                 <br />
                 <div className="product-description__attribute-name">
                   <span>{productDetails.brand}</span>
@@ -55,7 +53,7 @@ class CartItem extends React.Component {
                 </div>
                 <div className="product-description__attributes-price">
                   <span className="product-description__attributes-price-amount">
-                    $50.00
+                  {productDetails.prices[0].currency.symbol}{productDetails.prices[0].amount}
                   </span>
                 </div>
                 <div className="product-description__attributes-select-size">

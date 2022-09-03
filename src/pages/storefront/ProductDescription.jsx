@@ -4,6 +4,8 @@ import AppContext, { AppProvider } from "../../context/AppContext";
 import axios from "axios";
 
 import { GET_PRODUCT_DETAILS } from "../../graphql/Queries";
+import uuid from "react-uuid";
+
 
 import ProductDescriptionContent from "../../components/ProductDescriptionContent";
 
@@ -47,24 +49,27 @@ class ProductDescription extends React.Component {
   };
 
   render() {
+
+    const currencySelectedIndex = this.context.currencies
+    .map((element) => {
+      return element.symbol;
+    })
+    .indexOf(this.context.currency);
+
     return (
       <>
-        {this.state.productDescription ? (
-          <ProductDescriptionContent
-            productDescription={this.state.productDescription}
-            expandImagePreviewIndex={this.state.expandImagePreviewIndex}
-            expandImagePreview={this.expandImagePreview}
-            inStock={this.state.productDescription.product.inStock}
-          />
+        {this.context.productDescription ? (
+          <ProductDescriptionContent />
         ) : (
           <div style={{ margin: "200px" }}>"loading product data..."</div>
         )}
       </>
     );
   }
+  // <div style={{ margin: "200px" }}>{JSON.stringify(this.context.productDescription)}</div>
 
   componentDidMount() {
-    this.getProductDescription();
+    this.context.getProductDescription();
     console.log(
       "product description local state: " + JSON.stringify(this.state)
     );

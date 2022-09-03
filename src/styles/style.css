@@ -1219,11 +1219,12 @@ template {
   height: 36px;
   background-color: #0F6450;
   border: 1px solid #FFFFFF;
+  outline: 1px solid #5ECE7B;
   cursor: pointer;
 }
 
 .product-description__attributes-select-color-options .product-description__attributes-color:hover {
-  outline: 1px solid #5ECE7B;
+  outline: 1px solid #1D1F22;
 }
 
 .product-description__attributes-price {

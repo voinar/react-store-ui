@@ -14,17 +14,6 @@ import AppContext, { AppProvider } from "../context/AppContext";
 class Navbar extends React.Component {
   static contextType = AppContext
 
-  // constructor(props) {
-  //   super(props);
-  //   // this.toggleCartOverlay = this.toggleCartOverlay.bind(this);
-  //   // this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
-  // }
-
-  // state = {
-  //   currency: "usd",
-  // };
-
-
   render() {
     // console.log('state: ' + JSON.stringify(this.state));
     // console.log('context: ' + JSON.stringify(this.context));

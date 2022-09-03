@@ -106,11 +106,12 @@
         height: 36px;
         background-color: #0F6450;
         border: 1px solid $--c-white;
+        outline: 1px solid $--c-primary;
         cursor: pointer;
     }
 
     .product-description__attributes-color:hover {
-        outline: 1px solid $--c-primary;
+        outline: 1px solid $--c-black;
     }
 }
 

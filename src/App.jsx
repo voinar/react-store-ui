@@ -2,34 +2,26 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-import { GET_CATEGORIES } from "./graphql/Queries";
-
 import "./styles/style.css";
 
 import Navbar from "./components/Navbar";
 import ProductListing from "./pages/storefront/ProductListing";
 import ProductDescription from "./pages/storefront/ProductDescription";
 import Cart from "./pages/storefront/Cart";
-import Counter from "./components/Counter";
 
-import context from "./context/AppContext";
 import AppContext, { AppProvider } from "./context/AppContext";
 
 class App extends React.Component {
   static contextType = AppContext;
 
   state = {
-    loading: true,
-    productCategories: {
-      categories: [],
-    },
-    categoryIndex: 0,
+    productCategories: []
   };
 
-
-  getCategories = async () => {
+  // load categories to react router & generate routes procedurally
+  getCategories = () => {
     try {
-      const query = await axios({
+      const query = axios({
         url: "http://localhost:4000",
         method: "POST",
         data: {
@@ -43,35 +35,33 @@ class App extends React.Component {
         },
       }).then((result) => {
         this.setState({
-          loading: false,
-          productCategories: result.data.data,
+          productCategories: result.data.data.categories,
         });
       });
     } catch (err) {
       console.log(err);
     }
+    console.log(this.state.productCategories);
   };
 
-  render() {
 
+  render() {
     return (
       <>
         <AppProvider>
           <BrowserRouter>
             <Navbar
-              // handleCurrencyChange={this.handleCurrencyChange}
             />
-            {/* <Counter /> */}
             <Routes>
               <Route
                 path="/"
                 element={
                   <ProductListing
-                    category={''}
+                    category={'Welcome'}
                   />
                 }
               />
-              {this.state.productCategories.categories.map((category) => {
+              {this.state.productCategories.map((category) => {
                 return (
                   <Route
                     key={`${category.name}`}
@@ -84,31 +74,12 @@ class App extends React.Component {
                   />
                 );
               })}
-              {/* <Route
-              path="/product/description"
-              element={<ProductDescription />}
-            /> */}
               <Route
                 path="/product/:productId"
                 element={<ProductDescription />}
               />
               <Route path="/cart" element={<Cart />} />
             </Routes>
-            {/* <div>
-          {this.state.loading || !this.state.categories ? (
-            <div>loading...</div>
-          ) : (
-            <div>
-              <ul>
-                {categories.categories.map(obj => {
-                  return (
-                      <li key={obj.name}>{obj.name}</li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
-        </div> */}
           </BrowserRouter>
         </AppProvider>
       </>
@@ -117,7 +88,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getCategories();
-    // this.context.getProductCategories();
   }
 
 }
