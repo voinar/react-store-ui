@@ -88,6 +88,11 @@
         background-color: $--c-black;
         color: $--c-white;
     }
+
+    .product-description__attributes-size--selected {
+        background-color: $--c-black;
+        color: $--c-white;
+    }
 }
 
 .product-description__attributes-select-color {
@@ -106,11 +111,11 @@
         height: 36px;
         background-color: #0F6450;
         border: 1px solid $--c-white;
-        outline: 1px solid $--c-primary;
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
         cursor: pointer;
     }
 
-    .product-description__attributes-color:hover {
+    .product-description__attributes-color:hover, .product-description__attributes-color--selected {
         outline: 1px solid $--c-black;
     }
 }

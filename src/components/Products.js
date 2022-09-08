@@ -32,6 +32,7 @@ class Products extends React.Component {
               return (
                 <ProductCard
                   key={product.id}
+                  id={product.id}
                   productUrl={product.id}
                   name={product.name}
                   image={product.gallery[0]}

@@ -12,50 +12,42 @@ import ProductDescriptionContent from "../../components/ProductDescriptionConten
 class ProductDescription extends React.Component {
   static contextType = AppContext;
 
-  state = {
-    loadingProductDescription: true,
-    productDescription: null,
-    productCategory: null,
-    expandImagePreviewIndex: 0,
-  };
+  // state = {
+  //   loadingProductDescription: true,
+  //   productDescription: null,
+  //   productCategory: null,
+  // };
 
-  getProductDescription = async () => {
-    const productId = window.location.pathname.substring(9);
-    try {
-      const getProductDetails = await axios(
-        GET_PRODUCT_DETAILS(productId)
-      ).then((response) => {
-        this.setState({
-          loadingProductDescription: false,
-          productDescription: response.data.data,
-          productCategory: response.data.data.product.category,
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    console.log(
-      "getProductDescription: " + JSON.stringify(this.state.productDescription)
-    );
-  };
+  // getProductDescription = async () => {
+  //   const productId = window.location.pathname.substring(9);
+  //   try {
+  //     const getProductDetails = await axios(
+  //       GET_PRODUCT_DETAILS(productId)
+  //     ).then((response) => {
+  //       this.setState({
+  //         loadingProductDescription: false,
+  //         productDescription: response.data.data,
+  //         productCategory: response.data.data.product.category,
+  //       });
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   console.log(
+  //     "getProductDescription: " + JSON.stringify(this.state.productDescription)
+  //   );
+  // };
 
-  expandImagePreviewIndex = this.state.expandImagePreviewIndex;
+// expandImagePreviewIndex = this.state.expandImagePreviewIndex;
 
-  expandImagePreview = (e) => {
-    return this.setState({
-      expandImagePreviewIndex:
-        this.state.productDescription.product.gallery.indexOf(e.target.src),
-    });
-  };
+  // expandImagePreview = (e) => {
+  //   return this.setState({
+  //     expandImagePreviewIndex:
+  //       this.state.productDescription.product.gallery.indexOf(e.target.src),
+  //   });
+  // };
 
   render() {
-
-    const currencySelectedIndex = this.context.currencies
-    .map((element) => {
-      return element.symbol;
-    })
-    .indexOf(this.context.currency);
-
     return (
       <>
         {this.context.productDescription ? (
@@ -66,13 +58,10 @@ class ProductDescription extends React.Component {
       </>
     );
   }
-  // <div style={{ margin: "200px" }}>{JSON.stringify(this.context.productDescription)}</div>
 
   componentDidMount() {
     this.context.getProductDescription();
-    console.log(
-      "product description local state: " + JSON.stringify(this.state)
-    );
+    this.context.clearAttributeCache();
   }
 }
 

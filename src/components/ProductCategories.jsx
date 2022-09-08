@@ -7,7 +7,7 @@ class ProductCategories extends React.Component {
   static contextType = AppContext;
 
   render() {
-    const { productCategories } = this.context || null;
+    const { productCategories } = this.context;
 
     return (
       <>
@@ -17,7 +17,7 @@ class ProductCategories extends React.Component {
           ) : (
             <div>
               <ul className="navbar-categories">
-                {productCategories.categories.map((category) => {
+                {productCategories.map((category) => {
                   return (
                     <Link key={category.name} to={`${category.name}`}>
                       <li onClick={this.context.loadProductCategory}>

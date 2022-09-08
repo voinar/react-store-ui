@@ -15,11 +15,11 @@ class App extends React.Component {
   static contextType = AppContext;
 
   state = {
-    productCategories: []
+    loading: true,
+    productCategories: [],
   };
 
-  // load categories to react router & generate routes procedurally
-  getCategories = () => {
+  getProductCategories = () => {
     try {
       const query = axios({
         url: "http://localhost:4000",
@@ -35,61 +35,55 @@ class App extends React.Component {
         },
       }).then((result) => {
         this.setState({
+          loading: false,
           productCategories: result.data.data.categories,
         });
       });
     } catch (err) {
       console.log(err);
     }
-    console.log(this.state.productCategories);
   };
-
 
   render() {
     return (
       <>
-        <AppProvider>
-          <BrowserRouter>
-            <Navbar
-            />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <ProductListing
-                    category={'Welcome'}
-                  />
-                }
-              />
-              {this.state.productCategories.map((category) => {
-                return (
-                  <Route
-                    key={`${category.name}`}
-                    path={`${category.name}`}
-                    element={
-                      <ProductListing
-                        category={`${category.name}`}
-                      />
-                    }
-                  />
-                );
-              })}
-              <Route
-                path="/product/:productId"
-                element={<ProductDescription />}
-              />
-              <Route path="/cart" element={<Cart />} />
-            </Routes>
-          </BrowserRouter>
-        </AppProvider>
+        {this.state.loading === true ? (
+          <>loading... </>
+        ) : (
+          <AppProvider>
+            {/* {console.log('not empty ' +JSON.stringify(window.location.pathname.substring(1)))} */}
+            <BrowserRouter>
+              <Navbar />
+              <Routes>
+                <Route
+                  path="/"
+                  element={<ProductListing category={"Welcome"} />}
+                />
+                {this.state.productCategories.map((category) => {
+                  return (
+                    <Route
+                      key={`${category.name}`}
+                      path={`${category.name}`}
+                      element={<ProductListing category={`${category.name}`} />}
+                    />
+                  );
+                })}
+                <Route
+                  path="/product/:productId"
+                  element={<ProductDescription />}
+                />
+                <Route path="/cart" element={<Cart />} />
+              </Routes>
+            </BrowserRouter>
+          </AppProvider>
+        )}
       </>
     );
   }
 
   componentDidMount() {
-    this.getCategories();
+    this.getProductCategories();
   }
-
 }
 
 export default App;

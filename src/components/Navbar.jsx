@@ -15,26 +15,21 @@ class Navbar extends React.Component {
   static contextType = AppContext
 
   render() {
-    // console.log('state: ' + JSON.stringify(this.state));
-    // console.log('context: ' + JSON.stringify(this.context));
     return (
       <>
         <nav
           className="navbar container"
-          onClick={
-            this.context.cartOverlayVisibility
-              ? this.context.toggleCartOverlay
-              : null
-          }
+          // onClick={
+          //   this.context.cartOverlayVisibility
+          //     ? this.context.toggleModalOverlayMask
+          //     : null
+          // }
         >
           {this.context.modalOverlayMaskVisibility && (
-            <ModalOverlayMask toggleCartOverlay={this.context.toggleCartOverlay} />
+            <ModalOverlayMask />
           )}
 
           <ProductCategories
-            // loadProducts={this.props.loadProducts}
-            // categories={this.context.categories}
-            // loading={this.context.loading}
           />
 
           <Link to="/">
@@ -52,7 +47,7 @@ class Navbar extends React.Component {
                 className="navbar-cart-icon"
                 src={IconCart}
                 alt="view cart"
-                onClick={this.context.toggleCartOverlay}
+                onClick={this.context.toggleModalOverlayMask}
               />
               <div className="navbar-cart-icon__item-count">{this.context.productCartContents.length}</div>
               {this.context.cartOverlayVisibility && <CartOverlay />}

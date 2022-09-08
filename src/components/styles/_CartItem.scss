@@ -12,11 +12,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 310px;
-            width: 24px;
+            height: 366px;
+            margin-bottom: 30px;
 
             .cart-item__controls__quantity-button {
                 cursor: pointer;
+                border: 1px solid black;
+                width: 42px;
+                height: 42px;
+                font-size: 44px;
+                font-weight: 100;
+                line-height: 42px;
+                text-align: center;
+            }
+
+            .cart-item__controls__quantity-button--minus {
+                line-height: 34px;
             }
 
             .cart-item__controls__quantity-amount {
@@ -27,17 +38,17 @@
 
     .cart-item__controls__preview {
         img {
-            width: 200px;
-            height: 310px;
-            object-fit: cover;
+            width: 260px;
+            height: 340px;
+            object-fit: scale-down;
         }
 
         .cart-item__controls__preview-buttons {
             display: flex;
             gap: 8px;
             position: relative;
-            top: -46px;
-            right: -120px;
+            bottom: 0px;
+            right: -180px;
             width: 64px;
             cursor: pointer;
         }

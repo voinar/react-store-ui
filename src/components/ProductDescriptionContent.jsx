@@ -8,6 +8,14 @@ class ProductDescriptionContent extends React.Component {
 
   state = {
     textDescriptionExpanded: false,
+    expandImagePreviewIndex: 0,
+  };
+
+  expandImagePreview = (e) => {
+    return this.setState({
+      expandImagePreviewIndex:
+        this.context.productDescription.product.gallery.indexOf(e.target.src),
+    });
   };
 
   //expand or collapse product description text if longer than 300 characters
@@ -17,19 +25,28 @@ class ProductDescriptionContent extends React.Component {
     });
   };
 
-  render() {
-    const currencySelectedIndex = this.context.currencies
-      .map((element) => {
-        return element.symbol;
+  getAttributeType = () => {
+    //distinguish between size & capacity: find the property's index in attributes, then return the name of appropriate attribute
+    return this.context.productDescription.product.attributes[
+      this.context.productDescription.product.attributes.findIndex((items) => {
+        switch (items.name) {
+          case "Size":
+            // console.log("attr type: " + items.name);
+            return "Size";
+          case "Capacity":
+            // console.log("attr type: " + items.name);
+            return "Capacity";
+        }
       })
-      .indexOf(this.context.currency);
+    ].name;
+  };
 
+  render() {
     return (
       <div className="product-description section-container">
-        {/* {console.log(this.context.inStock)} */}
         <div
           className={
-            this.context.productDescription.inStock
+            this.context.productDescription.product.inStock
               ? "product-description__images"
               : "product-description__images product-description__images--unavailable"
           }
@@ -40,7 +57,7 @@ class ProductDescriptionContent extends React.Component {
                 <div
                   key={uuid()}
                   className="product-description__image-small"
-                  onClick={this.context.expandImagePreview}
+                  onClick={this.expandImagePreview}
                 >
                   <img src={image} alt="product" />
                 </div>
@@ -51,7 +68,7 @@ class ProductDescriptionContent extends React.Component {
             <img
               src={
                 this.context.productDescription.product.gallery[
-                  this.context.expandImagePreviewIndex
+                  this.state.expandImagePreviewIndex
                 ]
               }
               alt="product"
@@ -66,10 +83,12 @@ class ProductDescriptionContent extends React.Component {
             <span>{this.context.productDescription.product.brand}</span>
           </div>
 
-          {this.context.productDescription.product.attributes.length > 0 ? (
+          {this.context.productDescription.product.attributes.length > 0 ? ( // size selection
             <div className="product-description__attributes-select-size">
               <span className="product-description__attribute-category">
-                Size:
+                {
+                  this.getAttributeType() // get attribute type (size/capacity)
+                }
               </span>
               <div className="product-description__attributes-select-size-options">
                 {this.context.productDescription.product.attributes[
@@ -83,27 +102,50 @@ class ProductDescriptionContent extends React.Component {
                       }
                     }
                   )
-                ].items.map((value) => {
-                  return (
+                ].items.map((attribute) => {
+                  return this.getAttributeType() === "Capacity" ? (
                     <div
                       key={uuid()}
-                      className="product-description__attributes-size"
+                      className={
+                        //if attribute value is found in productAttributes list then change class to --selected
+                        this.context.attributeSelectedCapacity !== ""
+                          ? this.context.attributeSelectedCapacity ===
+                            attribute.value
+                            ? "product-description__attributes-size product-description__attributes-size--selected"
+                            : "product-description__attributes-size"
+                          : "product-description__attributes-size"
+                      }
+                      onClick={this.context.selectAttributeCapacity}
                     >
-                      {value.value}
+                      {attribute.value}
+                    </div>
+                  ) : (
+                    <div
+                      key={uuid()}
+                      className={
+                        //if attribute value is found in productAttributes list then change class to --selected
+                        this.context.attributeSelectedSize !== ""
+                          ? this.context.attributeSelectedSize ===
+                            attribute.value
+                            ? "product-description__attributes-size product-description__attributes-size--selected"
+                            : "product-description__attributes-size"
+                          : "product-description__attributes-size"
+                      }
+                      onClick={this.context.selectAttributeSize}
+                    >
+                      {attribute.value}
                     </div>
                   );
                 })}
               </div>
             </div>
-          ) : (
-            ""
-          )}
+          ) : null}
+
           {this.context.productDescription.product.attributes.find((obj) => {
             return obj.type === "swatch";
           }) ? (
             <div className="product-description__attributes-select-color">
               <span className="product-description__attribute-category">
-                {console.log()}
                 Color:
               </span>
               <div className="product-description__attributes-select-color-options">
@@ -117,16 +159,27 @@ class ProductDescriptionContent extends React.Component {
                   return (
                     <div
                       key={uuid()}
-                      className="product-description__attributes-color"
-                      style={{ backgroundColor: `${colorOption.value}` }}
-                    ></div>
+                      className={
+                        this.context.attributeSelectedColor !== ""
+                          ? this.context.attributeSelectedColor ===
+                            colorOption.value
+                            ? "product-description__attributes-color product-description__attributes-color--selected"
+                            : "product-description__attributes-color"
+                          : "product-description__attributes-color"
+                      }
+                      style={{
+                        backgroundColor: `${colorOption.value}`,
+                        color: "rgb(255,255,255,0)",
+                      }}
+                      onClick={this.context.selectAttributeColor}
+                    >
+                      {colorOption.value}
+                    </div>
                   );
                 })}
               </div>
             </div>
-          ) : (
-            null
-          )}
+          ) : null}
           <div className="product-description__attributes-price">
             <span className="product-description__attribute-category">
               Price:
@@ -134,23 +187,36 @@ class ProductDescriptionContent extends React.Component {
             <span className="product-description__attributes-price-amount">
               {
                 this.context.productDescription.product.prices[
-                  currencySelectedIndex
+                  this.context.currencies
+                    .map((element) => {
+                      return element.symbol;
+                    })
+                    .indexOf(this.context.currency)
                 ].currency.symbol
               }
               {
                 this.context.productDescription.product.prices[
-                  currencySelectedIndex
+                  this.context.currencies
+                    .map((element) => {
+                      return element.symbol;
+                    })
+                    .indexOf(this.context.currency)
                 ].amount
               }
             </span>
           </div>
           <button
             className={
-              this.context.inStock
+              this.context.productDescription.product.inStock
                 ? "product-description__button"
                 : "product-description__button product-description__button--inactive"
             }
-            onClick={this.context.inStock ? this.context.addToCart : null} //add item to cart along with its properties
+            onClick={
+              this.context.productDescription.product.inStock
+                ? this.context.addToCart
+                : this.context.addToCart
+              // : null
+            } //add item to cart along with its properties using item data from context
           >
             Add to cart
           </button>
@@ -175,12 +241,9 @@ class ProductDescriptionContent extends React.Component {
               >
                 {this.state.textDescriptionExpanded ? "See less" : "See more"}
               </button>
-            ) : (
-              null
-            )}
+            ) : null}
           </div>
         </div>
-        {console.log(this.context.productDescription.product.attributes)}
       </div>
     );
   }
