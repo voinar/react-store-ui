@@ -12,7 +12,7 @@ class CartItem extends React.Component {
   static contextType = AppContext;
 
   state = {
-    previewImageIndex: 0
+    previewImageIndex: 0,
   };
 
   getAttributeType = () => {
@@ -95,7 +95,6 @@ class CartItem extends React.Component {
                           .indexOf(this.context.currency)
                       ].amount
                     }
-                    {/* {JSON.stringify(productDetails.prices)} */}
                   </span>
                 </div>
 
@@ -126,6 +125,8 @@ class CartItem extends React.Component {
                                   : "product-description__attributes-size"
                                 : "product-description__attributes-size"
                             }
+                            onClick={this.context.selectAttributeCapacity}
+
                           >
                             {attribute.value}
                           </div>
@@ -140,6 +141,7 @@ class CartItem extends React.Component {
                                   : "product-description__attributes-size"
                                 : "product-description__attributes-size"
                             }
+                            onClick={this.context.selectAttributeSize}
                           >
                             {attribute.value}
                           </div>
@@ -174,7 +176,8 @@ class CartItem extends React.Component {
                                 : "product-description__attributes-color"
                             }
                             style={{ backgroundColor: `${colorOption.value}` }}
-                          ></div>
+                            onClick={this.context.selectAttributeColor}
+                          />
                         );
                       })}
                     </div>
@@ -192,7 +195,7 @@ class CartItem extends React.Component {
                     +
                   </div>
                   <div className="cart-item__controls__quantity-amount">
-                    <span>{this.props.duplicateItemCount}</span>
+                    <span>{this.props.productDetails.quantity}</span>
                   </div>
                   <div
                     className="cart-item__controls__quantity-button cart-item__controls__quantity-button--minus"
@@ -230,11 +233,12 @@ class CartItem extends React.Component {
               </div>
             </div>
           </div>
-        ) : (
-          <span>Your cart is empty.</span>
-        )}
+        ) : null}
       </>
     );
+  }
+  componentDidMount() {
+    // this.context.getCurrencies(); //load currencies from API
   }
 }
 

@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import ProductCategories from "./ProductCategories";
 import CurrencySelect from "./CurrencySelect";
 import CartOverlay from "../components/CartOverlay";
+import ProductCartItemsCount from "../components/ProductCartItemsCount";
 import ModalOverlayMask from "./ModalOverlayMask";
 
 import Logo from "../../src/assets/icon_logo.svg";
 import IconCart from "../../src/assets/icon_empty-cart.svg";
 
-import AppContext, { AppProvider } from "../context/AppContext";
+import AppContext from "../context/AppContext";
 
 
 class Navbar extends React.Component {
@@ -49,7 +50,8 @@ class Navbar extends React.Component {
                 alt="view cart"
                 onClick={this.context.toggleModalOverlayMask}
               />
-              <div className="navbar-cart-icon__item-count">{this.context.productCartContents.length}</div>
+
+              <ProductCartItemsCount />
               {this.context.cartOverlayVisibility && <CartOverlay />}
             </li>
           </ul>
@@ -57,6 +59,7 @@ class Navbar extends React.Component {
       </>
     );
   }
+
 }
 
 

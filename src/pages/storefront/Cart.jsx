@@ -13,29 +13,28 @@ class Cart extends React.Component {
         <div>
           <h1>Cart</h1>
         </div>
-
+        {/*
         {this.context.productCartContents === undefined
           ? (<>TRUE</>) : (<>FALSE</>)
-        }
-          {this.context.productCartContents.map((cartItem) => {
-              return (
-                <CartItem
-                  key={uuid()}
-                  productId={cartItem.id} //id used to query graphql for product details
-                  productDetails={cartItem}
-                  attributeSelectedColor={
-                    cartItem.attributesSelected.attributeSelectedColor
-                  }
-                  attributeSelectedSize={
-                    cartItem.attributesSelected.attributeSelectedSize
-                  }
-                  attributeSelectedCapacity={
-                    cartItem.attributesSelected.attributeSelectedCapacity
-                  }
-                />
-              );
-            })
-          }
+        } */}
+        {this.context.productCartContents.map((cartItem) => {
+          return (
+            <CartItem
+              key={uuid()}
+              productId={cartItem.id} //id used to query graphql for product details
+              productDetails={cartItem}
+              attributeSelectedColor={
+                cartItem.attributesSelected.attributeSelectedColor
+              }
+              attributeSelectedSize={
+                cartItem.attributesSelected.attributeSelectedSize
+              }
+              attributeSelectedCapacity={
+                cartItem.attributesSelected.attributeSelectedCapacity
+              }
+            />
+          );
+        })}
 
         <hr />
         <div className="cart__summary">
@@ -49,13 +48,16 @@ class Cart extends React.Component {
             <div className="cart__summary__quantity">
               <div>Quantity:</div>
               <div>
-                <strong>3</strong>
+                <strong>{this.context.productCartItemsCount}</strong>
               </div>
             </div>
             <div className="cart__summary__total">
               <div>Total:</div>
               <div>
-                <strong>$200.00</strong>
+                <strong>
+                  {this.context.currency}
+                  {this.context.cartTotal}
+                </strong>
               </div>
             </div>
           </div>
@@ -64,7 +66,10 @@ class Cart extends React.Component {
       </div>
     );
   }
-
+  componentDidMount() {
+    // {()=>this.context.currencies === [] ? this.context.getCurrencies() : null}; //load currencies from API
+    // {console.log('currencies context '+ JSON.stringify(this.context.currencies))}; //load currencies from API
+  }
 }
 
 export default Cart;

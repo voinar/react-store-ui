@@ -14,13 +14,19 @@ class Products extends React.Component {
   static contextType = AppContext;
 
   render() {
-    // console.log('currency: ' + this.context.currency)
-    // console.log('computed currency: ' + this.context.currency)
-
     const { productsData } = this.context || null;
 
-    const productCategoryIndex = this.context.productCategoryIndex;
-    const currencySelectedIndex = this.context.currencies.map(element => {return element.symbol}).indexOf(this.context.currency);
+    //load all products [0 index] if root route, else find category index by route pathname substring
+    const productCategoryIndex = window.location.pathname.length === 1 ? 0 : this.context.productCategories
+      .map((category) => category.name)
+      .indexOf(String(window.location.pathname.substring(1)));
+
+    //load display currency from state
+    const currencySelectedIndex = this.context.currencies
+      .map((element) => {
+        return element.symbol;
+      })
+      .indexOf(this.context.currency);
 
     return (
       <div>
@@ -28,20 +34,24 @@ class Products extends React.Component {
           <div>loading...</div>
         ) : (
           <div className="product-listing__cards-container">
-            {productsData.categories[productCategoryIndex].products.map((product) => {
-              return (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  productUrl={product.id}
-                  name={product.name}
-                  image={product.gallery[0]}
-                  priceSymbol={product.prices[currencySelectedIndex].currency.symbol}
-                  priceAmount={product.prices[currencySelectedIndex].amount}
-                  inStock={product.inStock}
-                />
-              );
-            })}
+            {productsData.categories[productCategoryIndex].products.map(
+              (product) => {
+                return (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    productUrl={product.id}
+                    name={product.name}
+                    image={product.gallery[0]}
+                    priceSymbol={
+                      product.prices[currencySelectedIndex].currency.symbol
+                    }
+                    priceAmount={product.prices[currencySelectedIndex].amount}
+                    inStock={product.inStock}
+                  />
+                );
+              }
+            )}
           </div>
         )}
       </div>
@@ -50,7 +60,6 @@ class Products extends React.Component {
 
   componentDidMount() {
     this.context.getProducts();
-    // console.log("mounted");
   }
 }
 

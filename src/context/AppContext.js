@@ -37,48 +37,6 @@ export class AppProvider extends Component {
 
     productCartContents: [
       {
-        cartItemId: "aaaaaa-e72-c132-d2cd-ba135cbdbb",
-        id: "huarache-x-stussy-le",
-        name: "Nike Air Huarache Le",
-        inStock: true,
-        gallery: [
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_3_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_5_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_4_720x.jpg?v=1612816087",
-        ],
-        brand: "Nike x Stussy",
-        prices: [
-          { currency: { label: "USD", symbol: "$" }, amount: 144.69 },
-          { currency: { label: "GBP", symbol: "£" }, amount: 104 },
-          { currency: { label: "AUD", symbol: "A$" }, amount: 186.65 },
-          { currency: { label: "JPY", symbol: "¥" }, amount: 15625.24 },
-          { currency: { label: "RUB", symbol: "₽" }, amount: 10941.76 },
-        ],
-        attributes: [
-          {
-            id: "Size",
-            name: "Size",
-            type: "text",
-            items: [
-              { displayValue: "40", value: "40", id: "40" },
-              { displayValue: "41", value: "41", id: "41" },
-              { displayValue: "42", value: "42", id: "42" },
-              { displayValue: "43", value: "43", id: "43" },
-            ],
-          },
-        ],
-        description: "<p>Great sneakers for everyday use!</p>",
-        category: "clothes",
-        quantity: 1,
-        attributesSelected: {
-          attributeSelectedColor: "",
-          attributeSelectedSize: "42",
-          attributeSelectedCapacity: "",
-        },
-      },
-      {
         cartItemId: "215552-e72-c132-d2cd-ba135cbdbb",
         id: "huarache-x-stussy-le",
         name: "Nike Air Huarache Le",
@@ -201,64 +159,9 @@ export class AppProvider extends Component {
         },
       },
     ],
-    // []
-    // [
-    // template for product details, shape of data equal to full product query shown in product description page
-    // {
-    //   id: "huarache-x-stussy-le",
-    //   name: null,
-    //   inStock: null,
-    //   gallery: null,
-    //   brand: null,
-    //   prices: {
-    //     amount: null,
-    //     currency: {
-    //       label: null,
-    //       symbol: null,
-    //     },
-    //     attributes: {
-    //       type: null,
-    //       items: {
-    //         id: null,
-    //         value: null,
-    //         displayValue: null,
-    //       },
-    //       name: null,
-    //       id: null,
-    //     },
-    //     description: null,
-    //     category: null,
-    //   },
-    //   quantity: 0,
-    // },
-    // {productId:"xbox-series-s",otherValues:null}
-    // ],
+    productCartItemsCount: 0,
+    cartTotal: 0,
   };
-
-  // getCategories = () => {
-  //   try {
-  //     const query = axios({
-  //       url: "http://localhost:4000",
-  //       method: "POST",
-  //       data: {
-  //         query: `
-  //         query GET_CATEGORIES {
-  //           categories {
-  //             name
-  //           }
-  //         }
-  //         `,
-  //       },
-  //     }).then((result) => {
-  //       this.setState({
-  //         loading: false,
-  //         productCategories: result.data.data,
-  //       });
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   logPrompt = () => {
     console.log("context loaded");
@@ -271,7 +174,6 @@ export class AppProvider extends Component {
     this.setState({
       modalOverlayMaskVisibility: !this.state.modalOverlayMaskVisibility,
     });
-    // console.log("clicked");
   };
 
   getProductCategories = async () => {
@@ -293,14 +195,6 @@ export class AppProvider extends Component {
       .indexOf(e.target.textContent);
     this.setState({ productCategoryIndex: productCategoryIndex });
   };
-
-  loadProductCategoryFromUrl = () => {
-    const productCategoryIndex = this.state.productCategories
-      .map((category) => category.name)
-      .indexOf(String(window.location.pathname.substring(1)));
-    this.setState({ productCategoryIndex: productCategoryIndex });
-  };
-
 
   getProducts = async () => {
     try {
@@ -337,12 +231,13 @@ export class AppProvider extends Component {
       const query = await axios(GET_CURRENCIES).then((result) => {
         this.setState({
           currencies: result.data.data.currencies,
-          currency: result.data.data.currencies[0].symbol
+          currency: result.data.data.currencies[0].symbol,
         });
       });
     } catch (err) {
       console.log(err);
     }
+    // console.log('currencies loaded')
   };
 
   handleCurrencyChange = (e) => {
@@ -354,6 +249,14 @@ export class AppProvider extends Component {
     this.setState({
       attributeSelectedColor: e.target.textContent,
     });
+
+    // this.setState({
+    //   productCartContents: [
+    //     ...this.context.productCartContents,
+    //     (this.context.productCartContents.productCartContents[0].attributesSelected.attributeSelectedColor =
+    //       e.target.textContent),
+    //   ],
+    // })
   };
 
   selectAttributeSize = (e) => {
@@ -378,63 +281,83 @@ export class AppProvider extends Component {
 
   addToCart = () => {
     const productId = window.location.pathname.substring(9);
-    this.setState({
-      productCartContents: [
-        ...this.state.productCartContents,
-        {
-          cartItemId: uuid(),
-          id: productId,
-          name: this.state.productDescription.product.name,
-          inStock: this.state.productDescription.product.inStock,
-          gallery: this.state.productDescription.product.gallery,
-          brand: this.state.productDescription.product.brand,
-          prices: this.state.productDescription.product.prices,
-          attributes: this.state.productDescription.product.attributes,
-          description: this.state.productDescription.product.description,
-          category: this.state.productDescription.product.category,
-          quantity: 1,
-          attributesSelected: {
-            attributeSelectedColor: this.state.attributeSelectedColor,
-            attributeSelectedSize: this.state.attributeSelectedSize,
-            attributeSelectedCapacity: this.state.attributeSelectedCapacity,
-          },
-        },
-      ],
-    });
-    console.log(
-      "product added: " + JSON.stringify(this.state.productCartContents)
+
+    let findItemByIndex = this.state.productCartContents.findIndex(
+      (cartItem) => cartItem.id === productId
     );
+
+    let updatedItem = this.state.productCartContents[findItemByIndex];
+    this.state.productCartContents[findItemByIndex] !== undefined
+      ? (updatedItem.quantity += 1)
+      : this.setState({
+          productCartContents: [
+            ...this.state.productCartContents,
+            {
+              cartItemId: uuid(),
+              id: productId,
+              name: this.state.productDescription.product.name,
+              inStock: this.state.productDescription.product.inStock,
+              gallery: this.state.productDescription.product.gallery,
+              brand: this.state.productDescription.product.brand,
+              prices: this.state.productDescription.product.prices,
+              attributes: this.state.productDescription.product.attributes,
+              description: this.state.productDescription.product.description,
+              category: this.state.productDescription.product.category,
+              quantity: 1,
+              attributesSelected: {
+                attributeSelectedColor: this.state.attributeSelectedColor,
+                attributeSelectedSize: this.state.attributeSelectedSize,
+                attributeSelectedCapacity: this.state.attributeSelectedCapacity,
+              },
+            },
+          ],
+        });
+    this.getCartTotal();
+    this.getProductCartItemsCount();
   };
 
   addToCartFromPLP = (id) => {
     console.log("id " + id);
     axios(GET_PRODUCT_DETAILS(id)).then((response) => {
-      this.setState({
-        productCartContents: [
-          ...this.state.productCartContents,
-          {
-            cartItemId: uuid(),
-            id: response.data.data.product.id,
-            name: response.data.data.product.name,
-            inStock: response.data.data.product.inStock,
-            gallery: response.data.data.product.gallery,
-            brand: response.data.data.product.brand,
-            prices: response.data.data.product.prices,
-            attributes: response.data.data.product.attributes,
-            description: response.data.data.product.description,
-            category: response.data.data.product.category,
-            quantity: 1,
-            attributesSelected: {
-              attributeSelectedColor: "",
-              attributeSelectedSize: "",
-              attributeSelectedCapacity: "",
-            },
-          },
-        ],
-      });
-    });
+      let findItemByIndex = this.state.productCartContents.findIndex(
+        (cartItem) => cartItem.id === id
+      );
 
-    console.dir(this.state.productCartContents);
+      let updatedItem = this.state.productCartContents[findItemByIndex];
+
+      this.state.productCartContents[findItemByIndex] !== undefined
+        ? (updatedItem.quantity += 1)
+        : this.setState(
+            {
+              productCartContents: [
+                ...this.state.productCartContents,
+                {
+                  cartItemId: uuid(),
+                  id: response.data.data.product.id,
+                  name: response.data.data.product.name,
+                  inStock: response.data.data.product.inStock,
+                  gallery: response.data.data.product.gallery,
+                  brand: response.data.data.product.brand,
+                  prices: response.data.data.product.prices,
+                  attributes: response.data.data.product.attributes,
+                  description: response.data.data.product.description,
+                  category: response.data.data.product.category,
+                  quantity: 1,
+                  attributesSelected: {
+                    attributeSelectedColor: "",
+                    attributeSelectedSize: "",
+                    attributeSelectedCapacity: "",
+                  },
+                },
+              ],
+            },
+            () => {
+              this.getProductCartItemsCount();
+            }
+          );
+    });
+    this.getCartTotal();
+    this.getProductCartItemsCount();
   };
 
   cartItemAddOne = (cartItemId) => {
@@ -443,64 +366,114 @@ export class AppProvider extends Component {
     //if cart item id quantity > 1 then subtract one
     //if cart item id quantity = 0 then remove from cart list
 
-    console.log("original id: " + cartItemId);
-    console.log(
-      "original index: " +
-        this.state.productCartContents.findIndex(
-          (cartItem) => cartItem.cartItemId === cartItemId
-        )
+    let findItemByIndex = this.state.productCartContents.findIndex(
+      (cartItem) => cartItem.cartItemId === cartItemId
     );
 
-    let newDuplicatedItem = Object.create(
-      this.state.productCartContents[
-        this.state.productCartContents.findIndex(
-          (cartItem) => cartItem.cartItemId === cartItemId
-        )
-      ]
-    );
-
-    newDuplicatedItem.cartItemId = uuid(); //assign new id to avoid duplicated keys
+    let updatedItem = this.state.productCartContents[findItemByIndex];
+    updatedItem.quantity += 1;
 
     this.setState({
-      productCartContents: [
-        ...this.state.productCartContents,
-        newDuplicatedItem,
-      ],
+      // productCartContents: [...this.state.productCartContents],
     });
+
+    this.getCartTotal();
+    this.getProductCartItemsCount();
   };
 
   cartItemSubtractOne = (cartItemId) => {
-    this.setState({
-      productCartContents: [
-        ...this.state.productCartContents.filter(
-          (product) => product.cartItemId !== cartItemId
-        ),
-      ],
-    });
+    let findItemByIndex = this.state.productCartContents.findIndex(
+      (cartItem) => cartItem.cartItemId === cartItemId
+    );
+
+    let updatedItem = this.state.productCartContents[findItemByIndex];
+    updatedItem.quantity -= 1;
+
+    if (updatedItem.quantity > 0) {
+      this.setState({
+        productCartContents: [
+          ...this.state.productCartContents,
+          // .filter(
+          //   (product) => product.cartItemId !== cartItemId
+          // ),
+        ],
+      });
+    } else {
+      this.setState({
+        productCartContents: [
+          ...this.state.productCartContents.filter(
+            (product) => product.cartItemId !== cartItemId
+          ),
+        ],
+      });
+    }
+    this.getCartTotal();
+    this.getProductCartItemsCount();
   };
 
-  cartTotal = () => {
-    let total = 0;
+  getProductCartItemsCount = () => {
+    const productCartItemsCount = this.state.productCartContents
+      .map((cartItem) => cartItem.quantity)
+      .reduce((a, b) => a + b, 0);
 
-    total = parseFloat(
-      this.state.productCartContents
-        .map(
-          (prices) =>
-            prices.prices[
-              this.state.productCartContents[0].prices.findIndex(
-                (obj) => obj.currency.symbol === this.state.currency
+    this.setState({ productCartItemsCount: productCartItemsCount });
+
+    //   this.setState(prevState => ({
+    //     count: prevState.count + 1,
+    // }), this.doubledCount)
+  };
+
+  getCartTotal = () => {
+    let total = this.state.cartTotal;
+
+    total =
+      this.state.productCartContents.length === 0
+        ? 0
+        : parseFloat(
+            this.state.productCartContents
+              .map(
+                (cartItem) =>
+                  cartItem.prices[
+                    this.state.currencies
+                      .map((element) => {
+                        return element.symbol;
+                      })
+                      .indexOf(this.state.currency)
+                  ].amount * cartItem.quantity
               )
-            ].amount
-        )
-        .reduce(
-          (previousValue, currentValue) => previousValue + currentValue,
-          total
-        )
-    ).toFixed(2);
-    return total;
+              .reduce(
+                (previousValue, currentValue) => previousValue + currentValue
+              )
+          ).toFixed(2);
+    this.setState({ cartTotal: total });
   };
+
+  // getCartTotal = () => {
+  //   let total = this.state.cartTotal;
+
+  //   total = parseFloat(
+  //     this.state.productCartContents === 0
+  //       ? 0
+  //       : this.state.productCartContents
+  //           .map(
+  //             (prices) =>
+  //               prices.prices[
+  //                 this.state.productCartContents[0].prices.findIndex(
+  //                   (obj) => obj.currency.symbol === this.state.currency
+  //                 )
+  //               ].amount
+  //           )
+  //           .reduce(
+  //             (previousValue, currentValue) => previousValue + currentValue,
+  //             total
+  //           )
+  //   ).toFixed(2);
+  //   this.setState({ cartTotal: 100 });
+  // };
 
   render() {
+    console.log("cart state: " + this.state.productCartItemsCount);
+
     const {
       loading,
       productCategories,
@@ -518,6 +491,8 @@ export class AppProvider extends Component {
       attributeSelectedSize,
       attributeSelectedCapacity,
       productCartContents,
+      productCartItemsCount,
+      cartTotal,
     } = this.state;
     const {
       // getCategories,
@@ -525,7 +500,6 @@ export class AppProvider extends Component {
       toggleModalOverlayMask,
       getProductCategories,
       loadProductCategory,
-      loadProductCategoryFromUrl,
       getProducts,
       getProductDescription,
       getCurrencies,
@@ -538,7 +512,8 @@ export class AppProvider extends Component {
       addToCartFromPLP,
       cartItemAddOne,
       cartItemSubtractOne,
-      cartTotal,
+      getProductCartItemsCount,
+      getCartTotal,
     } = this;
     return (
       <AppContext.Provider
@@ -559,12 +534,12 @@ export class AppProvider extends Component {
           attributeSelectedSize,
           attributeSelectedCapacity,
           productCartContents,
-          // getCategories,
+          productCartItemsCount,
+          cartTotal,
           logPrompt,
           toggleModalOverlayMask,
           getProductCategories,
           loadProductCategory,
-          loadProductCategoryFromUrl,
           getProducts,
           getProductDescription,
           getCurrencies,
@@ -577,7 +552,8 @@ export class AppProvider extends Component {
           addToCartFromPLP,
           cartItemAddOne,
           cartItemSubtractOne,
-          cartTotal,
+          getProductCartItemsCount,
+          getCartTotal,
         }}
       >
         {this.props.children}
@@ -587,9 +563,6 @@ export class AppProvider extends Component {
     );
   }
 
-  componentDidMount() {
-    // this.getCategories();
-  }
 }
 
 export default AppContext;
