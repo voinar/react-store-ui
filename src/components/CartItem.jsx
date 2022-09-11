@@ -126,7 +126,6 @@ class CartItem extends React.Component {
                                 : "product-description__attributes-size"
                             }
                             onClick={this.context.selectAttributeCapacity}
-
                           >
                             {attribute.value}
                           </div>
@@ -176,7 +175,9 @@ class CartItem extends React.Component {
                                 : "product-description__attributes-color"
                             }
                             style={{ backgroundColor: `${colorOption.value}` }}
-                            onClick={this.context.selectAttributeColor}
+                            onClick={
+                              this.context.selectAttributeColor
+                            }
                           />
                         );
                       })}

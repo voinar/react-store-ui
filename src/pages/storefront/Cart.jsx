@@ -42,7 +42,7 @@ class Cart extends React.Component {
             <div className="cart__summary__tax">
               <div>Tax 21%:</div>
               <div>
-                <strong>$42.00</strong>
+                <strong>{this.context.currency}{(Number(this.context.cartTotal)*21/100).toFixed(2)}</strong>
               </div>
             </div>
             <div className="cart__summary__quantity">

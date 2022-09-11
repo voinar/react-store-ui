@@ -246,9 +246,12 @@ export class AppProvider extends Component {
   };
 
   selectAttributeColor = (e) => {
+    // console.log('cartItemId' + cartItemId)
+    // cartItemId !== undefined ?
     this.setState({
       attributeSelectedColor: e.target.textContent,
-    });
+    })
+   console.log(e.target)
 
     // this.setState({
     //   productCartContents: [
@@ -282,36 +285,80 @@ export class AppProvider extends Component {
   addToCart = () => {
     const productId = window.location.pathname.substring(9);
 
-    let findItemByIndex = this.state.productCartContents.findIndex(
+    const findItemByIndex = this.state.productCartContents.findIndex(
       (cartItem) => cartItem.id === productId
     );
 
-    let updatedItem = this.state.productCartContents[findItemByIndex];
-    this.state.productCartContents[findItemByIndex] !== undefined
-      ? (updatedItem.quantity += 1)
-      : this.setState({
-          productCartContents: [
-            ...this.state.productCartContents,
+    const cartItem = this.state.productCartContents[findItemByIndex];
+    cartItem !== undefined
+      ? //if attributes selected are different than in any object in cart with the same id then create new object
+        String(cartItem.attributesSelected.attributeSelectedSize) ===
+          String(this.state.attributeSelectedSize) &&
+        String(cartItem.attributesSelected.attributeSelectedCapacity) ===
+          String(this.state.attributeSelectedCapacity) &&
+        String(cartItem.attributesSelected.attributeSelectedColor) ===
+          String(this.state.attributeSelectedColor)
+        ? (cartItem.quantity += 1) //else if attributes are the same as any item already present in cart then add quantity + 1
+        : this.setState( //otherwise add new item to cart with selected attributes
             {
-              cartItemId: uuid(),
-              id: productId,
-              name: this.state.productDescription.product.name,
-              inStock: this.state.productDescription.product.inStock,
-              gallery: this.state.productDescription.product.gallery,
-              brand: this.state.productDescription.product.brand,
-              prices: this.state.productDescription.product.prices,
-              attributes: this.state.productDescription.product.attributes,
-              description: this.state.productDescription.product.description,
-              category: this.state.productDescription.product.category,
-              quantity: 1,
-              attributesSelected: {
-                attributeSelectedColor: this.state.attributeSelectedColor,
-                attributeSelectedSize: this.state.attributeSelectedSize,
-                attributeSelectedCapacity: this.state.attributeSelectedCapacity,
-              },
+              productCartContents: [
+                ...this.state.productCartContents,
+                {
+                  cartItemId: uuid(),
+                  id: productId,
+                  name: this.state.productDescription.product.name,
+                  inStock: this.state.productDescription.product.inStock,
+                  gallery: this.state.productDescription.product.gallery,
+                  brand: this.state.productDescription.product.brand,
+                  prices: this.state.productDescription.product.prices,
+                  attributes: this.state.productDescription.product.attributes,
+                  description:
+                    this.state.productDescription.product.description,
+                  category: this.state.productDescription.product.category,
+                  quantity: 1,
+                  attributesSelected: {
+                    attributeSelectedColor: this.state.attributeSelectedColor,
+                    attributeSelectedSize: this.state.attributeSelectedSize,
+                    attributeSelectedCapacity:
+                      this.state.attributeSelectedCapacity,
+                  },
+                },
+              ],
             },
-          ],
-        });
+            () => {
+              this.getProductCartItemsCount();
+            }
+          )
+      : //if no item with the specified id is found in the cart then add new object to the cart wth specified attributes
+        this.setState(
+          {
+            productCartContents: [
+              ...this.state.productCartContents,
+              {
+                cartItemId: uuid(),
+                id: productId,
+                name: this.state.productDescription.product.name,
+                inStock: this.state.productDescription.product.inStock,
+                gallery: this.state.productDescription.product.gallery,
+                brand: this.state.productDescription.product.brand,
+                prices: this.state.productDescription.product.prices,
+                attributes: this.state.productDescription.product.attributes,
+                description: this.state.productDescription.product.description,
+                category: this.state.productDescription.product.category,
+                quantity: 1,
+                attributesSelected: {
+                  attributeSelectedColor: this.state.attributeSelectedColor,
+                  attributeSelectedSize: this.state.attributeSelectedSize,
+                  attributeSelectedCapacity:
+                    this.state.attributeSelectedCapacity,
+                },
+              },
+            ],
+          },
+          () => {
+            this.getProductCartItemsCount();
+          }
+        );
     this.getCartTotal();
     this.getProductCartItemsCount();
   };
@@ -448,29 +495,6 @@ export class AppProvider extends Component {
     this.setState({ cartTotal: total });
   };
 
-  // getCartTotal = () => {
-  //   let total = this.state.cartTotal;
-
-  //   total = parseFloat(
-  //     this.state.productCartContents === 0
-  //       ? 0
-  //       : this.state.productCartContents
-  //           .map(
-  //             (prices) =>
-  //               prices.prices[
-  //                 this.state.productCartContents[0].prices.findIndex(
-  //                   (obj) => obj.currency.symbol === this.state.currency
-  //                 )
-  //               ].amount
-  //           )
-  //           .reduce(
-  //             (previousValue, currentValue) => previousValue + currentValue,
-  //             total
-  //           )
-  //   ).toFixed(2);
-  //   this.setState({ cartTotal: 100 });
-  // };
-
   render() {
     console.log("cart state: " + this.state.productCartItemsCount);
 
@@ -562,7 +586,6 @@ export class AppProvider extends Component {
       </AppContext.Provider>
     );
   }
-
 }
 
 export default AppContext;

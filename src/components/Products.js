@@ -42,11 +42,13 @@ class Products extends React.Component {
                     id={product.id}
                     productUrl={product.id}
                     name={product.name}
+                    brand={product.brand}
                     image={product.gallery[0]}
                     priceSymbol={
                       product.prices[currencySelectedIndex].currency.symbol
                     }
                     priceAmount={product.prices[currencySelectedIndex].amount}
+                    selectableAttributes={product.attributes.length !== 0}
                     inStock={product.inStock}
                   />
                 );

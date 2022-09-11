@@ -14,7 +14,7 @@ class ProductListing extends React.Component {
           <h1>{this.props.category}</h1>
         </header>
 
-        <div className="product-listing__cards-container">
+        <div>
           <Products />
         </div>
       </div>
