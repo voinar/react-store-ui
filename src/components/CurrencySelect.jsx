@@ -1,9 +1,7 @@
-import React from "react";
-import AppContext from "../context/AppContext";
-import axios from "axios";
-import { GET_CURRENCIES } from "../graphql/Queries";
+import React from 'react';
+import AppContext from '../context/AppContext';
 
-import ChevronDown from "../../src/assets/icon_chevron-down.svg";
+import ChevronDown from '../../src/assets/icon_chevron-down.svg';
 
 class CurrencySelect extends React.Component {
   static contextType = AppContext;
@@ -14,12 +12,12 @@ class CurrencySelect extends React.Component {
 
     return (
       <>
-        { currency === '' ? (<>loading...</>) : (
+        {currency === '' ? (
+          <>loading...</>
+        ) : (
           <div className="currency-select">
             <button className="currency-select__dropdown">
-              <span>
-                {currency}
-              </span>
+              <span>{currency}</span>
               <img src={ChevronDown} alt="select currency" />
             </button>
             <select
@@ -27,7 +25,6 @@ class CurrencySelect extends React.Component {
               size={currencies.length}
               // onClick={this.context.handleCurrencyChange}
             >
-              {/* <option value={this.props.currency.code}>$ USD</option> */}
               {currencies.map((currency) => {
                 return (
                   <option
@@ -41,9 +38,7 @@ class CurrencySelect extends React.Component {
               })}
             </select>
           </div>
-        )
-
-        }
+        )}
       </>
     );
   }

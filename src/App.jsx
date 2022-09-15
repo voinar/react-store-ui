@@ -48,7 +48,7 @@ class App extends React.Component {
     return (
       <>
         {this.state.loading === true ? (
-          <>loading... </>
+          <h1>Please check your Apollo server connection... </h1>
         ) : (
           <AppProvider>
             <BrowserRouter>

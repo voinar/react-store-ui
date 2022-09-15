@@ -216,7 +216,7 @@ class ProductDescriptionContent extends React.Component {
                 ? this.context.addToCart
                 : this.context.addToCart
               // : null
-            } //add item to cart along with its properties using item data from context
+            } //add item to cart along with its properties using item data from context. null if item is not in stock
           >
             Add to cart
           </button>

@@ -1,37 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import ProductCategories from "./ProductCategories";
-import CurrencySelect from "./CurrencySelect";
-import CartOverlay from "../components/CartOverlay";
-import ProductCartItemsCount from "../components/ProductCartItemsCount";
-import ModalOverlayMask from "./ModalOverlayMask";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import ProductCategories from './ProductCategories';
+import CurrencySelect from './CurrencySelect';
+import CartOverlay from '../components/CartOverlay';
+import ProductCartItemsCount from './CartItemsCount';
+import ModalOverlayMask from './ModalOverlayMask';
 
-import Logo from "../../src/assets/icon_logo.svg";
-import IconCart from "../../src/assets/icon_empty-cart.svg";
+import Logo from '../../src/assets/icon_logo.svg';
+import IconCart from '../../src/assets/icon_empty-cart.svg';
 
-import AppContext from "../context/AppContext";
-
+import AppContext from '../context/AppContext';
 
 class Navbar extends React.Component {
-  static contextType = AppContext
+  static contextType = AppContext;
 
   render() {
     return (
       <>
-        <nav
-          className="navbar container"
-          // onClick={
-          //   this.context.cartOverlayVisibility
-          //     ? this.context.toggleModalOverlayMask
-          //     : null
-          // }
-        >
-          {this.context.modalOverlayMaskVisibility && (
-            <ModalOverlayMask />
-          )}
+        <nav className="navbar container">
+          {this.context.modalOverlayMaskVisibility && <ModalOverlayMask />}
 
-          <ProductCategories
-          />
+          <ProductCategories />
 
           <Link to="/">
             <div className="navbar-logo">
@@ -59,8 +48,6 @@ class Navbar extends React.Component {
       </>
     );
   }
-
 }
-
 
 export default Navbar;

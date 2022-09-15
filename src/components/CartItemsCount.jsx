@@ -13,7 +13,8 @@ class ProductCartItemsCount extends React.Component {
   }
 
   componentDidMount() {
-    this.context.getProductCartItemsCount();
+    // this.context.getCartItemsCount();
+    // () => {this.context.getCartItemsCount()}
   }
 }
 

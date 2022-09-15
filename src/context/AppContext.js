@@ -1,173 +1,34 @@
+//context api used to manage global state
+
 import React, { Component } from 'react';
-import axios from 'axios';
-import uuid from 'react-uuid';
+import axios from 'axios'; //data fetch library
+import uuid from 'react-uuid'; //unique id for product cards and cart items
+import initialState from './InitialState'; //default state used for initialization & saved to localStorage or first run
 
-import { GET_PRODUCT_DETAILS } from '../graphql/Queries';
-
+//graphQL queries
 import {
   GET_PRODUCT_CATEGORIES,
   GET_PRODUCTS,
+  GET_PRODUCT_DETAILS,
   GET_CURRENCIES,
 } from '../graphql/Queries';
+
+//util functions
+import { toggleModalOverlayMask } from './utils/ToggleModalOverlayMask';
 
 const AppContext = React.createContext();
 
 export class AppProvider extends Component {
   static contextType = AppContext;
 
-  defaultState = {
-    loading: true,
-    productCategories: [],
-    productCategoryIndex: 0,
-    loadingProductDescription: true,
-    product: null,
-    expandImagePreviewIndex: 0,
+  // constructor(props) {
+  //   super(props)
+  //   const appState = localStorage.getItem("appState")
+  //   this.state = appState ?? initialState;
+  //   localStorage.setItem('appState', JSON.parse(this.state))
+  // }
 
-    cartOverlayVisibility: false,
-    modalOverlayMaskVisibility: false,
-    currencies: [],
-    currency: '',
-    productsDataLoading: true,
-    productDescription: null,
-    attributesSelected: [],
-
-    attributeSelectedColor: '',
-    attributeSelectedSize: '',
-    attributeSelectedCapacity: '',
-
-    productCartContents: [
-      {
-        cartItemId: '215552-e72-c132-d2cd-ba135cbdbb',
-        id: 'huarache-x-stussy-le',
-        name: 'Nike Air Huarache Le',
-        inStock: true,
-        gallery: [
-          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087',
-          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087',
-          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_3_720x.jpg?v=1612816087',
-          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_5_720x.jpg?v=1612816087',
-          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_4_720x.jpg?v=1612816087',
-        ],
-        brand: 'Nike x Stussy',
-        prices: [
-          { currency: { label: 'USD', symbol: '$' }, amount: 144.69 },
-          { currency: { label: 'GBP', symbol: '£' }, amount: 104 },
-          { currency: { label: 'AUD', symbol: 'A$' }, amount: 186.65 },
-          { currency: { label: 'JPY', symbol: '¥' }, amount: 15625.24 },
-          { currency: { label: 'RUB', symbol: '₽' }, amount: 10941.76 },
-        ],
-        attributes: [
-          {
-            id: 'Size',
-            name: 'Size',
-            type: 'text',
-            items: [
-              { displayValue: '40', value: '40', id: '40' },
-              { displayValue: '41', value: '41', id: '41' },
-              { displayValue: '42', value: '42', id: '42' },
-              { displayValue: '43', value: '43', id: '43' },
-            ],
-          },
-        ],
-        description: '<p>Great sneakers for everyday use!</p>',
-        category: 'clothes',
-        quantity: 1,
-        attributesSelected: {
-          attributeSelectedColor: '',
-          attributeSelectedSize: '42',
-          attributeSelectedCapacity: '',
-        },
-      },
-      {
-        cartItemId: '7c27242-2fde-c426-820a-da72b4f5153',
-        id: 'ps-5',
-        name: 'PlayStation 5',
-        inStock: false,
-        gallery: [
-          'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
-          'https://images-na.ssl-images-amazon.com/images/I/610%2B69ZsKCL._SL1500_.jpg',
-          'https://images-na.ssl-images-amazon.com/images/I/51iPoFwQT3L._SL1230_.jpg',
-          'https://images-na.ssl-images-amazon.com/images/I/61qbqFcvoNL._SL1500_.jpg',
-          'https://images-na.ssl-images-amazon.com/images/I/51HCjA3rqYL._SL1230_.jpg',
-        ],
-        brand: 'Sony',
-        prices: [
-          { currency: { label: 'USD', symbol: '$' }, amount: 844.02 },
-          { currency: { label: 'GBP', symbol: '£' }, amount: 606.67 },
-          { currency: { label: 'AUD', symbol: 'A$' }, amount: 1088.79 },
-          { currency: { label: 'JPY', symbol: '¥' }, amount: 91147.25 },
-          { currency: { label: 'RUB', symbol: '₽' }, amount: 63826.91 },
-        ],
-        attributes: [
-          {
-            id: 'Color',
-            name: 'Color',
-            type: 'swatch',
-            items: [
-              { displayValue: 'Green', value: '#44FF03', id: 'Green' },
-              { displayValue: 'Cyan', value: '#03FFF7', id: 'Cyan' },
-              { displayValue: 'Blue', value: '#030BFF', id: 'Blue' },
-              { displayValue: 'Black', value: '#000000', id: 'Black' },
-              { displayValue: 'White', value: '#FFFFFF', id: 'White' },
-            ],
-          },
-          {
-            id: 'Capacity',
-            name: 'Capacity',
-            type: 'text',
-            items: [
-              { displayValue: '512G', value: '512G', id: '512G' },
-              { displayValue: '1T', value: '1T', id: '1T' },
-            ],
-          },
-        ],
-        description:
-          '<p>A good gaming console. Plays games of PS4! Enjoy if you can buy it mwahahahaha</p>',
-        category: 'tech',
-        quantity: 1,
-        attributesSelected: {
-          attributeSelectedColor: '#000000',
-          attributeSelectedSize: '',
-          attributeSelectedCapacity: '1T',
-        },
-      },
-      {
-        cartItemId: '07e53d-701-b0d1-cc24-35f1d0c7caec',
-        id: 'apple-airtag',
-        name: 'AirTag',
-        inStock: true,
-        gallery: [
-          'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-double-select-202104?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761672000',
-        ],
-        brand: 'Apple',
-        prices: [
-          { currency: { label: 'USD', symbol: '$' }, amount: 120.57 },
-          { currency: { label: 'GBP', symbol: '£' }, amount: 86.67 },
-          { currency: { label: 'AUD', symbol: 'A$' }, amount: 155.54 },
-          { currency: { label: 'JPY', symbol: '¥' }, amount: 13021.04 },
-          { currency: { label: 'RUB', symbol: '₽' }, amount: 9118.13 },
-        ],
-        attributes: [],
-        description:
-          '\n<h1>Lose your knack for losing things.</h1>\n<p>AirTag is an easy way to keep track of your stuff. Attach one to your keys, slip another one in your backpack. And just like that, they’re on your radar in the Find My app. AirTag has your back.</p>\n',
-        category: 'tech',
-        quantity: 1,
-        attributesSelected: {
-          attributeSelectedColor: '',
-          attributeSelectedSize: '',
-          attributeSelectedCapacity: '',
-        },
-      },
-    ],
-    productCartItemsCount: 0,
-    cartTotal: 0,
-  };
-
-  state = this.defaultState
-
-  logPrompt = () => {
-    console.log('context loaded');
-  };
+  state = JSON.parse(localStorage.getItem('appState')) ?? initialState; //load state from localStorage or from initialState default
 
   toggleModalOverlayMask = () => {
     this.setState({
@@ -224,25 +85,33 @@ export class AppProvider extends Component {
     } catch (err) {
       console.log(err);
     }
+    this.handleStateUpdate();
   };
 
   getCurrencies = async () => {
+    let currencyIndex = this.state.currencies.findIndex(
+      (currency) => currency.symbol === this.state.currency
+    );
+
     try {
       await axios(GET_CURRENCIES).then((result) => {
         this.setState({
           currencies: result.data.data.currencies,
-          currency: result.data.data.currencies[0].symbol,
+          currency: result.data.data.currencies[currencyIndex].symbol,
         });
       });
     } catch (err) {
       console.log(err);
     }
     // console.log('currencies loaded')
+    this.handleStateUpdate();
   };
 
-  handleCurrencyChange = (e) => {
-    this.setState({ currency: e.target.value });
+  handleCurrencyChange = async (e) => {
+    let currencyUpdate = e.target.value;
+    await this.setState({ currency: currencyUpdate });
     // console.log("handle curency change: " + this.state.currency);
+    this.handleStateUpdate();
   };
 
   selectAttributeColor = (e) => {
@@ -250,7 +119,8 @@ export class AppProvider extends Component {
     this.setState({
       attributeSelectedColor: e.target.textContent,
     });
-    console.log(e.target);
+    // console.log(e.target);
+    this.handleStateUpdate();
   };
 
   selectAttributeColorById = (e, uuid) => {
@@ -267,12 +137,14 @@ export class AppProvider extends Component {
       )
     ].attributesSelected.attributeSelectedColor = e.target.textContent; //new value
     this.setState({ newCartContents }); //update the value
+    this.handleStateUpdate();
   };
 
   selectAttributeSize = (e) => {
     this.setState({
       attributeSelectedSize: e.target.textContent,
     });
+    this.handleStateUpdate();
   };
 
   selectAttributeSizeById = (e, uuid) => {
@@ -289,12 +161,14 @@ export class AppProvider extends Component {
       )
     ].attributesSelected.attributeSelectedSize = e.target.textContent; //new value
     this.setState({ newCartContents }); //update the value
+    this.handleStateUpdate();
   };
 
   selectAttributeCapacity = (e) => {
     this.setState({
       attributeSelectedCapacity: e.target.textContent,
     });
+    this.handleStateUpdate();
   };
 
   selectAttributeCapacityById = (e, uuid) => {
@@ -311,6 +185,7 @@ export class AppProvider extends Component {
       )
     ].attributesSelected.attributeSelectedCapacity = e.target.textContent; //new value
     this.setState({ newCartContents }); //update the value
+    this.handleStateUpdate();
   };
 
   clearAttributeCache = () => {
@@ -319,16 +194,17 @@ export class AppProvider extends Component {
       attributeSelectedSize: '',
       attributeSelectedColor: '',
     });
+    this.handleStateUpdate();
   };
 
-  addToCart = () => {
-    const productId = window.location.pathname.substring(9);
-
-    const findItemByIndex = this.state.productCartContents.findIndex(
+  addToCart = async () => {
+    let productId = window.location.pathname.substring(9);
+    let findItemByIndex = this.state.productCartContents.findIndex(
       (cartItem) => cartItem.id === productId
     );
+    // console.log(findItemByIndex);
 
-    const cartItem = this.state.productCartContents[findItemByIndex];
+    let cartItem = this.state.productCartContents[findItemByIndex];
     cartItem !== undefined
       ? //if attributes selected are different than in any object in cart with the same id then create new object
         String(cartItem.attributesSelected.attributeSelectedSize) ===
@@ -364,48 +240,38 @@ export class AppProvider extends Component {
                   },
                 },
               ],
-            },
-            () => {
-              this.getProductCartItemsCount();
             }
           )
       : //if no item with the specified id is found in the cart then add new object to the cart wth specified attributes
-        this.setState(
-          {
-            productCartContents: [
-              ...this.state.productCartContents,
-              {
-                cartItemId: uuid(),
-                id: productId,
-                name: this.state.productDescription.product.name,
-                inStock: this.state.productDescription.product.inStock,
-                gallery: this.state.productDescription.product.gallery,
-                brand: this.state.productDescription.product.brand,
-                prices: this.state.productDescription.product.prices,
-                attributes: this.state.productDescription.product.attributes,
-                description: this.state.productDescription.product.description,
-                category: this.state.productDescription.product.category,
-                quantity: 1,
-                attributesSelected: {
-                  attributeSelectedColor: this.state.attributeSelectedColor,
-                  attributeSelectedSize: this.state.attributeSelectedSize,
-                  attributeSelectedCapacity:
-                    this.state.attributeSelectedCapacity,
-                },
+        this.setState({
+          productCartContents: [
+            ...this.state.productCartContents,
+            {
+              cartItemId: uuid(),
+              id: productId,
+              name: this.state.productDescription.product.name,
+              inStock: this.state.productDescription.product.inStock,
+              gallery: this.state.productDescription.product.gallery,
+              brand: this.state.productDescription.product.brand,
+              prices: this.state.productDescription.product.prices,
+              attributes: this.state.productDescription.product.attributes,
+              description: this.state.productDescription.product.description,
+              category: this.state.productDescription.product.category,
+              quantity: 1,
+              attributesSelected: {
+                attributeSelectedColor: this.state.attributeSelectedColor,
+                attributeSelectedSize: this.state.attributeSelectedSize,
+                attributeSelectedCapacity: this.state.attributeSelectedCapacity,
               },
-            ],
-          },
-          () => {
-            this.getProductCartItemsCount();
-          }
-        );
-    this.getCartTotal();
-    this.getProductCartItemsCount();
+            },
+          ],
+        });
+    this.handleStateUpdate();
   };
 
-  addToCartFromPLP = (id) => {
-    console.log('id ' + id);
-    axios(GET_PRODUCT_DETAILS(id)).then((response) => {
+  addToCartFromPLP = async (id) => {
+    // console.log('id ' + id);
+    await axios(GET_PRODUCT_DETAILS(id)).then((response) => {
       let findItemByIndex = this.state.productCartContents.findIndex(
         (cartItem) => cartItem.id === id
       );
@@ -414,37 +280,31 @@ export class AppProvider extends Component {
 
       this.state.productCartContents[findItemByIndex] !== undefined
         ? (updatedItem.quantity += 1)
-        : this.setState(
-            {
-              productCartContents: [
-                ...this.state.productCartContents,
-                {
-                  cartItemId: uuid(),
-                  id: response.data.data.product.id,
-                  name: response.data.data.product.name,
-                  inStock: response.data.data.product.inStock,
-                  gallery: response.data.data.product.gallery,
-                  brand: response.data.data.product.brand,
-                  prices: response.data.data.product.prices,
-                  attributes: response.data.data.product.attributes,
-                  description: response.data.data.product.description,
-                  category: response.data.data.product.category,
-                  quantity: 1,
-                  attributesSelected: {
-                    attributeSelectedColor: '',
-                    attributeSelectedSize: '',
-                    attributeSelectedCapacity: '',
-                  },
+        : this.setState({
+            productCartContents: [
+              ...this.state.productCartContents,
+              {
+                cartItemId: uuid(),
+                id: response.data.data.product.id,
+                name: response.data.data.product.name,
+                inStock: response.data.data.product.inStock,
+                gallery: response.data.data.product.gallery,
+                brand: response.data.data.product.brand,
+                prices: response.data.data.product.prices,
+                attributes: response.data.data.product.attributes,
+                description: response.data.data.product.description,
+                category: response.data.data.product.category,
+                quantity: 1,
+                attributesSelected: {
+                  attributeSelectedColor: '',
+                  attributeSelectedSize: '',
+                  attributeSelectedCapacity: '',
                 },
-              ],
-            },
-            () => {
-              this.getProductCartItemsCount();
-            }
-          );
+              },
+            ],
+          });
     });
-    this.getCartTotal();
-    this.getProductCartItemsCount();
+    this.handleStateUpdate();
   };
 
   cartItemAddOne = (cartItemId) => {
@@ -464,8 +324,7 @@ export class AppProvider extends Component {
       // productCartContents: [...this.state.productCartContents],
     });
 
-    this.getCartTotal();
-    this.getProductCartItemsCount();
+    this.handleStateUpdate();
   };
 
   cartItemSubtractOne = (cartItemId) => {
@@ -494,20 +353,15 @@ export class AppProvider extends Component {
         ],
       });
     }
-    this.getCartTotal();
-    this.getProductCartItemsCount();
+    this.handleStateUpdate();
   };
 
-  getProductCartItemsCount = () => {
-    const productCartItemsCount = this.state.productCartContents
+  getCartItemsCount = () => {
+    let productCartItemsCount = this.state.productCartContents
       .map((cartItem) => cartItem.quantity)
       .reduce((a, b) => a + b, 0);
 
     this.setState({ productCartItemsCount: productCartItemsCount });
-
-    //   this.setState(prevState => ({
-    //     count: prevState.count + 1,
-    // }), this.doubledCount)
   };
 
   getCartTotal = () => {
@@ -535,8 +389,18 @@ export class AppProvider extends Component {
     this.setState({ cartTotal: total });
   };
 
+  handleLocalStorage = () => {
+    localStorage.setItem('appState', JSON.stringify(this.state));
+  };
+
+  handleStateUpdate = () => {
+    this.handleLocalStorage();
+    this.getCartTotal();
+    this.getCartItemsCount();
+  };
+
   render() {
-    console.log('cart state: ' + this.state.productCartItemsCount);
+    // console.log('cart count: ' + this.state.productCartItemsCount);
 
     const {
       loading,
@@ -559,8 +423,6 @@ export class AppProvider extends Component {
       cartTotal,
     } = this.state;
     const {
-      // getCategories,
-      logPrompt,
       toggleModalOverlayMask,
       getProductCategories,
       loadProductCategory,
@@ -579,7 +441,7 @@ export class AppProvider extends Component {
       addToCartFromPLP,
       cartItemAddOne,
       cartItemSubtractOne,
-      getProductCartItemsCount,
+      getCartItemsCount,
       getCartTotal,
     } = this;
     return (
@@ -603,7 +465,6 @@ export class AppProvider extends Component {
           productCartContents,
           productCartItemsCount,
           cartTotal,
-          logPrompt,
           toggleModalOverlayMask,
           getProductCategories,
           loadProductCategory,
@@ -622,7 +483,7 @@ export class AppProvider extends Component {
           addToCartFromPLP,
           cartItemAddOne,
           cartItemSubtractOne,
-          getProductCartItemsCount,
+          getCartItemsCount,
           getCartTotal,
         }}
       >
@@ -634,9 +495,16 @@ export class AppProvider extends Component {
   }
 
   componentDidMount() {
-    // console.log('context')
-    // const persistentState = JSON.parse(localStorage.getItem('persistentState')) ?? this.defaultState;
-    // if(persistentState){
+    // console.log(JSON.parse(localStorage.getItem('appState')))
+
+    // console.log(localStorage.getItem('appState'));
+
+    // if (this.state) {
+    //   this.setState({
+    //     initialState,
+    //   });
+
+    localStorage.setItem('appState', JSON.stringify(this.state)); //save state to localStorage
 
     // }
   }
