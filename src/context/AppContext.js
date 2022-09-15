@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import axios from "axios";
-import uuid from "react-uuid";
+import React, { Component } from 'react';
+import axios from 'axios';
+import uuid from 'react-uuid';
 
-import { GET_PRODUCT_DETAILS } from "../graphql/Queries";
+import { GET_PRODUCT_DETAILS } from '../graphql/Queries';
 
 import {
   GET_PRODUCT_CATEGORIES,
   GET_PRODUCTS,
   GET_CURRENCIES,
-} from "../graphql/Queries";
+} from '../graphql/Queries';
 
 const AppContext = React.createContext();
 
 export class AppProvider extends Component {
   static contextType = AppContext;
 
-  state = {
+  defaultState = {
     loading: true,
     productCategories: [],
     productCategoryIndex: 0,
@@ -26,136 +26,136 @@ export class AppProvider extends Component {
     cartOverlayVisibility: false,
     modalOverlayMaskVisibility: false,
     currencies: [],
-    currency: "",
+    currency: '',
     productsDataLoading: true,
     productDescription: null,
     attributesSelected: [],
 
-    attributeSelectedColor: "",
-    attributeSelectedSize: "",
-    attributeSelectedCapacity: "",
+    attributeSelectedColor: '',
+    attributeSelectedSize: '',
+    attributeSelectedCapacity: '',
 
     productCartContents: [
       {
-        cartItemId: "215552-e72-c132-d2cd-ba135cbdbb",
-        id: "huarache-x-stussy-le",
-        name: "Nike Air Huarache Le",
+        cartItemId: '215552-e72-c132-d2cd-ba135cbdbb',
+        id: 'huarache-x-stussy-le',
+        name: 'Nike Air Huarache Le',
         inStock: true,
         gallery: [
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_3_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_5_720x.jpg?v=1612816087",
-          "https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_4_720x.jpg?v=1612816087",
+          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_2_720x.jpg?v=1612816087',
+          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_1_720x.jpg?v=1612816087',
+          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_3_720x.jpg?v=1612816087',
+          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_5_720x.jpg?v=1612816087',
+          'https://cdn.shopify.com/s/files/1/0087/6193/3920/products/DD1381200_DEOA_4_720x.jpg?v=1612816087',
         ],
-        brand: "Nike x Stussy",
+        brand: 'Nike x Stussy',
         prices: [
-          { currency: { label: "USD", symbol: "$" }, amount: 144.69 },
-          { currency: { label: "GBP", symbol: "£" }, amount: 104 },
-          { currency: { label: "AUD", symbol: "A$" }, amount: 186.65 },
-          { currency: { label: "JPY", symbol: "¥" }, amount: 15625.24 },
-          { currency: { label: "RUB", symbol: "₽" }, amount: 10941.76 },
+          { currency: { label: 'USD', symbol: '$' }, amount: 144.69 },
+          { currency: { label: 'GBP', symbol: '£' }, amount: 104 },
+          { currency: { label: 'AUD', symbol: 'A$' }, amount: 186.65 },
+          { currency: { label: 'JPY', symbol: '¥' }, amount: 15625.24 },
+          { currency: { label: 'RUB', symbol: '₽' }, amount: 10941.76 },
         ],
         attributes: [
           {
-            id: "Size",
-            name: "Size",
-            type: "text",
+            id: 'Size',
+            name: 'Size',
+            type: 'text',
             items: [
-              { displayValue: "40", value: "40", id: "40" },
-              { displayValue: "41", value: "41", id: "41" },
-              { displayValue: "42", value: "42", id: "42" },
-              { displayValue: "43", value: "43", id: "43" },
+              { displayValue: '40', value: '40', id: '40' },
+              { displayValue: '41', value: '41', id: '41' },
+              { displayValue: '42', value: '42', id: '42' },
+              { displayValue: '43', value: '43', id: '43' },
             ],
           },
         ],
-        description: "<p>Great sneakers for everyday use!</p>",
-        category: "clothes",
+        description: '<p>Great sneakers for everyday use!</p>',
+        category: 'clothes',
         quantity: 1,
         attributesSelected: {
-          attributeSelectedColor: "",
-          attributeSelectedSize: "42",
-          attributeSelectedCapacity: "",
+          attributeSelectedColor: '',
+          attributeSelectedSize: '42',
+          attributeSelectedCapacity: '',
         },
       },
       {
-        cartItemId: "7c27242-2fde-c426-820a-da72b4f5153",
-        id: "ps-5",
-        name: "PlayStation 5",
+        cartItemId: '7c27242-2fde-c426-820a-da72b4f5153',
+        id: 'ps-5',
+        name: 'PlayStation 5',
         inStock: false,
         gallery: [
-          "https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg",
-          "https://images-na.ssl-images-amazon.com/images/I/610%2B69ZsKCL._SL1500_.jpg",
-          "https://images-na.ssl-images-amazon.com/images/I/51iPoFwQT3L._SL1230_.jpg",
-          "https://images-na.ssl-images-amazon.com/images/I/61qbqFcvoNL._SL1500_.jpg",
-          "https://images-na.ssl-images-amazon.com/images/I/51HCjA3rqYL._SL1230_.jpg",
+          'https://images-na.ssl-images-amazon.com/images/I/510VSJ9mWDL._SL1262_.jpg',
+          'https://images-na.ssl-images-amazon.com/images/I/610%2B69ZsKCL._SL1500_.jpg',
+          'https://images-na.ssl-images-amazon.com/images/I/51iPoFwQT3L._SL1230_.jpg',
+          'https://images-na.ssl-images-amazon.com/images/I/61qbqFcvoNL._SL1500_.jpg',
+          'https://images-na.ssl-images-amazon.com/images/I/51HCjA3rqYL._SL1230_.jpg',
         ],
-        brand: "Sony",
+        brand: 'Sony',
         prices: [
-          { currency: { label: "USD", symbol: "$" }, amount: 844.02 },
-          { currency: { label: "GBP", symbol: "£" }, amount: 606.67 },
-          { currency: { label: "AUD", symbol: "A$" }, amount: 1088.79 },
-          { currency: { label: "JPY", symbol: "¥" }, amount: 91147.25 },
-          { currency: { label: "RUB", symbol: "₽" }, amount: 63826.91 },
+          { currency: { label: 'USD', symbol: '$' }, amount: 844.02 },
+          { currency: { label: 'GBP', symbol: '£' }, amount: 606.67 },
+          { currency: { label: 'AUD', symbol: 'A$' }, amount: 1088.79 },
+          { currency: { label: 'JPY', symbol: '¥' }, amount: 91147.25 },
+          { currency: { label: 'RUB', symbol: '₽' }, amount: 63826.91 },
         ],
         attributes: [
           {
-            id: "Color",
-            name: "Color",
-            type: "swatch",
+            id: 'Color',
+            name: 'Color',
+            type: 'swatch',
             items: [
-              { displayValue: "Green", value: "#44FF03", id: "Green" },
-              { displayValue: "Cyan", value: "#03FFF7", id: "Cyan" },
-              { displayValue: "Blue", value: "#030BFF", id: "Blue" },
-              { displayValue: "Black", value: "#000000", id: "Black" },
-              { displayValue: "White", value: "#FFFFFF", id: "White" },
+              { displayValue: 'Green', value: '#44FF03', id: 'Green' },
+              { displayValue: 'Cyan', value: '#03FFF7', id: 'Cyan' },
+              { displayValue: 'Blue', value: '#030BFF', id: 'Blue' },
+              { displayValue: 'Black', value: '#000000', id: 'Black' },
+              { displayValue: 'White', value: '#FFFFFF', id: 'White' },
             ],
           },
           {
-            id: "Capacity",
-            name: "Capacity",
-            type: "text",
+            id: 'Capacity',
+            name: 'Capacity',
+            type: 'text',
             items: [
-              { displayValue: "512G", value: "512G", id: "512G" },
-              { displayValue: "1T", value: "1T", id: "1T" },
+              { displayValue: '512G', value: '512G', id: '512G' },
+              { displayValue: '1T', value: '1T', id: '1T' },
             ],
           },
         ],
         description:
-          "<p>A good gaming console. Plays games of PS4! Enjoy if you can buy it mwahahahaha</p>",
-        category: "tech",
+          '<p>A good gaming console. Plays games of PS4! Enjoy if you can buy it mwahahahaha</p>',
+        category: 'tech',
         quantity: 1,
         attributesSelected: {
-          attributeSelectedColor: "#000000",
-          attributeSelectedSize: "",
-          attributeSelectedCapacity: "1T",
+          attributeSelectedColor: '#000000',
+          attributeSelectedSize: '',
+          attributeSelectedCapacity: '1T',
         },
       },
       {
-        cartItemId: "07e53d-701-b0d1-cc24-35f1d0c7caec",
-        id: "apple-airtag",
-        name: "AirTag",
+        cartItemId: '07e53d-701-b0d1-cc24-35f1d0c7caec',
+        id: 'apple-airtag',
+        name: 'AirTag',
         inStock: true,
         gallery: [
-          "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-double-select-202104?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761672000",
+          'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airtag-double-select-202104?wid=445&hei=370&fmt=jpeg&qlt=95&.v=1617761672000',
         ],
-        brand: "Apple",
+        brand: 'Apple',
         prices: [
-          { currency: { label: "USD", symbol: "$" }, amount: 120.57 },
-          { currency: { label: "GBP", symbol: "£" }, amount: 86.67 },
-          { currency: { label: "AUD", symbol: "A$" }, amount: 155.54 },
-          { currency: { label: "JPY", symbol: "¥" }, amount: 13021.04 },
-          { currency: { label: "RUB", symbol: "₽" }, amount: 9118.13 },
+          { currency: { label: 'USD', symbol: '$' }, amount: 120.57 },
+          { currency: { label: 'GBP', symbol: '£' }, amount: 86.67 },
+          { currency: { label: 'AUD', symbol: 'A$' }, amount: 155.54 },
+          { currency: { label: 'JPY', symbol: '¥' }, amount: 13021.04 },
+          { currency: { label: 'RUB', symbol: '₽' }, amount: 9118.13 },
         ],
         attributes: [],
         description:
-          "\n<h1>Lose your knack for losing things.</h1>\n<p>AirTag is an easy way to keep track of your stuff. Attach one to your keys, slip another one in your backpack. And just like that, they’re on your radar in the Find My app. AirTag has your back.</p>\n",
-        category: "tech",
+          '\n<h1>Lose your knack for losing things.</h1>\n<p>AirTag is an easy way to keep track of your stuff. Attach one to your keys, slip another one in your backpack. And just like that, they’re on your radar in the Find My app. AirTag has your back.</p>\n',
+        category: 'tech',
         quantity: 1,
         attributesSelected: {
-          attributeSelectedColor: "",
-          attributeSelectedSize: "",
-          attributeSelectedCapacity: "",
+          attributeSelectedColor: '',
+          attributeSelectedSize: '',
+          attributeSelectedCapacity: '',
         },
       },
     ],
@@ -163,8 +163,10 @@ export class AppProvider extends Component {
     cartTotal: 0,
   };
 
+  state = this.defaultState
+
   logPrompt = () => {
-    console.log("context loaded");
+    console.log('context loaded');
   };
 
   toggleModalOverlayMask = () => {
@@ -178,7 +180,7 @@ export class AppProvider extends Component {
 
   getProductCategories = async () => {
     try {
-      const query = await axios(GET_PRODUCT_CATEGORIES).then((result) => {
+      await axios(GET_PRODUCT_CATEGORIES).then((result) => {
         this.setState({
           loading: false,
           productCategories: result.data.data.categories,
@@ -198,7 +200,7 @@ export class AppProvider extends Component {
 
   getProducts = async () => {
     try {
-      const query = await axios(GET_PRODUCTS).then((result) => {
+      await axios(GET_PRODUCTS).then((result) => {
         this.setState({
           productsDataLoading: false,
           productsData: result.data.data,
@@ -213,9 +215,7 @@ export class AppProvider extends Component {
   getProductDescription = async () => {
     const productId = window.location.pathname.substring(9);
     try {
-      const getProductDetails = await axios(
-        GET_PRODUCT_DETAILS(productId)
-      ).then((response) => {
+      await axios(GET_PRODUCT_DETAILS(productId)).then((response) => {
         this.setState({
           loadingProductDescription: false,
           productDescription: response.data.data,
@@ -228,7 +228,7 @@ export class AppProvider extends Component {
 
   getCurrencies = async () => {
     try {
-      const query = await axios(GET_CURRENCIES).then((result) => {
+      await axios(GET_CURRENCIES).then((result) => {
         this.setState({
           currencies: result.data.data.currencies,
           currency: result.data.data.currencies[0].symbol,
@@ -246,20 +246,27 @@ export class AppProvider extends Component {
   };
 
   selectAttributeColor = (e) => {
-    // console.log('cartItemId' + cartItemId)
-    // cartItemId !== undefined ?
+    //change color attribute in product page
     this.setState({
       attributeSelectedColor: e.target.textContent,
-    })
-   console.log(e.target)
+    });
+    console.log(e.target);
+  };
 
-    // this.setState({
-    //   productCartContents: [
-    //     ...this.context.productCartContents,
-    //     (this.context.productCartContents.productCartContents[0].attributesSelected.attributeSelectedColor =
-    //       e.target.textContent),
-    //   ],
-    // })
+  selectAttributeColorById = (e, uuid) => {
+    //change color attribute in cart
+    console.log('e ' + e.target.textContent);
+    console.log('id ' + uuid);
+
+    //select item by id
+    //change attribute in state
+    let newCartContents = [...this.state.productCartContents]; // create copy of state array
+    newCartContents[
+      this.state.productCartContents.findIndex(
+        (cartItem) => cartItem.cartItemId === uuid
+      )
+    ].attributesSelected.attributeSelectedColor = e.target.textContent; //new value
+    this.setState({ newCartContents }); //update the value
   };
 
   selectAttributeSize = (e) => {
@@ -268,17 +275,49 @@ export class AppProvider extends Component {
     });
   };
 
+  selectAttributeSizeById = (e, uuid) => {
+    //change size attribute in cart
+    console.log('e ' + e.target.textContent);
+    console.log('id ' + uuid);
+
+    //select item by id
+    //change attribute in state
+    let newCartContents = [...this.state.productCartContents]; // create copy of state array
+    newCartContents[
+      this.state.productCartContents.findIndex(
+        (cartItem) => cartItem.cartItemId === uuid
+      )
+    ].attributesSelected.attributeSelectedSize = e.target.textContent; //new value
+    this.setState({ newCartContents }); //update the value
+  };
+
   selectAttributeCapacity = (e) => {
     this.setState({
       attributeSelectedCapacity: e.target.textContent,
     });
   };
 
+  selectAttributeCapacityById = (e, uuid) => {
+    //change capacity attribute in cart
+    console.log('e ' + e.target.textContent);
+    console.log('id ' + uuid);
+
+    //select item by id
+    //change attribute in state
+    let newCartContents = [...this.state.productCartContents]; // create copy of state array
+    newCartContents[
+      this.state.productCartContents.findIndex(
+        (cartItem) => cartItem.cartItemId === uuid
+      )
+    ].attributesSelected.attributeSelectedCapacity = e.target.textContent; //new value
+    this.setState({ newCartContents }); //update the value
+  };
+
   clearAttributeCache = () => {
     this.setState({
-      attributeSelectedCapacity: "",
-      attributeSelectedSize: "",
-      attributeSelectedColor: "",
+      attributeSelectedCapacity: '',
+      attributeSelectedSize: '',
+      attributeSelectedColor: '',
     });
   };
 
@@ -299,7 +338,8 @@ export class AppProvider extends Component {
         String(cartItem.attributesSelected.attributeSelectedColor) ===
           String(this.state.attributeSelectedColor)
         ? (cartItem.quantity += 1) //else if attributes are the same as any item already present in cart then add quantity + 1
-        : this.setState( //otherwise add new item to cart with selected attributes
+        : this.setState(
+            //otherwise add new item to cart with selected attributes
             {
               productCartContents: [
                 ...this.state.productCartContents,
@@ -364,7 +404,7 @@ export class AppProvider extends Component {
   };
 
   addToCartFromPLP = (id) => {
-    console.log("id " + id);
+    console.log('id ' + id);
     axios(GET_PRODUCT_DETAILS(id)).then((response) => {
       let findItemByIndex = this.state.productCartContents.findIndex(
         (cartItem) => cartItem.id === id
@@ -391,9 +431,9 @@ export class AppProvider extends Component {
                   category: response.data.data.product.category,
                   quantity: 1,
                   attributesSelected: {
-                    attributeSelectedColor: "",
-                    attributeSelectedSize: "",
-                    attributeSelectedCapacity: "",
+                    attributeSelectedColor: '',
+                    attributeSelectedSize: '',
+                    attributeSelectedCapacity: '',
                   },
                 },
               ],
@@ -496,7 +536,7 @@ export class AppProvider extends Component {
   };
 
   render() {
-    console.log("cart state: " + this.state.productCartItemsCount);
+    console.log('cart state: ' + this.state.productCartItemsCount);
 
     const {
       loading,
@@ -529,8 +569,11 @@ export class AppProvider extends Component {
       getCurrencies,
       handleCurrencyChange,
       selectAttributeColor,
+      selectAttributeColorById,
       selectAttributeSize,
+      selectAttributeSizeById,
       selectAttributeCapacity,
+      selectAttributeCapacityById,
       clearAttributeCache,
       addToCart,
       addToCartFromPLP,
@@ -569,8 +612,11 @@ export class AppProvider extends Component {
           getCurrencies,
           handleCurrencyChange,
           selectAttributeColor,
+          selectAttributeColorById,
           selectAttributeSize,
+          selectAttributeSizeById,
           selectAttributeCapacity,
+          selectAttributeCapacityById,
           clearAttributeCache,
           addToCart,
           addToCartFromPLP,
@@ -585,6 +631,14 @@ export class AppProvider extends Component {
         {/* {console.dir(this.state.productCartContents)} */}
       </AppContext.Provider>
     );
+  }
+
+  componentDidMount() {
+    // console.log('context')
+    // const persistentState = JSON.parse(localStorage.getItem('persistentState')) ?? this.defaultState;
+    // if(persistentState){
+
+    // }
   }
 }
 

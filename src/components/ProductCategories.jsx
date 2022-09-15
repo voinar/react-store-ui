@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import AppContext, { AppProvider } from "../context/AppContext";
+import AppContext from "../context/AppContext";
 
 class ProductCategories extends React.Component {
   static contextType = AppContext;

@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import AppContext from "../context/AppContext";
-import ProductCartAdd from "../assets/icon_add-to-cart.svg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import AppContext from '../context/AppContext';
+import ProductCartAdd from '../assets/icon_add-to-cart.svg';
 
 class ProductCard extends React.Component {
   static contextType = AppContext;
@@ -45,10 +45,10 @@ class ProductCard extends React.Component {
         <Link to={`/product/${this.props.productUrl}`}>
           <div
             className={
-              this.props.inStock ? "" : `${"product-card__out-of-stock"}`
+              this.props.inStock ? '' : `${'product-card__out-of-stock'}`
             }
           >
-            {this.props.inStock ? "" : <span>Out of stock</span>}
+            {this.props.inStock ? '' : <span>Out of stock</span>}
           </div>
         </Link>
       </div>

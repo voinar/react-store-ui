@@ -20,6 +20,7 @@ class CartOverlay extends React.Component {
             return (
               <CartItem
                 key={cartItem.cartItemId}
+                id={cartItem.cartItemId}
                 productId={cartItem.id} //id used to query graphql for product details
                 productDetails={cartItem}
                 attributeSelectedColor={

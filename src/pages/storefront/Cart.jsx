@@ -1,5 +1,5 @@
 import React from "react";
-import AppContext, { AppProvider } from "../../context/AppContext";
+import AppContext from "../../context/AppContext";
 import uuid from "react-uuid";
 
 import CartItem from "../../components/CartItem";
@@ -21,6 +21,7 @@ class Cart extends React.Component {
           return (
             <CartItem
               key={uuid()}
+              id={cartItem.cartItemId}
               productId={cartItem.id} //id used to query graphql for product details
               productDetails={cartItem}
               attributeSelectedColor={

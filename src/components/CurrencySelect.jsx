@@ -1,5 +1,5 @@
 import React from "react";
-import AppContext, { AppProvider } from "../context/AppContext";
+import AppContext from "../context/AppContext";
 import axios from "axios";
 import { GET_CURRENCIES } from "../graphql/Queries";
 

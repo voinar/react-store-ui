@@ -21,7 +21,7 @@ class App extends React.Component {
 
   getProductCategories = () => {
     try {
-      const query = axios({
+      axios({
         url: "http://localhost:4000",
         method: "POST",
         data: {
@@ -51,7 +51,6 @@ class App extends React.Component {
           <>loading... </>
         ) : (
           <AppProvider>
-            {/* {console.log('not empty ' +JSON.stringify(window.location.pathname.substring(1)))} */}
             <BrowserRouter>
               <Navbar />
               <Routes>

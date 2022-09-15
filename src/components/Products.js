@@ -1,10 +1,8 @@
-import { GET_PRODUCTS } from "../graphql/Queries";
-import axios from "axios";
-import ProductCard from "./ProductCard";
-
-import React from "react";
-
-import AppContext, { AppProvider } from "../context/AppContext";
+import { GET_PRODUCTS } from '../graphql/Queries';
+import axios from 'axios';
+import ProductCard from './ProductCard';
+import React from 'react';
+import AppContext from '../context/AppContext';
 
 //------------------------------
 // AXIOS + CONTEXT API
@@ -17,9 +15,12 @@ class Products extends React.Component {
     const { productsData } = this.context || null;
 
     //load all products [0 index] if root route, else find category index by route pathname substring
-    const productCategoryIndex = window.location.pathname.length === 1 ? 0 : this.context.productCategories
-      .map((category) => category.name)
-      .indexOf(String(window.location.pathname.substring(1)));
+    const productCategoryIndex =
+      window.location.pathname.length === 1
+        ? 0
+        : this.context.productCategories
+            .map((category) => category.name)
+            .indexOf(String(window.location.pathname.substring(1)));
 
     //load display currency from state
     const currencySelectedIndex = this.context.currencies

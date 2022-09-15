@@ -1,12 +1,12 @@
-import React from "react";
-import AppContext from "../context/AppContext";
+import React from 'react';
+import AppContext from '../context/AppContext';
 
-import uuid from "react-uuid";
+import uuid from 'react-uuid';
 
-import IconPrev from "../assets/icon_prev.svg";
-import IconNext from "../assets/icon_next.svg";
-import IconPlusSquare from "../assets/icon_plus-square.svg";
-import IconMinusSquare from "../assets/icon_minus-square.svg";
+import IconPrev from '../assets/icon_prev.svg';
+import IconNext from '../assets/icon_next.svg';
+import IconPlusSquare from '../assets/icon_plus-square.svg';
+import IconMinusSquare from '../assets/icon_minus-square.svg';
 
 class CartItem extends React.Component {
   static contextType = AppContext;
@@ -20,12 +20,12 @@ class CartItem extends React.Component {
     return this.props.productDetails.attributes[
       this.props.productDetails.attributes.findIndex((items) => {
         switch (items.name) {
-          case "Size":
+          case 'Size':
             // console.log("attr type: " + items.name);
-            return "Size";
-          case "Capacity":
+            return 'Size';
+          case 'Capacity':
             // console.log("attr type: " + items.name);
-            return "Capacity";
+            return 'Capacity';
         }
       })
     ].name;
@@ -107,40 +107,54 @@ class CartItem extends React.Component {
                       {productDetails.attributes[
                         productDetails.attributes.findIndex((items) => {
                           switch (items.name) {
-                            case "Size":
-                              return "Size";
-                            case "Capacity":
-                              return "Capacity";
+                            case 'Size':
+                              return 'Size';
+                            case 'Capacity':
+                              return 'Capacity';
                           }
                         })
                       ].items.map((attribute) => {
-                        return this.getAttributeType() === "Capacity" ? (
+                        return this.getAttributeType() === 'Capacity' ? (
+                          //template for items with selectable capacity
                           <div
                             key={uuid()}
                             className={
                               attribute.value !== undefined
                                 ? attribute.value ===
                                   this.props.attributeSelectedCapacity
-                                  ? "product-description__attributes-size product-description__attributes-size--selected"
-                                  : "product-description__attributes-size"
-                                : "product-description__attributes-size"
+                                  ? 'product-description__attributes-size product-description__attributes-size--selected'
+                                  : 'product-description__attributes-size'
+                                : 'product-description__attributes-size'
                             }
-                            onClick={this.context.selectAttributeCapacity}
+                            onClick={(e) =>
+                              this.context.selectAttributeCapacityById(
+                                e,
+                                this.props.id
+                              )
+                            }
                           >
                             {attribute.value}
                           </div>
                         ) : (
+                          //template for items with selectable size
                           <div
                             key={uuid()}
                             className={
                               attribute.value !== undefined
                                 ? attribute.value ===
                                   this.props.attributeSelectedSize
-                                  ? "product-description__attributes-size product-description__attributes-size--selected"
-                                  : "product-description__attributes-size"
-                                : "product-description__attributes-size"
+                                  ? 'product-description__attributes-size product-description__attributes-size--selected'
+                                  : 'product-description__attributes-size'
+                                : 'product-description__attributes-size'
                             }
-                            onClick={this.context.selectAttributeSize}
+                            // onClick={this.context.selectAttributeSize}
+                            // onClick={(e)=>this.context.selectAttributeSizeById(e, this.props.id)}
+                            onClick={(e) =>
+                              this.context.selectAttributeSizeById(
+                                e,
+                                this.props.id
+                              )
+                            }
                           >
                             {attribute.value}
                           </div>
@@ -151,7 +165,7 @@ class CartItem extends React.Component {
                 ) : null}
 
                 {productDetails.attributes.find((obj) => {
-                  return obj.type === "swatch";
+                  return obj.type === 'swatch';
                 }) ? (
                   <div className="product-description__attributes-select-color">
                     <span className="product-description__attribute-category">
@@ -160,7 +174,7 @@ class CartItem extends React.Component {
                     <div className="product-description__attributes-select-color-options">
                       {productDetails.attributes[
                         productDetails.attributes.findIndex((items) => {
-                          return items.type === "swatch";
+                          return items.type === 'swatch';
                         })
                       ].items.map((colorOption) => {
                         return (
@@ -170,15 +184,24 @@ class CartItem extends React.Component {
                               colorOption.value !== undefined
                                 ? colorOption.value ===
                                   this.props.attributeSelectedColor
-                                  ? "product-description__attributes-color product-description__attributes-color--selected"
-                                  : "product-description__attributes-color"
-                                : "product-description__attributes-color"
+                                  ? 'product-description__attributes-color product-description__attributes-color--selected'
+                                  : 'product-description__attributes-color'
+                                : 'product-description__attributes-color'
                             }
-                            style={{ backgroundColor: `${colorOption.value}` }}
-                            onClick={
-                              this.context.selectAttributeColor
+                            style={{
+                              backgroundColor: `${colorOption.value}`,
+                              color: 'rgba(0,0,0,0)',
+                            }}
+                            // onClick={this.context.selectAttributeColor}
+                            onClick={(e) =>
+                              this.context.selectAttributeColorById(
+                                e,
+                                this.props.id
+                              )
                             }
-                          />
+                          >
+                            {colorOption.value}
+                          </div>
                         );
                       })}
                     </div>
@@ -237,9 +260,6 @@ class CartItem extends React.Component {
         ) : null}
       </>
     );
-  }
-  componentDidMount() {
-    // this.context.getCurrencies(); //load currencies from API
   }
 }
 
