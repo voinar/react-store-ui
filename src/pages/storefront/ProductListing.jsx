@@ -1,6 +1,4 @@
 import React from 'react';
-import ProductCard from '../../components/ProductCard';
-// import { data } from '../../data/data.js'
 import Products from '../../components/Products';
 import AppContext from '../../context/AppContext';
 
@@ -19,6 +17,10 @@ class ProductListing extends React.Component {
         </div>
       </div>
     );
+  }
+  componentDidMount() {
+    console.log('loaded product list');
+    this.context.clearAttributeCache();
   }
 }
 

@@ -13,9 +13,6 @@ import {
   GET_CURRENCIES,
 } from '../graphql/Queries';
 
-//util functions
-import { toggleModalOverlayMask } from './utils/ToggleModalOverlayMask';
-
 const AppContext = React.createContext();
 
 export class AppProvider extends Component {
@@ -30,22 +27,24 @@ export class AppProvider extends Component {
 
   state = JSON.parse(localStorage.getItem('appState')) ?? initialState; //load state from localStorage or from initialState default
 
+  //state setter functions
   toggleModalOverlayMask = () => {
-    this.setState({
-      cartOverlayVisibility: !this.state.cartOverlayVisibility,
-    });
-    this.setState({
-      modalOverlayMaskVisibility: !this.state.modalOverlayMaskVisibility,
+    this.setState((prevState) => {
+      return {
+        cartOverlayVisibility: !prevState.cartOverlayVisibility,
+        modalOverlayMaskVisibility: !prevState.modalOverlayMaskVisibility,
+      };
     });
   };
 
   getProductCategories = async () => {
     try {
       await axios(GET_PRODUCT_CATEGORIES).then((result) => {
-        this.setState({
-          loading: false,
-          productCategories: result.data.data.categories,
-        });
+        this.setState((prevState) => ({
+          loading: (prevState.loading = false),
+          productCategories: (prevState.productCategories =
+            result.data.data.categories),
+        }));
       });
     } catch (err) {
       console.log(err);
@@ -56,16 +55,19 @@ export class AppProvider extends Component {
     const productCategoryIndex = this.state.productCategories
       .map((category) => category.name)
       .indexOf(e.target.textContent);
-    this.setState({ productCategoryIndex: productCategoryIndex });
+    this.setState((prevState) => ({
+      productCategoryIndex: (prevState.productCategoryIndex =
+        productCategoryIndex),
+    }));
   };
 
   getProducts = async () => {
     try {
       await axios(GET_PRODUCTS).then((result) => {
-        this.setState({
-          productsDataLoading: false,
-          productsData: result.data.data,
-        });
+        this.setState((prevState) => ({
+          productsDataLoading: (prevState.productsDataLoading = false),
+          productsData: (prevState.productsData = result.data.data),
+        }));
       });
     } catch (err) {
       console.log(err);
@@ -74,59 +76,86 @@ export class AppProvider extends Component {
   };
 
   getProductDescription = async () => {
+    this.clearAttributeCache();
+
     const productId = window.location.pathname.substring(9);
+    let newProductDescription = {};
+
     try {
       await axios(GET_PRODUCT_DETAILS(productId)).then((response) => {
-        this.setState({
-          loadingProductDescription: false,
-          productDescription: response.data.data,
-        });
+        newProductDescription = response.data.data;
       });
     } catch (err) {
       console.log(err);
     }
+
+    this.setState((prevState) => ({
+      loadingProductDescription: (prevState.loadingProductDescription = false),
+      productDescription: (prevState.productDescription =
+        newProductDescription),
+    }));
+
+    // this.setState((prevState) => ({
+    //   loadingProductDescription: (prevState.loadingProductDescription = false),
+    //   productDescription: (prevState.productDescription = productDescription),
+    // }));
+    // this.setState({
+    //   loadingProductDescription: false,
+    //   productDescription: productDescription,
+    // });
+    this.selectDefaultAttributes();
     this.handleStateUpdate();
   };
 
   getCurrencies = async () => {
-    let currencyIndex = this.state.currencies.findIndex(
-      (currency) => currency.symbol === this.state.currency
-    );
+    let currencyIndex = () => {
+      //if currency in initialState is undefined then pick 0-index as default, else persist selected currency from state in localStorage
+      if (this.state.currency === '') {
+        return 0;
+      } else {
+        return this.state.currencies.findIndex(
+          (currency) => currency.symbol === this.state.currency
+        );
+      }
+    };
 
     try {
       await axios(GET_CURRENCIES).then((result) => {
-        this.setState({
-          currencies: result.data.data.currencies,
-          currency: result.data.data.currencies[currencyIndex].symbol,
-        });
+        this.setState((prevState) => ({
+          currencies: (prevState.currencies = result.data.data.currencies),
+          currency: (prevState.currency =
+            result.data.data.currencies[currencyIndex()].symbol),
+        }));
       });
     } catch (err) {
       console.log(err);
     }
-    // console.log('currencies loaded')
     this.handleStateUpdate();
   };
 
   handleCurrencyChange = async (e) => {
     let currencyUpdate = e.target.value;
-    await this.setState({ currency: currencyUpdate });
+    await this.setState((prevState) => ({
+      currency: (prevState.currency = currencyUpdate),
+    }));
     // console.log("handle curency change: " + this.state.currency);
     this.handleStateUpdate();
   };
 
   selectAttributeColor = (e) => {
     //change color attribute in product page
-    this.setState({
-      attributeSelectedColor: e.target.textContent,
-    });
+    this.setState((prevState) => ({
+      attributeSelectedColor: (prevState.attributeSelectedColor =
+        e.target.textContent),
+    }));
     // console.log(e.target);
     this.handleStateUpdate();
   };
 
   selectAttributeColorById = (e, uuid) => {
     //change color attribute in cart
-    console.log('e ' + e.target.textContent);
-    console.log('id ' + uuid);
+    // console.log('e ' + e.target.textContent);
+    // console.log('id ' + uuid);
 
     //select item by id
     //change attribute in state
@@ -136,19 +165,24 @@ export class AppProvider extends Component {
         (cartItem) => cartItem.cartItemId === uuid
       )
     ].attributesSelected.attributeSelectedColor = e.target.textContent; //new value
-    this.setState({ newCartContents }); //update the value
+    this.setState((prevState) => ({
+      productCartContents: (prevState.productCartContents = newCartContents),
+    })); //update the value
     this.handleStateUpdate();
   };
 
   selectAttributeSize = (e) => {
-    this.setState({
-      attributeSelectedSize: e.target.textContent,
-    });
+    //select size from product description page
+    this.setState((prevState) => ({
+      attributeSelectedSize: (prevState.attributeSelectedSize =
+        e.target.textContent),
+    }));
     this.handleStateUpdate();
   };
 
   selectAttributeSizeById = (e, uuid) => {
-    //change size attribute in cart
+    //change attribute in cart
+
     console.log('e ' + e.target.textContent);
     console.log('id ' + uuid);
 
@@ -160,14 +194,18 @@ export class AppProvider extends Component {
         (cartItem) => cartItem.cartItemId === uuid
       )
     ].attributesSelected.attributeSelectedSize = e.target.textContent; //new value
-    this.setState({ newCartContents }); //update the value
+    this.setState((prevState) => ({
+      productCartContents: (prevState.productCartContents = newCartContents),
+    })); //update the value
     this.handleStateUpdate();
   };
 
   selectAttributeCapacity = (e) => {
-    this.setState({
-      attributeSelectedCapacity: e.target.textContent,
-    });
+    //select attribute from product description page
+    this.setState((prevState) => ({
+      attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
+        e.target.textContent),
+    }));
     this.handleStateUpdate();
   };
 
@@ -184,25 +222,110 @@ export class AppProvider extends Component {
         (cartItem) => cartItem.cartItemId === uuid
       )
     ].attributesSelected.attributeSelectedCapacity = e.target.textContent; //new value
-    this.setState({ newCartContents }); //update the value
+    this.setState((prevState) => ({
+      productCartContents: (prevState.productCartContents = newCartContents),
+    })); //update the value
     this.handleStateUpdate();
   };
 
-  clearAttributeCache = () => {
-    this.setState({
-      attributeSelectedCapacity: '',
-      attributeSelectedSize: '',
-      attributeSelectedColor: '',
-    });
-    this.handleStateUpdate();
+  clearAttributeCache = async () => {
+    let emptyValue = '';
+
+    this.setState(
+      (prevState) => ({
+        // productCartContents: (prevState.productCartContents = this.context.initialState.productCartContents),
+        attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
+          emptyValue),
+        attributeSelectedSize: (prevState.attributeSelectedSize = emptyValue),
+        attributeSelectedColor: (prevState.attributeSelectedColor = emptyValue),
+      }),
+      this.handleLocalStorage()
+      // // () => {
+      // //   // this.handleLocalStorage();
+
+      //   console.log(
+      //     'clearAttributeCache: ' +
+      //       this.state.attributeSelectedCapacity +
+      //       ' ' +
+      //       this.state.attributeSelectedSize +
+      //       ' ' +
+      //       this.state.attributeSelectedColor
+      //   );
+      // // }
+    );
+    console.log('product description in cache' + this.state.productDescription);
   };
 
-  addToCart = async () => {
+  selectDefaultAttributes = async () => {
+    //select first value in list of attributes by default
+    this.clearAttributeCache();
+
+    let defaultCapacity =
+      this.state.productDescription?.product.attributes[
+        this.state.productDescription?.product.attributes.findIndex(
+          (attribute) => attribute.name === 'Capacity'
+        )
+      ]?.items[0].value;
+    console.log('defaultCapacity ' + defaultCapacity);
+
+    let defaultSize =
+      this.state.productDescription?.product.attributes[
+        this.state.productDescription?.product.attributes.findIndex(
+          (attribute) => attribute.name === 'Size'
+        )
+      ]?.items[0].value;
+    console.log('defaultSize ' + defaultSize);
+
+    let defaultColor =
+      this.state.productDescription?.product.attributes[
+        this.state.productDescription?.product.attributes.findIndex(
+          (attribute) => attribute.name === 'Color'
+        )
+      ]?.items[0].value;
+    console.log('defaultColor ' + defaultColor);
+
+    this.setState(
+      (prevState) => ({
+        attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
+          defaultCapacity),
+        // attributeSelectedCapacity: '',
+        attributeSelectedSize: (prevState.attributeSelectedSize = defaultSize),
+        // attributeSelectedSize: '',
+        attributeSelectedColor: (prevState.attributeSelectedColor =
+          defaultColor),
+        // attributeSelectedColor: '',
+      }),
+      this.handleStateUpdate()
+    );
+    // this.handleStateUpdate();
+  };
+
+  addToCart = () => {
     let productId = window.location.pathname.substring(9);
+    console.log(productId);
+
     let findItemByIndex = this.state.productCartContents.findIndex(
       (cartItem) => cartItem.id === productId
     );
-    // console.log(findItemByIndex);
+
+    let newProductData = {
+      cartItemId: uuid(),
+      id: productId,
+      name: this.state.productDescription.product.name,
+      inStock: this.state.productDescription.product.inStock,
+      gallery: this.state.productDescription.product.gallery,
+      brand: this.state.productDescription.product.brand,
+      prices: this.state.productDescription.product.prices,
+      attributes: this.state.productDescription.product.attributes,
+      description: this.state.productDescription.product.description,
+      category: this.state.productDescription.product.category,
+      quantity: 1,
+      attributesSelected: {
+        attributeSelectedColor: this.state.attributeSelectedColor,
+        attributeSelectedSize: this.state.attributeSelectedSize,
+        attributeSelectedCapacity: this.state.attributeSelectedCapacity,
+      },
+    };
 
     let cartItem = this.state.productCartContents[findItemByIndex];
     cartItem !== undefined
@@ -214,67 +337,53 @@ export class AppProvider extends Component {
         String(cartItem.attributesSelected.attributeSelectedColor) ===
           String(this.state.attributeSelectedColor)
         ? (cartItem.quantity += 1) //else if attributes are the same as any item already present in cart then add quantity + 1
-        : this.setState(
-            //otherwise add new item to cart with selected attributes
-            {
-              productCartContents: [
+        : this.setState((prevState) =>
+            //add new item to cart with selected attributes
+            ({
+              productCartContents: (prevState.productCartContents = [
                 ...this.state.productCartContents,
-                {
-                  cartItemId: uuid(),
-                  id: productId,
-                  name: this.state.productDescription.product.name,
-                  inStock: this.state.productDescription.product.inStock,
-                  gallery: this.state.productDescription.product.gallery,
-                  brand: this.state.productDescription.product.brand,
-                  prices: this.state.productDescription.product.prices,
-                  attributes: this.state.productDescription.product.attributes,
-                  description:
-                    this.state.productDescription.product.description,
-                  category: this.state.productDescription.product.category,
-                  quantity: 1,
-                  attributesSelected: {
-                    attributeSelectedColor: this.state.attributeSelectedColor,
-                    attributeSelectedSize: this.state.attributeSelectedSize,
-                    attributeSelectedCapacity:
-                      this.state.attributeSelectedCapacity,
-                  },
-                },
-              ],
-            }
+                newProductData,
+              ]),
+            })
           )
       : //if no item with the specified id is found in the cart then add new object to the cart wth specified attributes
-        this.setState({
-          productCartContents: [
-            ...this.state.productCartContents,
-            {
-              cartItemId: uuid(),
-              id: productId,
-              name: this.state.productDescription.product.name,
-              inStock: this.state.productDescription.product.inStock,
-              gallery: this.state.productDescription.product.gallery,
-              brand: this.state.productDescription.product.brand,
-              prices: this.state.productDescription.product.prices,
-              attributes: this.state.productDescription.product.attributes,
-              description: this.state.productDescription.product.description,
-              category: this.state.productDescription.product.category,
-              quantity: 1,
-              attributesSelected: {
-                attributeSelectedColor: this.state.attributeSelectedColor,
-                attributeSelectedSize: this.state.attributeSelectedSize,
-                attributeSelectedCapacity: this.state.attributeSelectedCapacity,
-              },
-            },
-          ],
-        });
+        this.setState((prevState) =>
+          //otherwise add new item to cart with selected attributes
+          ({
+            productCartContents: (prevState.productCartContents = [
+              ...this.state.productCartContents,
+              newProductData,
+            ]),
+          })
+        );
     this.handleStateUpdate();
   };
 
-  addToCartFromPLP = async (id) => {
+  addToCartFromPLP = (id) => {
     // console.log('id ' + id);
-    await axios(GET_PRODUCT_DETAILS(id)).then((response) => {
+    axios(GET_PRODUCT_DETAILS(id)).then((response) => {
       let findItemByIndex = this.state.productCartContents.findIndex(
         (cartItem) => cartItem.id === id
       );
+
+      let newProductData = {
+        cartItemId: uuid(),
+        id: response.data.data.product.id,
+        name: response.data.data.product.name,
+        inStock: response.data.data.product.inStock,
+        gallery: response.data.data.product.gallery,
+        brand: response.data.data.product.brand,
+        prices: response.data.data.product.prices,
+        attributes: response.data.data.product.attributes,
+        description: response.data.data.product.description,
+        category: response.data.data.product.category,
+        quantity: 1,
+        attributesSelected: {
+          attributeSelectedColor: '',
+          attributeSelectedSize: '',
+          attributeSelectedCapacity: '',
+        },
+      };
 
       let updatedItem = this.state.productCartContents[findItemByIndex];
 
@@ -283,24 +392,7 @@ export class AppProvider extends Component {
         : this.setState({
             productCartContents: [
               ...this.state.productCartContents,
-              {
-                cartItemId: uuid(),
-                id: response.data.data.product.id,
-                name: response.data.data.product.name,
-                inStock: response.data.data.product.inStock,
-                gallery: response.data.data.product.gallery,
-                brand: response.data.data.product.brand,
-                prices: response.data.data.product.prices,
-                attributes: response.data.data.product.attributes,
-                description: response.data.data.product.description,
-                category: response.data.data.product.category,
-                quantity: 1,
-                attributesSelected: {
-                  attributeSelectedColor: '',
-                  attributeSelectedSize: '',
-                  attributeSelectedCapacity: '',
-                },
-              },
+              newProductData,
             ],
           });
     });
@@ -320,9 +412,9 @@ export class AppProvider extends Component {
     let updatedItem = this.state.productCartContents[findItemByIndex];
     updatedItem.quantity += 1;
 
-    this.setState({
-      // productCartContents: [...this.state.productCartContents],
-    });
+    // this.setState({
+    //   // productCartContents: [...this.state.productCartContents],
+    // });
 
     this.handleStateUpdate();
   };
@@ -336,22 +428,19 @@ export class AppProvider extends Component {
     updatedItem.quantity -= 1;
 
     if (updatedItem.quantity > 0) {
-      this.setState({
-        productCartContents: [
+      this.setState((prevState) => ({
+        productCartContents: (prevState.productCartContents = [
           ...this.state.productCartContents,
-          // .filter(
-          //   (product) => product.cartItemId !== cartItemId
-          // ),
-        ],
-      });
+        ]),
+      }));
     } else {
-      this.setState({
-        productCartContents: [
+      this.setState((prevState) => ({
+        productCartContents: (prevState.productCartContents = [
           ...this.state.productCartContents.filter(
             (product) => product.cartItemId !== cartItemId
           ),
-        ],
-      });
+        ]),
+      }));
     }
     this.handleStateUpdate();
   };
@@ -361,7 +450,10 @@ export class AppProvider extends Component {
       .map((cartItem) => cartItem.quantity)
       .reduce((a, b) => a + b, 0);
 
-    this.setState({ productCartItemsCount: productCartItemsCount });
+    this.setState((prevState) => ({
+      productCartItemsCount: (prevState.productCartItemsCount =
+        productCartItemsCount),
+    }));
   };
 
   getCartTotal = () => {
@@ -386,7 +478,9 @@ export class AppProvider extends Component {
                 (previousValue, currentValue) => previousValue + currentValue
               )
           ).toFixed(2);
-    this.setState({ cartTotal: total });
+    this.setState((prevState) => ({
+      cartTotal: (prevState.cartTotal = total),
+    }));
   };
 
   handleLocalStorage = () => {
@@ -437,6 +531,7 @@ export class AppProvider extends Component {
       selectAttributeCapacity,
       selectAttributeCapacityById,
       clearAttributeCache,
+      selectDefaultAttributes,
       addToCart,
       addToCartFromPLP,
       cartItemAddOne,
@@ -479,6 +574,7 @@ export class AppProvider extends Component {
           selectAttributeCapacity,
           selectAttributeCapacityById,
           clearAttributeCache,
+          selectDefaultAttributes,
           addToCart,
           addToCartFromPLP,
           cartItemAddOne,
@@ -503,9 +599,13 @@ export class AppProvider extends Component {
     //   this.setState({
     //     initialState,
     //   });
-
-    localStorage.setItem('appState', JSON.stringify(this.state)); //save state to localStorage
-
+    let currentState = this.state;
+    localStorage.setItem('appState', JSON.stringify(currentState)); //save state to localStorage
+    // {
+    //   const newCity = "london" //<--- newCity is now the current city. Use this inside of this function as worldCity will be stale until this function finishes.
+    //   cityProp(newCity)
+    //    setWorldCity(newCity)
+    //   }
     // }
   }
 }

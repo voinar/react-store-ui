@@ -3,7 +3,6 @@ const initialState = {
     productCategories: [],
     productCategoryIndex: 0,
     loadingProductDescription: true,
-    product: null,
     expandImagePreviewIndex: 0,
 
     cartOverlayVisibility: false,

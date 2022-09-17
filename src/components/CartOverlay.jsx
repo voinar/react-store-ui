@@ -1,22 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import CartItem from "./CartItem";
-import AppContext from "../context/AppContext";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import CartItem from './CartItem';
+import AppContext from '../context/AppContext';
 
 class CartOverlay extends React.Component {
   static contextType = AppContext;
 
   render() {
     return (
-      <div className="cart-overlay" ref={this.outsideRef}>
-        <div className="cart-overlay__items-container">
+      <div className="cart-overlay">
+        <div className="cart-overlay__items-container" ref={this.outsideRef}>
           <div className="cart-overlay__header">
             <h3>My Bag,</h3>
             <span>{this.context.productCartItemsCount} items</span>
           </div>
-          {
-            this.context.productCartContents
-          .map((cartItem) => {
+          {this.context.productCartContents.map((cartItem) => {
             return (
               <CartItem
                 key={cartItem.cartItemId}
@@ -70,11 +68,11 @@ class CartOverlay extends React.Component {
   componentDidMount() {
     this.context.getCartItemsCount();
     this.context.getCartTotal();
-    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   outsideRef = React.createRef();

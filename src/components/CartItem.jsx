@@ -1,12 +1,9 @@
 import React from 'react';
 import AppContext from '../context/AppContext';
-
 import uuid from 'react-uuid';
 
 import IconPrev from '../assets/icon_prev.svg';
 import IconNext from '../assets/icon_next.svg';
-import IconPlusSquare from '../assets/icon_plus-square.svg';
-import IconMinusSquare from '../assets/icon_minus-square.svg';
 
 class CartItem extends React.Component {
   static contextType = AppContext;
@@ -26,6 +23,8 @@ class CartItem extends React.Component {
           case 'Capacity':
             // console.log("attr type: " + items.name);
             return 'Capacity';
+            default:
+              break;
         }
       })
     ].name;
@@ -87,13 +86,13 @@ class CartItem extends React.Component {
                       ].currency.symbol
                     }
                     {
-                      productDetails.prices[
+                      parseFloat(productDetails.prices[
                         this.context.currencies
                           .map((element) => {
                             return element.symbol;
                           })
                           .indexOf(this.context.currency)
-                      ].amount
+                      ].amount * productDetails.quantity).toFixed(2)
                     }
                   </span>
                 </div>
@@ -111,6 +110,8 @@ class CartItem extends React.Component {
                               return 'Size';
                             case 'Capacity':
                               return 'Capacity';
+                            default:
+                              break;
                           }
                         })
                       ].items.map((attribute) => {
@@ -147,8 +148,6 @@ class CartItem extends React.Component {
                                   : 'product-description__attributes-size'
                                 : 'product-description__attributes-size'
                             }
-                            // onClick={this.context.selectAttributeSize}
-                            // onClick={(e)=>this.context.selectAttributeSizeById(e, this.props.id)}
                             onClick={(e) =>
                               this.context.selectAttributeSizeById(
                                 e,
@@ -235,7 +234,8 @@ class CartItem extends React.Component {
                 <div className="cart-item__controls__preview">
                   <img
                     src={productDetails.gallery[this.state.previewImageIndex]}
-                    alt="product preview"
+                    alt={`${productDetails.brand} ${productDetails.name}`}
+                    title={`${productDetails.brand} ${productDetails.name}`}
                   />
                   {this.props.productDetails.gallery.length > 1 ? (
                     <div className="cart-item__controls__preview-buttons">
