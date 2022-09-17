@@ -6,6 +6,17 @@ import ChevronDown from '../../src/assets/icon_chevron-down.svg';
 class CurrencySelect extends React.Component {
   static contextType = AppContext;
 
+  outsideRef = React.createRef();
+
+  handleClickOutside = (e) => {
+    if (
+      this.context.currencySelectVisibility === true &&
+      !this.outsideRef.current.contains(e.target)
+    ) {
+      this.context.toggleCurrencySelect();
+    }
+  };
+
   render() {
     const { currencies } = this.context;
     const { currency } = this.context;
@@ -16,27 +27,35 @@ class CurrencySelect extends React.Component {
           <>loading...</>
         ) : (
           <div className="currency-select">
-            <button className="currency-select__dropdown">
+            <button
+              className="currency-select__dropdown"
+              onClick={this.context.toggleCurrencySelect}
+            >
               <span>{currency}</span>
               <img src={ChevronDown} alt="select currency" />
             </button>
-            <select
-              className="currency-select__dropdown-content"
-              size={currencies.length}
-              // onClick={this.context.handleCurrencyChange}
-            >
-              {currencies.map((currency) => {
-                return (
-                  <option
-                    key={currency.symbol}
-                    value={currency.symbol}
-                    onClick={this.context.handleCurrencyChange}
-                  >
-                    {currency.symbol} {currency.label}
-                  </option>
-                );
-              })}
-            </select>
+            {this.context.currencySelectVisibility === true ? (
+              <select
+                className="currency-select__dropdown-content"
+                size={currencies.length}
+                ref={this.outsideRef}
+              >
+                {currencies.map((currency) => {
+                  return (
+                    <option
+                      key={currency.symbol}
+                      value={currency.symbol}
+                      onClick={(e) => {
+                        this.context.toggleCurrencySelect();
+                        this.context.handleCurrencyChange(e);
+                      }}
+                    >
+                      {currency.symbol} {currency.label}
+                    </option>
+                  );
+                })}
+              </select>
+            ) : null}
           </div>
         )}
       </>
@@ -45,6 +64,11 @@ class CurrencySelect extends React.Component {
 
   componentDidMount() {
     this.context.getCurrencies(); //load currencies from API
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 }
 

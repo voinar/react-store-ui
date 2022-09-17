@@ -28,11 +28,19 @@ export class AppProvider extends Component {
   state = JSON.parse(localStorage.getItem('appState')) ?? initialState; //load state from localStorage or from initialState default
 
   //state setter functions
-  toggleModalOverlayMask = () => {
+  toggleCartOverlay = () => {
     this.setState((prevState) => {
       return {
         cartOverlayVisibility: !prevState.cartOverlayVisibility,
         modalOverlayMaskVisibility: !prevState.modalOverlayMaskVisibility,
+      };
+    });
+  };
+
+  toggleCurrencySelect = () => {
+    this.setState((prevState) => {
+      return {
+        currencySelectVisibility: !prevState.currencySelectVisibility,
       };
     });
   };
@@ -238,8 +246,8 @@ export class AppProvider extends Component {
           emptyValue),
         attributeSelectedSize: (prevState.attributeSelectedSize = emptyValue),
         attributeSelectedColor: (prevState.attributeSelectedColor = emptyValue),
-      }),
-      this.handleLocalStorage()
+      })
+      // this.handleLocalStorage()
       // // () => {
       // //   // this.handleLocalStorage();
 
@@ -502,6 +510,7 @@ export class AppProvider extends Component {
       productCategoryIndex,
       expandImagePreviewIndex,
       cartOverlayVisibility,
+      currencySelectVisibility,
       modalOverlayMaskVisibility,
       currencies,
       currency,
@@ -517,7 +526,8 @@ export class AppProvider extends Component {
       cartTotal,
     } = this.state;
     const {
-      toggleModalOverlayMask,
+      toggleCartOverlay,
+      toggleCurrencySelect,
       getProductCategories,
       loadProductCategory,
       getProducts,
@@ -547,6 +557,7 @@ export class AppProvider extends Component {
           productCategoryIndex,
           expandImagePreviewIndex,
           cartOverlayVisibility,
+          currencySelectVisibility,
           modalOverlayMaskVisibility,
           currencies,
           currency,
@@ -560,7 +571,8 @@ export class AppProvider extends Component {
           productCartContents,
           productCartItemsCount,
           cartTotal,
-          toggleModalOverlayMask,
+          toggleCartOverlay,
+          toggleCurrencySelect,
           getProductCategories,
           loadProductCategory,
           getProducts,

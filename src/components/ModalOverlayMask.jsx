@@ -6,7 +6,7 @@ class ModalOverlayMask extends React.Component {
 
     render() {
         return <>
-            <div className="modal-overlay-mask" onClick={this.context.toggleModalOverlayMask}/>
+            <div className="modal-overlay-mask" onClick={this.context.toggleCartOverlay}/>
         </>
     }
 }

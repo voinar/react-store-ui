@@ -6,6 +6,14 @@ import AppContext from '../context/AppContext';
 class CartOverlay extends React.Component {
   static contextType = AppContext;
 
+  outsideRef = React.createRef();
+
+  handleClickOutside = (e) => {
+    if (!this.outsideRef.current.contains(e.target)) {
+      this.context.toggleCartOverlay();
+    }
+  };
+
   render() {
     return (
       <div className="cart-overlay">
@@ -47,14 +55,14 @@ class CartOverlay extends React.Component {
               <Link to="/cart">
                 <button
                   className="cart-overlay__summary__view-bag"
-                  onClick={this.context.toggleModalOverlayMask}
+                  onClick={this.context.toggleCartOverlay}
                 >
                   View bag
                 </button>
               </Link>
               <button
                 className="cart-overlay__summary__checkout"
-                onClick={this.context.toggleModalOverlayMask}
+                onClick={this.context.toggleCartOverlay}
               >
                 Check out
               </button>
@@ -66,22 +74,14 @@ class CartOverlay extends React.Component {
   }
 
   componentDidMount() {
-    this.context.getCartItemsCount();
-    this.context.getCartTotal();
+    // this.context.getCartItemsCount();
+    // this.context.getCartTotal();
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClickOutside);
   }
-
-  outsideRef = React.createRef();
-
-  handleClickOutside = (e) => {
-    if (!this.outsideRef.current.contains(e.target)) {
-      this.context.toggleModalOverlayMask();
-    }
-  };
 }
 
 export default CartOverlay;

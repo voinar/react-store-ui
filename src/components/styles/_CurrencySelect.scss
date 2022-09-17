@@ -27,6 +27,7 @@
   }
 
 .currency-select__dropdown-content {
+  // visibility: hidden;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -35,8 +36,7 @@
   padding: 4px 0;
   box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.40);
   cursor: pointer;
-  // visibility: hidden;
-  opacity: 0;
+  // opacity: 1;
   transition-property: visibility, opacity;
   transition-timing-function: linear;
   transition-duration: 0s, 0.2s;
@@ -57,10 +57,14 @@
   }
 }
 
-.currency-select:hover .currency-select__dropdown-content {
-    visibility: visible;
-    opacity: 1;
+.currency-select__dropdown-content--hidden {
+  visibility: hidden;
 }
+
+// .currency-select:hover .currency-select__dropdown-content {
+//     visibility: visible;
+//     opacity: 1;
+// }
 
 .currency-select:hover .currency-select__dropdown img {
   transform: rotate(180deg);

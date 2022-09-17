@@ -7,6 +7,7 @@ const initialState = {
 
     cartOverlayVisibility: false,
     modalOverlayMaskVisibility: false,
+    currencySelectVisibility: false,
     currencies: [],
     currency: '',
     productsDataLoading: true,

@@ -823,7 +823,6 @@ template {
   -webkit-box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.4);
           box-shadow: 0px 4px 20px rgba(168, 172, 176, 0.4);
   cursor: pointer;
-  opacity: 0;
   -webkit-transition-property: visibility, opacity;
   transition-property: visibility, opacity;
   -webkit-transition-timing-function: linear;
@@ -847,9 +846,8 @@ template {
   background-color: #EEEEEE;
 }
 
-.currency-select:hover .currency-select__dropdown-content {
-  visibility: visible;
-  opacity: 1;
+.currency-select__dropdown-content--hidden {
+  visibility: hidden;
 }
 
 .currency-select:hover .currency-select__dropdown img {

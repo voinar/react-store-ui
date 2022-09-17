@@ -8,7 +8,7 @@ class ProductCartItemsCount extends React.Component {
     return (
       <div
         className="navbar-cart-icon__item-count"
-        onClick={this.context.toggleModalOverlayMask}
+        onClick={this.context.toggleCartOverlay}
       >
         {this.context.productCartItemsCount}
       </div>

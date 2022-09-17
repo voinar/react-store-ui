@@ -37,7 +37,7 @@ class Navbar extends React.Component {
                 className="navbar-cart-icon"
                 src={IconCart}
                 alt="view cart"
-                onClick={this.context.toggleModalOverlayMask}
+                onClick={this.context.toggleCartOverlay}
               />
 
               <ProductCartItemsCount />
