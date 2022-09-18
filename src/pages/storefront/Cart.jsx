@@ -54,7 +54,7 @@ class Cart extends React.Component {
             <div className="cart__summary__quantity">
               <div className="cart__summary__quantity__label">Quantity:</div>
               <div>
-                <strong>{this.context.productCartItemsCount}</strong>
+                <strong>{this.context.getCartItemsCount()}</strong>
               </div>
             </div>
             <div className="cart__summary__total">

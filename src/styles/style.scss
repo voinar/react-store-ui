@@ -3,6 +3,7 @@
 @import './variables'; //global style variables: fonts, colors, shadows etc
 
 //components
+@import '../components/styles/LoadingSpinner';
 @import '../components/styles/Navbar';
 @import '../components/styles/ModalOverlayMask';
 @import '../components/styles/ProductCard';

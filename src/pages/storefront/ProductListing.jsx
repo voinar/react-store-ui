@@ -19,7 +19,7 @@ class ProductListing extends React.Component {
     );
   }
   componentDidMount() {
-    this.context.clearAttributeCache();
+    this.context.loadDefaultProductDescription();
   }
 }
 

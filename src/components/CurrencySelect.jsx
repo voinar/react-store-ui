@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../context/AppContext';
+import LoadingSpinner from './LoadingSpinner';
 
 import ChevronDown from '../../src/assets/icon_chevron-down.svg';
 
@@ -11,7 +12,7 @@ class CurrencySelect extends React.Component {
   state = { currencySelectVisibility: false };
 
   toggleCurrencySelect = () => {
-    console.log('clock')
+    console.log('clock');
     this.setState((prevState) => {
       return {
         currencySelectVisibility: !prevState.currencySelectVisibility,
@@ -35,7 +36,9 @@ class CurrencySelect extends React.Component {
     return (
       <>
         {currency === '' ? (
-          <>loading...</>
+          <>
+            <LoadingSpinner />
+          </>
         ) : (
           <div className="currency-select">
             <button

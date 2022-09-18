@@ -232,16 +232,23 @@ export class AppProvider extends Component {
   clearAttributeCache = async () => {
     let emptyValue = '';
 
-    this.setState(
-      (prevState) => ({
-        // productCartContents: (prevState.productCartContents = this.context.initialState.productCartContents),
-        attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
-          emptyValue),
-        attributeSelectedSize: (prevState.attributeSelectedSize = emptyValue),
-        attributeSelectedColor: (prevState.attributeSelectedColor = emptyValue),
-      })
-    );
+    this.setState((prevState) => ({
+      ...prevState,
+      // productCartContents: (prevState.productCartContents = this.context.initialState.productCartContents),
+      attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
+        emptyValue),
+      attributeSelectedSize: (prevState.attributeSelectedSize = emptyValue),
+      attributeSelectedColor: (prevState.attributeSelectedColor = emptyValue),
+    }));
   };
+
+  loadDefaultProductDescription = async () => {
+    console.log('ok');
+
+    this.setState((prevState) => ({
+      ...prevState,
+      productDescription: null }))
+    }
 
   selectDefaultAttributes = async () => {
     //select first value in list of attributes by default
@@ -441,7 +448,6 @@ export class AppProvider extends Component {
     //   productCartItemsCount: (prevState.productCartItemsCount =
     //     productCartItemsCount),
     // }));
-
   };
 
   getCartTotal = () => {
@@ -518,6 +524,7 @@ export class AppProvider extends Component {
       selectAttributeCapacity,
       selectAttributeCapacityById,
       clearAttributeCache,
+      loadDefaultProductDescription,
       selectDefaultAttributes,
       addToCart,
       addToCartFromPLP,
@@ -560,6 +567,7 @@ export class AppProvider extends Component {
           selectAttributeCapacity,
           selectAttributeCapacityById,
           clearAttributeCache,
+          loadDefaultProductDescription,
           selectDefaultAttributes,
           addToCart,
           addToCartFromPLP,

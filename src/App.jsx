@@ -1,15 +1,16 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 
-import "./styles/style.css";
+import './styles/style.css';
 
-import Navbar from "./components/Navbar";
-import ProductListing from "./pages/storefront/ProductListing";
-import ProductDescription from "./pages/storefront/ProductDescription";
-import Cart from "./pages/storefront/Cart";
+import Navbar from './components/Navbar';
+import ProductListing from './pages/storefront/ProductListing';
+import ProductDescription from './pages/storefront/ProductDescription';
+import Cart from './pages/storefront/Cart';
+import LoadingSpinner from './components/LoadingSpinner';
 
-import AppContext, { AppProvider } from "./context/AppContext";
+import AppContext, { AppProvider } from './context/AppContext';
 
 class App extends React.Component {
   static contextType = AppContext;
@@ -22,8 +23,8 @@ class App extends React.Component {
   getProductCategories = () => {
     try {
       axios({
-        url: "http://localhost:4000",
-        method: "POST",
+        url: 'http://localhost:4000',
+        method: 'POST',
         data: {
           query: `
           query GET_CATEGORIES {
@@ -48,7 +49,7 @@ class App extends React.Component {
     return (
       <>
         {this.state.loading === true ? (
-          <h1>Please check your Apollo server connection... </h1>
+          <LoadingSpinner />
         ) : (
           <AppProvider>
             <BrowserRouter>
@@ -56,7 +57,7 @@ class App extends React.Component {
               <Routes>
                 <Route
                   path="/"
-                  element={<ProductListing category={"Welcome"} />}
+                  element={<ProductListing category={'Welcome'} />}
                 />
                 {this.state.productCategories.map((category) => {
                   return (

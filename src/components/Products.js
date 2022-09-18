@@ -1,7 +1,6 @@
-import { GET_PRODUCTS } from '../graphql/Queries';
-import axios from 'axios';
-import ProductCard from './ProductCard';
 import React from 'react';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ProductCard from './ProductCard';
 import AppContext from '../context/AppContext';
 
 //------------------------------
@@ -32,7 +31,9 @@ class Products extends React.Component {
     return (
       <div>
         {this.context.productsDataLoading || !this.context.productsData ? (
-          <div>loading...</div>
+          <div>
+            <LoadingSpinner />
+          </div>
         ) : (
           <div className="product-listing__cards-container">
             {productsData.categories[productCategoryIndex].products.map(
