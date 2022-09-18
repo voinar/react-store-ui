@@ -1,8 +1,8 @@
 import React from 'react';
+import AppContext, { AppProvider } from './context/AppContext';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-
-import './styles/style.css';
 
 import Navbar from './components/Navbar';
 import ProductListing from './pages/storefront/ProductListing';
@@ -10,7 +10,7 @@ import ProductDescription from './pages/storefront/ProductDescription';
 import Cart from './pages/storefront/Cart';
 import LoadingSpinner from './components/LoadingSpinner';
 
-import AppContext, { AppProvider } from './context/AppContext';
+import './styles/style.css';
 
 class App extends React.Component {
   static contextType = AppContext;
@@ -23,7 +23,7 @@ class App extends React.Component {
   getProductCategories = () => {
     try {
       axios({
-        url: 'http://localhost:4000',
+        url: 'https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/',
         method: 'POST',
         data: {
           query: `

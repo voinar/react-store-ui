@@ -1,5 +1,5 @@
 export const GET_PRODUCT_CATEGORIES = {
-  url: "http://localhost:4000/",
+  url: "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/",
   method: "POST",
   data: {
     query: `
@@ -12,7 +12,7 @@ export const GET_PRODUCT_CATEGORIES = {
 };
 
 export const GET_PRODUCTS = {
-  url: "http://localhost:4000/",
+  url: "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/",
   method: "POST",
   data: {
     query: `
@@ -52,7 +52,7 @@ export const GET_PRODUCTS = {
 };
 
 export const GET_CURRENCIES = {
-  url: "http://localhost:4000/",
+  url: "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/",
   method: "POST",
   data: {
     query: `
@@ -68,7 +68,7 @@ export const GET_CURRENCIES = {
 
 export const GET_PRODUCT_DETAILS = (productId) => {
   return {
-    url: "http://localhost:4000/",
+    url: "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/",
     method: "POST",
     data: {
       query: `
