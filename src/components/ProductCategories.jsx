@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
+import AppContext from '../context/AppContext';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import AppContext from "../context/AppContext";
 
 class ProductCategories extends React.Component {
   static contextType = AppContext;
@@ -14,7 +14,9 @@ class ProductCategories extends React.Component {
       <>
         <div>
           {this.context.loading || !this.context.productCategories ? (
-            <div><LoadingSpinner /></div>
+            <div>
+              <LoadingSpinner />
+            </div>
           ) : (
             <div>
               <ul className="navbar-categories">
@@ -36,7 +38,6 @@ class ProductCategories extends React.Component {
   }
   componentDidMount() {
     this.context.getProductCategories();
-    // console.log("mounted");
   }
 }
 

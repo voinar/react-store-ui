@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import { Link } from 'react-router-dom';
+
 import ProductCartAdd from '../assets/icon_add-to-cart.svg';
 
 class ProductCard extends React.Component {
@@ -10,7 +11,11 @@ class ProductCard extends React.Component {
     return (
       <div className="product-card" key={this.props.id}>
         <Link to={`/product/${this.props.productUrl}`}>
-          <img src={this.props.image} alt={`${this.props.brand} ${this.props.name}`} title={`${this.props.brand} ${this.props.name}`}/>
+          <img
+            src={this.props.image}
+            alt={`${this.props.brand} ${this.props.name}`}
+            title={`${this.props.brand} ${this.props.name}`}
+          />
           <div className="product-card__content">
             <h2 className="product-card__content-title">
               {this.props.brand} {this.props.name}
@@ -53,10 +58,6 @@ class ProductCard extends React.Component {
         </Link>
       </div>
     );
-  }
-
-  componentDidMount() {
-    this.context.clearAttributeCache();
   }
 }
 

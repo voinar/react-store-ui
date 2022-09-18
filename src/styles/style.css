@@ -1138,6 +1138,14 @@ template {
   line-height: 20px;
 }
 
+.cart-overlay .cart-overlay__items-container .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-button:hover,
+.cart-overlay .cart-overlay__items-container .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-button--minus:hover {
+  background-color: black;
+  color: white;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
 .cart-overlay .cart-overlay__items-container .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-amount {
   font-size: 16px;
 }
@@ -1202,6 +1210,8 @@ template {
 .cart-overlay .cart-overlay__summary .cart-overlay__summary__buttons button {
   all: unset;
   padding: 10px 32px;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
 }
 
 .cart-overlay .cart-overlay__summary .cart-overlay__summary__buttons .cart-overlay__summary__view-bag {
@@ -1366,6 +1376,8 @@ template {
   text-align: center;
   padding-top: 10px;
   cursor: pointer;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
 }
 
 .product-description__attributes-select-size-options .product-description__attributes-size:hover {
@@ -1387,6 +1399,8 @@ template {
       -ms-flex-direction: column;
           flex-direction: column;
   margin: 0 0 30px 0;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
 }
 
 .product-description__attributes-select-color-options {
@@ -1408,6 +1422,8 @@ template {
   -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
           box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .product-description__attributes-select-color-options .product-description__attributes-color:hover,
@@ -1439,6 +1455,8 @@ template {
   text-align: center;
   margin: 30px 0;
   cursor: pointer;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .product-description__button:hover {
@@ -1578,6 +1596,10 @@ body {
   color: #1D1F22;
   background-color: #FFFFFF;
   min-width: 600px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 h1 {
@@ -1588,6 +1610,13 @@ h1 {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+span, p, h1, h2, h3, h4, h5, h6, a {
+  -webkit-user-select: text;
+     -moz-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
 }
 
 .section-container {

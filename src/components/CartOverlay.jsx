@@ -1,7 +1,7 @@
 import React from 'react';
+import AppContext from '../context/AppContext';
 import { Link } from 'react-router-dom';
 import CartItem from './CartItem';
-import AppContext from '../context/AppContext';
 
 class CartOverlay extends React.Component {
   static contextType = AppContext;
@@ -78,8 +78,6 @@ class CartOverlay extends React.Component {
   }
 
   componentDidMount() {
-    // this.context.getCartItemsCount();
-    // this.context.getCartTotal();
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 

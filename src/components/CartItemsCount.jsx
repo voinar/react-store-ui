@@ -14,12 +14,6 @@ class ProductCartItemsCount extends React.Component {
       </div>
     );
   }
-
-  componentDidMount() {
-    // this.context.getCartItemsCount();
-    // this.forceUpdate();
-  }
-
 }
 
 export default ProductCartItemsCount;

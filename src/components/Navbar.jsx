@@ -1,15 +1,15 @@
 import React from 'react';
+import AppContext from '../context/AppContext';
 import { Link } from 'react-router-dom';
+
+import ModalOverlayMask from './ModalOverlayMask';
 import ProductCategories from './ProductCategories';
 import CurrencySelect from './CurrencySelect';
 import CartOverlay from '../components/CartOverlay';
 import ProductCartItemsCount from './CartItemsCount';
-import ModalOverlayMask from './ModalOverlayMask';
 
 import Logo from '../../src/assets/icon_logo.svg';
 import IconCart from '../../src/assets/icon_empty-cart.svg';
-
-import AppContext from '../context/AppContext';
 
 class Navbar extends React.Component {
   static contextType = AppContext;

@@ -18,18 +18,17 @@ class CartItem extends React.Component {
       this.props.productDetails.attributes.findIndex((items) => {
         switch (items.name) {
           case 'Size':
-            // console.log("attr type: " + items.name);
             return 'Size';
           case 'Capacity':
-            // console.log("attr type: " + items.name);
             return 'Capacity';
-            default:
-              break;
+          default:
+            return null;
         }
       })
     ].name;
   };
 
+  //view product images from the gallery
   nextPreviewImage = () => {
     if (
       this.state.previewImageIndex <
@@ -67,7 +66,6 @@ class CartItem extends React.Component {
             <hr />
             <div className="cart-item__contents">
               <div className="product-description__attributes">
-                {/* <span>{productDetails.cartItemId}</span> */}
                 <div className="product-description__attribute-name">
                   <span>{productDetails.brand}</span>
                 </div>
@@ -85,15 +83,15 @@ class CartItem extends React.Component {
                           .indexOf(this.context.currency)
                       ].currency.symbol
                     }
-                    {
-                      parseFloat(productDetails.prices[
+                    {parseFloat(
+                      productDetails.prices[
                         this.context.currencies
                           .map((element) => {
                             return element.symbol;
                           })
                           .indexOf(this.context.currency)
-                      ].amount * productDetails.quantity).toFixed(2)
-                    }
+                      ].amount * productDetails.quantity
+                    ).toFixed(2)}
                   </span>
                 </div>
 
@@ -111,7 +109,7 @@ class CartItem extends React.Component {
                             case 'Capacity':
                               return 'Capacity';
                             default:
-                              break;
+                              return null;
                           }
                         })
                       ].items.map((attribute) => {
@@ -191,7 +189,6 @@ class CartItem extends React.Component {
                               backgroundColor: `${colorOption.value}`,
                               color: 'rgba(0,0,0,0)',
                             }}
-                            // onClick={this.context.selectAttributeColor}
                             onClick={(e) =>
                               this.context.selectAttributeColorById(
                                 e,

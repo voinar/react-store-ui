@@ -1,6 +1,6 @@
 import React from 'react';
-import Products from '../../components/Products';
 import AppContext from '../../context/AppContext';
+import Products from '../../components/Products';
 
 class ProductListing extends React.Component {
   static contextType = AppContext;
@@ -11,10 +11,7 @@ class ProductListing extends React.Component {
         <header>
           <h1>{this.props.category}</h1>
         </header>
-
-        <div>
-          <Products />
-        </div>
+        <Products />
       </div>
     );
   }

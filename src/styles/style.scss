@@ -25,6 +25,7 @@ body {
     color: $--c-text;
     background-color: $--c-white;
     min-width: 600px;
+    user-select: none;
 }
 
 h1 {
@@ -35,6 +36,10 @@ h1 {
 a {
     text-decoration: none;
     color: inherit;
+}
+
+span, p, h1, h2, h3, h4, h5, h6, a {
+    user-select: text;
 }
 
 .section-container {

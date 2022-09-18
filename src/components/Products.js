@@ -1,7 +1,7 @@
 import React from 'react';
+import AppContext from '../context/AppContext';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ProductCard from './ProductCard';
-import AppContext from '../context/AppContext';
 
 //------------------------------
 // AXIOS + CONTEXT API

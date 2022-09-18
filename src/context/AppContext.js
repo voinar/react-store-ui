@@ -18,13 +18,6 @@ const AppContext = React.createContext();
 export class AppProvider extends Component {
   static contextType = AppContext;
 
-  // constructor(props) {
-  //   super(props)
-  //   const appState = localStorage.getItem("appState")
-  //   this.state = appState ?? initialState;
-  //   localStorage.setItem('appState', JSON.parse(this.state))
-  // }
-
   state = JSON.parse(localStorage.getItem('appState')) ?? initialState; //load state from localStorage or from initialState default
 
   //state setter functions
@@ -80,7 +73,6 @@ export class AppProvider extends Component {
     } catch (err) {
       console.log(err);
     }
-    // console.log("products fetch successful");
   };
 
   getProductDescription = async () => {
@@ -139,7 +131,6 @@ export class AppProvider extends Component {
     await this.setState((prevState) => ({
       currency: (prevState.currency = currencyUpdate),
     }));
-    // console.log("handle curency change: " + this.state.currency);
     this.handleStateUpdate();
   };
 
@@ -149,15 +140,10 @@ export class AppProvider extends Component {
       attributeSelectedColor: (prevState.attributeSelectedColor =
         e.target.textContent),
     }));
-    // console.log(e.target);
     this.handleStateUpdate();
   };
 
   selectAttributeColorById = (e, uuid) => {
-    //change color attribute in cart
-    // console.log('e ' + e.target.textContent);
-    // console.log('id ' + uuid);
-
     //select item by id
     //change attribute in state
     let newCartContents = [...this.state.productCartContents]; // create copy of state array
@@ -182,13 +168,7 @@ export class AppProvider extends Component {
   };
 
   selectAttributeSizeById = (e, uuid) => {
-    //change attribute in cart
-
-    console.log('e ' + e.target.textContent);
-    console.log('id ' + uuid);
-
-    //select item by id
-    //change attribute in state
+    //change attribute in cart: select item by id, then change attribute in state
     let newCartContents = [...this.state.productCartContents]; // create copy of state array
     newCartContents[
       this.state.productCartContents.findIndex(
@@ -211,12 +191,7 @@ export class AppProvider extends Component {
   };
 
   selectAttributeCapacityById = (e, uuid) => {
-    //change capacity attribute in cart
-    console.log('e ' + e.target.textContent);
-    console.log('id ' + uuid);
-
-    //select item by id
-    //change attribute in state
+    //change capacity attribute in cart: select item by id, then change attribute in state
     let newCartContents = [...this.state.productCartContents]; // create copy of state array
     newCartContents[
       this.state.productCartContents.findIndex(
@@ -234,7 +209,6 @@ export class AppProvider extends Component {
 
     this.setState((prevState) => ({
       ...prevState,
-      // productCartContents: (prevState.productCartContents = this.context.initialState.productCartContents),
       attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
         emptyValue),
       attributeSelectedSize: (prevState.attributeSelectedSize = emptyValue),
@@ -242,13 +216,13 @@ export class AppProvider extends Component {
     }));
   };
 
-  loadDefaultProductDescription = async () => {
-    console.log('ok');
-
+  loadDefaultProductDescription = () => {
+    //clear product description cache
     this.setState((prevState) => ({
       ...prevState,
-      productDescription: null }))
-    }
+      productDescription: null,
+    }));
+  };
 
   selectDefaultAttributes = async () => {
     //select first value in list of attributes by default
@@ -260,7 +234,6 @@ export class AppProvider extends Component {
           (attribute) => attribute.name === 'Capacity'
         )
       ]?.items[0].value;
-    // console.log('defaultCapacity ' + defaultCapacity);
 
     let defaultSize =
       this.state.productDescription?.product.attributes[
@@ -268,7 +241,6 @@ export class AppProvider extends Component {
           (attribute) => attribute.name === 'Size'
         )
       ]?.items[0].value;
-    // console.log('defaultSize ' + defaultSize);
 
     let defaultColor =
       this.state.productDescription?.product.attributes[
@@ -276,22 +248,17 @@ export class AppProvider extends Component {
           (attribute) => attribute.name === 'Color'
         )
       ]?.items[0].value;
-    // console.log('defaultColor ' + defaultColor);
 
     this.setState(
       (prevState) => ({
         attributeSelectedCapacity: (prevState.attributeSelectedCapacity =
           defaultCapacity),
-        // attributeSelectedCapacity: '',
         attributeSelectedSize: (prevState.attributeSelectedSize = defaultSize),
-        // attributeSelectedSize: '',
         attributeSelectedColor: (prevState.attributeSelectedColor =
           defaultColor),
-        // attributeSelectedColor: '',
       }),
       this.handleStateUpdate()
     );
-    // this.handleStateUpdate();
   };
 
   addToCart = () => {
@@ -393,10 +360,7 @@ export class AppProvider extends Component {
   };
 
   cartItemAddOne = (cartItemId) => {
-    //get cart item id
-    //find cart item by id in cart list
-    //if cart item id quantity > 1 then subtract one
-    //if cart item id quantity = 0 then remove from cart list
+    //find cart item by id in cart list & increment quantity
 
     let findItemByIndex = this.state.productCartContents.findIndex(
       (cartItem) => cartItem.cartItemId === cartItemId
@@ -405,9 +369,9 @@ export class AppProvider extends Component {
     let updatedItem = this.state.productCartContents[findItemByIndex];
     updatedItem.quantity += 1;
 
-    this.setState({
-      productCartContents: [...this.state.productCartContents],
-    });
+    this.setState((prevState) => ({
+      ...prevState.productCartContents,
+    }));
 
     this.handleStateUpdate();
   };
@@ -443,17 +407,10 @@ export class AppProvider extends Component {
     return this.state.productCartContents
       .map((cartItem) => cartItem.quantity)
       .reduce((a, b) => a + b, 0);
-
-    // this.setState((prevState) => ({
-    //   productCartItemsCount: (prevState.productCartItemsCount =
-    //     productCartItemsCount),
-    // }));
   };
 
   getCartTotal = () => {
-    let total = this.state.cartTotal;
-
-    total =
+    let total =
       this.state.productCartContents.length === 0
         ? 0
         : parseFloat(
@@ -488,8 +445,6 @@ export class AppProvider extends Component {
   };
 
   render() {
-    // console.log('cart count: ' + this.state.productCartItemsCount);
-
     const {
       loading,
       productCategories,
@@ -578,8 +533,6 @@ export class AppProvider extends Component {
         }}
       >
         {this.props.children}
-
-        {/* {console.dir(this.state.productCartContents)} */}
       </AppContext.Provider>
     );
   }

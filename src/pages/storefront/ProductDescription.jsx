@@ -19,11 +19,7 @@ class ProductDescription extends React.Component {
   }
 
   componentDidMount() {
-    this.context.clearAttributeCache();
     this.context.getProductDescription();
-    setTimeout(() => {
-      this.context.selectDefaultAttributes();
-    }, 50);
   }
 }
 

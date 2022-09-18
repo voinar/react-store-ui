@@ -13,10 +13,7 @@ class Cart extends React.Component {
         <div>
           <h1>Cart</h1>
         </div>
-        {/*
-        {this.context.productCartContents === undefined
-          ? (<>TRUE</>) : (<>FALSE</>)
-        } */}
+
         {this.context.productCartContents.map((cartItem) => {
           return (
             <CartItem
@@ -77,10 +74,6 @@ class Cart extends React.Component {
         </div>
       </div>
     );
-  }
-  componentDidMount() {
-    // {()=>this.context.currencies === [] ? this.context.getCurrencies() : null}; //load currencies from API
-    // {console.log('currencies context '+ JSON.stringify(this.context.currencies))}; //load currencies from API
   }
 }
 

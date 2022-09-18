@@ -1,7 +1,7 @@
 import React from 'react';
-import parse from 'html-react-parser';
 import AppContext from '../context/AppContext';
 import uuid from 'react-uuid';
+import parse from 'html-react-parser';
 
 class ProductDescriptionContent extends React.Component {
   static contextType = AppContext;
@@ -32,14 +32,11 @@ class ProductDescriptionContent extends React.Component {
         (items) => {
           switch (items.name) {
             case 'Size':
-              // console.log("attr type: " + items.name);
               return 'Size';
             case 'Capacity':
-              // console.log("attr type: " + items.name);
               return 'Capacity';
             default:
-              // alert('Unrecognized product attribute: ' + items.name);
-              break;
+              return null;
           }
         }
       )
@@ -111,7 +108,7 @@ class ProductDescriptionContent extends React.Component {
                             case 'Capacity':
                               return 'Capacity';
                             default:
-                              break;
+                              return null;
                           }
                         }
                       )

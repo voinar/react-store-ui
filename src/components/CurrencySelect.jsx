@@ -77,7 +77,7 @@ class CurrencySelect extends React.Component {
   }
 
   componentDidMount() {
-    this.context.getCurrencies(); //load currencies from API
+    this.context.getCurrencies(); //load currencies from API & populate dropdown menu
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 
