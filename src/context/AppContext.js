@@ -103,16 +103,9 @@ export class AppProvider extends Component {
         newProductDescription),
     }));
 
-    // this.setState((prevState) => ({
-    //   loadingProductDescription: (prevState.loadingProductDescription = false),
-    //   productDescription: (prevState.productDescription = productDescription),
-    // }));
-    // this.setState({
-    //   loadingProductDescription: false,
-    //   productDescription: productDescription,
-    // });
     this.selectDefaultAttributes();
     this.handleStateUpdate();
+    this.forceUpdate();
   };
 
   getCurrencies = async () => {
@@ -247,21 +240,7 @@ export class AppProvider extends Component {
         attributeSelectedSize: (prevState.attributeSelectedSize = emptyValue),
         attributeSelectedColor: (prevState.attributeSelectedColor = emptyValue),
       })
-      // this.handleLocalStorage()
-      // // () => {
-      // //   // this.handleLocalStorage();
-
-      //   console.log(
-      //     'clearAttributeCache: ' +
-      //       this.state.attributeSelectedCapacity +
-      //       ' ' +
-      //       this.state.attributeSelectedSize +
-      //       ' ' +
-      //       this.state.attributeSelectedColor
-      //   );
-      // // }
     );
-    console.log('product description in cache' + this.state.productDescription);
   };
 
   selectDefaultAttributes = async () => {
@@ -274,7 +253,7 @@ export class AppProvider extends Component {
           (attribute) => attribute.name === 'Capacity'
         )
       ]?.items[0].value;
-    console.log('defaultCapacity ' + defaultCapacity);
+    // console.log('defaultCapacity ' + defaultCapacity);
 
     let defaultSize =
       this.state.productDescription?.product.attributes[
@@ -282,7 +261,7 @@ export class AppProvider extends Component {
           (attribute) => attribute.name === 'Size'
         )
       ]?.items[0].value;
-    console.log('defaultSize ' + defaultSize);
+    // console.log('defaultSize ' + defaultSize);
 
     let defaultColor =
       this.state.productDescription?.product.attributes[
@@ -290,7 +269,7 @@ export class AppProvider extends Component {
           (attribute) => attribute.name === 'Color'
         )
       ]?.items[0].value;
-    console.log('defaultColor ' + defaultColor);
+    // console.log('defaultColor ' + defaultColor);
 
     this.setState(
       (prevState) => ({
@@ -310,7 +289,6 @@ export class AppProvider extends Component {
 
   addToCart = () => {
     let productId = window.location.pathname.substring(9);
-    console.log(productId);
 
     let findItemByIndex = this.state.productCartContents.findIndex(
       (cartItem) => cartItem.id === productId
@@ -420,9 +398,9 @@ export class AppProvider extends Component {
     let updatedItem = this.state.productCartContents[findItemByIndex];
     updatedItem.quantity += 1;
 
-    // this.setState({
-    //   // productCartContents: [...this.state.productCartContents],
-    // });
+    this.setState({
+      productCartContents: [...this.state.productCartContents],
+    });
 
     this.handleStateUpdate();
   };
@@ -450,18 +428,20 @@ export class AppProvider extends Component {
         ]),
       }));
     }
+
     this.handleStateUpdate();
   };
 
   getCartItemsCount = () => {
-    let productCartItemsCount = this.state.productCartContents
+    return this.state.productCartContents
       .map((cartItem) => cartItem.quantity)
       .reduce((a, b) => a + b, 0);
 
-    this.setState((prevState) => ({
-      productCartItemsCount: (prevState.productCartItemsCount =
-        productCartItemsCount),
-    }));
+    // this.setState((prevState) => ({
+    //   productCartItemsCount: (prevState.productCartItemsCount =
+    //     productCartItemsCount),
+    // }));
+
   };
 
   getCartTotal = () => {
@@ -510,7 +490,6 @@ export class AppProvider extends Component {
       productCategoryIndex,
       expandImagePreviewIndex,
       cartOverlayVisibility,
-      currencySelectVisibility,
       modalOverlayMaskVisibility,
       currencies,
       currency,
@@ -522,12 +501,10 @@ export class AppProvider extends Component {
       attributeSelectedSize,
       attributeSelectedCapacity,
       productCartContents,
-      productCartItemsCount,
       cartTotal,
     } = this.state;
     const {
       toggleCartOverlay,
-      toggleCurrencySelect,
       getProductCategories,
       loadProductCategory,
       getProducts,
@@ -557,7 +534,6 @@ export class AppProvider extends Component {
           productCategoryIndex,
           expandImagePreviewIndex,
           cartOverlayVisibility,
-          currencySelectVisibility,
           modalOverlayMaskVisibility,
           currencies,
           currency,
@@ -569,10 +545,8 @@ export class AppProvider extends Component {
           attributeSelectedSize,
           attributeSelectedCapacity,
           productCartContents,
-          productCartItemsCount,
           cartTotal,
           toggleCartOverlay,
-          toggleCurrencySelect,
           getProductCategories,
           loadProductCategory,
           getProducts,
@@ -603,22 +577,8 @@ export class AppProvider extends Component {
   }
 
   componentDidMount() {
-    // console.log(JSON.parse(localStorage.getItem('appState')))
-
-    // console.log(localStorage.getItem('appState'));
-
-    // if (this.state) {
-    //   this.setState({
-    //     initialState,
-    //   });
     let currentState = this.state;
     localStorage.setItem('appState', JSON.stringify(currentState)); //save state to localStorage
-    // {
-    //   const newCity = "london" //<--- newCity is now the current city. Use this inside of this function as worldCity will be stale until this function finishes.
-    //   cityProp(newCity)
-    //    setWorldCity(newCity)
-    //   }
-    // }
   }
 }
 

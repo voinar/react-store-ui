@@ -8,6 +8,7 @@
     overflow-x: hidden;
     height: 70vh;
     width: 340px;
+    cursor: default;
 
     .cart-overlay__items-container {
         position: absolute;
@@ -196,6 +197,7 @@
             .cart-overlay__summary__checkout {
                 background-color: $--c-primary;
                 color: $--c-white;
+                height: 24px;
             }
 
             .cart-overlay__summary__view-bag:hover {

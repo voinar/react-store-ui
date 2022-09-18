@@ -10,13 +10,14 @@ class ProductCartItemsCount extends React.Component {
         className="navbar-cart-icon__item-count"
         onClick={this.context.toggleCartOverlay}
       >
-        {this.context.productCartItemsCount}
+        {this.context.getCartItemsCount()}
       </div>
     );
   }
 
   componentDidMount() {
-    this.context.getCartItemsCount();
+    // this.context.getCartItemsCount();
+    // this.forceUpdate();
   }
 
 }

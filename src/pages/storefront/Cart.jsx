@@ -1,8 +1,8 @@
-import React from "react";
-import AppContext from "../../context/AppContext";
-import uuid from "react-uuid";
+import React from 'react';
+import AppContext from '../../context/AppContext';
+import uuid from 'react-uuid';
 
-import CartItem from "../../components/CartItem";
+import CartItem from '../../components/CartItem';
 
 class Cart extends React.Component {
   static contextType = AppContext;
@@ -41,28 +41,39 @@ class Cart extends React.Component {
         <div className="cart__summary">
           <div>
             <div className="cart__summary__tax">
-              <div>Tax 21%:</div>
+              <div className="cart__summary__tax__label">Tax 21%:</div>
               <div>
-                <strong>{this.context.currency}{(Number(this.context.cartTotal)*21/100).toFixed(2)}</strong>
+                <strong>
+                  {this.context.currency}
+                  {parseFloat(
+                    (Number(this.context.cartTotal) * 21) / 100
+                  ).toFixed(2)}
+                </strong>
               </div>
             </div>
             <div className="cart__summary__quantity">
-              <div>Quantity:</div>
+              <div className="cart__summary__quantity__label">Quantity:</div>
               <div>
                 <strong>{this.context.productCartItemsCount}</strong>
               </div>
             </div>
             <div className="cart__summary__total">
-              <div>Total:</div>
+              <div className="cart__summary__total__label">Total:</div>
               <div>
                 <strong>
                   {this.context.currency}
-                  {this.context.cartTotal}
+                  {(() => {
+                    return Number(
+                      parseFloat(this.context.cartTotal) +
+                        (parseFloat(this.context.cartTotal) * 21) / 100
+                    ).toFixed(2);
+                  })()}
                 </strong>
               </div>
             </div>
           </div>
-          <button className="cart__summary__order">Order</button>
+          <button className="cart__summary__order"
+          onClick={(()=>{alert(':)')})}>Order</button>
         </div>
       </div>
     );

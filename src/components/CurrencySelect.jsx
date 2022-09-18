@@ -8,12 +8,23 @@ class CurrencySelect extends React.Component {
 
   outsideRef = React.createRef();
 
+  state = { currencySelectVisibility: false };
+
+  toggleCurrencySelect = () => {
+    console.log('clock')
+    this.setState((prevState) => {
+      return {
+        currencySelectVisibility: !prevState.currencySelectVisibility,
+      };
+    });
+  };
+
   handleClickOutside = (e) => {
     if (
-      this.context.currencySelectVisibility === true &&
+      this.state.currencySelectVisibility === true &&
       !this.outsideRef.current.contains(e.target)
     ) {
-      this.context.toggleCurrencySelect();
+      this.toggleCurrencySelect();
     }
   };
 
@@ -29,12 +40,12 @@ class CurrencySelect extends React.Component {
           <div className="currency-select">
             <button
               className="currency-select__dropdown"
-              onClick={this.context.toggleCurrencySelect}
+              onClick={this.toggleCurrencySelect}
             >
               <span>{currency}</span>
               <img src={ChevronDown} alt="select currency" />
             </button>
-            {this.context.currencySelectVisibility === true ? (
+            {this.state.currencySelectVisibility === true ? (
               <select
                 className="currency-select__dropdown-content"
                 size={currencies.length}
@@ -46,7 +57,7 @@ class CurrencySelect extends React.Component {
                       key={currency.symbol}
                       value={currency.symbol}
                       onClick={(e) => {
-                        this.context.toggleCurrencySelect();
+                        this.toggleCurrencySelect();
                         this.context.handleCurrencyChange(e);
                       }}
                     >

@@ -19,7 +19,6 @@ class ProductListing extends React.Component {
     );
   }
   componentDidMount() {
-    console.log('loaded product list');
     this.context.clearAttributeCache();
   }
 }

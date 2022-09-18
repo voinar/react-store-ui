@@ -46,10 +46,6 @@ class ProductDescriptionContent extends React.Component {
     ].name;
   };
 
-  componentDidMount() {
-    this.context.selectDefaultAttributes();
-  }
-
   render() {
     return (
       <>
@@ -86,7 +82,6 @@ class ProductDescriptionContent extends React.Component {
                   }
                   alt={`Large preview of ${this.context.productDescription?.product?.brand} ${this.context.productDescription?.product?.name}`}
                   title={`Large preview of ${this.context.productDescription?.product?.brand} ${this.context.productDescription?.product?.name}`}
-
                 />
               </div>
             </div>
@@ -270,6 +265,11 @@ class ProductDescriptionContent extends React.Component {
         ) : null}
       </>
     );
+  }
+
+  componentDidMount() {
+    this.context.clearAttributeCache();
+    this.context.selectDefaultAttributes();
   }
 }
 

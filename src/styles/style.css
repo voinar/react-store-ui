@@ -585,6 +585,7 @@ template {
   font-size: 14px;
   text-align: center;
   border-radius: 100px;
+  cursor: pointer;
 }
 
 .modal-overlay-mask {
@@ -867,6 +868,7 @@ template {
   overflow-x: hidden;
   height: 70vh;
   width: 340px;
+  cursor: default;
 }
 
 .cart-overlay .cart-overlay__items-container {
@@ -1069,6 +1071,7 @@ template {
 .cart-overlay .cart-overlay__summary .cart-overlay__summary__buttons .cart-overlay__summary__checkout {
   background-color: #5ECE7B;
   color: #FFFFFF;
+  height: 24px;
 }
 
 .cart-overlay .cart-overlay__summary .cart-overlay__summary__buttons .cart-overlay__summary__view-bag:hover {
@@ -1260,14 +1263,15 @@ template {
 .product-description__attributes-select-color-options .product-description__attributes-color {
   width: 36px;
   height: 36px;
-  background-color: #0F6450;
+  background-color: #0f6450;
   border: 1px solid #FFFFFF;
   -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
           box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 
-.product-description__attributes-select-color-options .product-description__attributes-color:hover, .product-description__attributes-select-color-options .product-description__attributes-color--selected {
+.product-description__attributes-select-color-options .product-description__attributes-color:hover,
+.product-description__attributes-select-color-options .product-description__attributes-color--selected {
   outline: 1px solid #1D1F22;
 }
 
@@ -1297,16 +1301,24 @@ template {
   cursor: pointer;
 }
 
+.product-description__button:hover {
+  background-color: #1D1F22;
+}
+
 .product-description__button--inactive {
   background-color: #B4D2F4;
-  opacity: .7;
-  cursor: default;
+  opacity: 0.7;
+}
+
+.product-description__button--inactive:hover {
+  background-color: #B4D2F4;
+  opacity: 1;
 }
 
 .product-description__contents {
   position: relative;
-  -webkit-transition: height .5s;
-  transition: height .5s;
+  -webkit-transition: height 0.5s;
+  transition: height 0.5s;
 }
 
 .product-description__contents span {
@@ -1380,13 +1392,27 @@ template {
   margin: 30px 0;
 }
 
-.cart .cart__summary .cart__summary__tax td, .cart .cart__summary .cart__summary__quantity td, .cart .cart__summary .cart__summary__total td {
+.cart .cart__summary .cart__summary__tax,
+.cart .cart__summary .cart__summary__quantity,
+.cart .cart__summary .cart__summary__total {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
   font-size: 24px;
   font-weight: 300;
 }
 
-.cart .cart__summary .cart__summary__tax strong, .cart .cart__summary .cart__summary__quantity strong, .cart .cart__summary .cart__summary__total strong {
+.cart .cart__summary .cart__summary__tax strong,
+.cart .cart__summary .cart__summary__quantity strong,
+.cart .cart__summary .cart__summary__total strong {
   font-weight: 600;
+}
+
+.cart .cart__summary .cart__summary__tax__label,
+.cart .cart__summary .cart__summary__quantity__label,
+.cart .cart__summary .cart__summary__total__label {
+  width: 100px;
 }
 
 .cart .cart__summary button {
@@ -1401,6 +1427,10 @@ template {
   text-transform: uppercase;
   text-align: center;
   cursor: pointer;
+}
+
+.cart .cart__summary button:hover {
+  background-color: #1D1F22;
 }
 
 body {
