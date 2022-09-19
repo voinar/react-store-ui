@@ -1084,11 +1084,11 @@ template {
 }
 
 .cart-overlay .cart-overlay__items-container .product-description__attributes-select-size-options .product-description__attributes-size {
-  width: 30px;
-  height: 30px;
+  width: 31px;
+  height: 31px;
   border: 1px solid #1D1F22;
-  font-size: 12px;
-  padding: 4px 0 0;
+  font-size: 11px;
+  padding: 5px 0 0;
 }
 
 .cart-overlay .cart-overlay__items-container .product-description__attributes-select-color {
