@@ -10,6 +10,8 @@ import ProductDescription from './pages/storefront/ProductDescription';
 import Cart from './pages/storefront/Cart';
 import LoadingSpinner from './components/LoadingSpinner';
 
+import { serverUrl }  from './graphql/Queries'
+
 import './styles/style.css';
 
 class App extends React.Component {
@@ -23,7 +25,7 @@ class App extends React.Component {
   getProductCategories = () => {
     try {
       axios({
-        url: 'https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/',
+        url: serverUrl,
         method: 'POST',
         data: {
           query: `

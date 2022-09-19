@@ -1,6 +1,7 @@
 {
   "name": "react-store-ui",
   "version": "0.1.0",
+  "proxy": "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.6.9",

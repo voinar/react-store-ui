@@ -38,39 +38,55 @@ class Cart extends React.Component {
         <div className="cart__summary">
           <div>
             <div className="cart__summary__tax">
-              <div className="cart__summary__tax__label">Tax 21%:</div>
+              <div className="cart__summary__tax__label">
+                <span>Tax 21%:</span>
+              </div>
               <div>
                 <strong>
-                  {this.context.currency}
-                  {parseFloat(
-                    (Number(this.context.cartTotal) * 21) / 100
-                  ).toFixed(2)}
+                  <span>
+                    {this.context.currency}
+                    {parseFloat(
+                      (Number(this.context.cartTotal) * 21) / 100
+                    ).toFixed(2)}
+                  </span>
                 </strong>
               </div>
             </div>
             <div className="cart__summary__quantity">
-              <div className="cart__summary__quantity__label">Quantity:</div>
+              <div className="cart__summary__quantity__label">
+                <span>Quantity:</span>
+              </div>
               <div>
-                <strong>{this.context.getCartItemsCount()}</strong>
+                <strong>
+                  <span>{this.context.getCartItemsCount()}</span>
+                </strong>
               </div>
             </div>
             <div className="cart__summary__total">
-              <div className="cart__summary__total__label">Total:</div>
+              <div className="cart__summary__total__label"><span>Total</span></div>
               <div>
                 <strong>
-                  {this.context.currency}
-                  {(() => {
-                    return Number(
-                      parseFloat(this.context.cartTotal) +
-                        (parseFloat(this.context.cartTotal) * 21) / 100
-                    ).toFixed(2);
-                  })()}
+                  <span>
+                    {this.context.currency}
+                    {(() => {
+                      return Number(
+                        parseFloat(this.context.cartTotal) +
+                          (parseFloat(this.context.cartTotal) * 21) / 100
+                      ).toFixed(2);
+                    })()}
+                  </span>
                 </strong>
               </div>
             </div>
           </div>
-          <button className="cart__summary__order"
-          onClick={(()=>{alert(':)')})}>Order</button>
+          <button
+            className="cart__summary__order"
+            onClick={() => {
+              alert(':)');
+            }}
+          >
+            Order
+          </button>
         </div>
       </div>
     );
