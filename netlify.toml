@@ -1,9 +1,5 @@
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
-
-[[redirects]]
-from = “localhost:4000/*”
-to = “632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/"
-status = 200
+  from = "http://localhost:4000/"
+  to = "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/"
+  status = 200
+  force = true # COMMENT: ensure that we always redirect

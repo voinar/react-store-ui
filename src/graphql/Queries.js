@@ -1,6 +1,6 @@
 export const serverUrl =
-// "http://localhost:4000/" //local server
-"https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/" //remote server
+"http://localhost:4000/" //local server
+// "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/" //remote server
 
 export const GET_PRODUCT_CATEGORIES = {
   url: serverUrl,
