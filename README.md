@@ -1,5 +1,5 @@
 # Scandiweb test assignment
 
-### Preview the site live: https://63282f1c4b397e000851fdb9--snazzy-kelpie-2efda3.netlify.app/
+### Preview the site live: https://632969cfe2f759000827c898--snazzy-kelpie-2efda3.netlify.app/ (requires apollo server running @localhost:4000)
 
 by Marcin Wojnar / marcin.wojnar@indragon.eu
