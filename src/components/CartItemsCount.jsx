@@ -6,6 +6,7 @@ class ProductCartItemsCount extends React.Component {
 
   render() {
     return (
+      this.context.getCartItemsCount() === 0 ? null :
       <div
         className="navbar-cart-icon__item-count"
         onClick={this.context.toggleCartOverlay}
