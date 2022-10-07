@@ -171,6 +171,13 @@
     text-align: justify;
     font-family: $--font-secondary;
     font-weight: 300;
+
+    .product-description__parsed {
+      ul {
+        padding: 0 0 0 20px;
+        list-style: disc;
+      }
+    }
   }
 
   h1 {

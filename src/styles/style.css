@@ -1492,6 +1492,11 @@ template {
   font-weight: 300;
 }
 
+.product-description__contents span .product-description__parsed ul {
+  padding: 0 0 0 20px;
+  list-style: disc;
+}
+
 .product-description__contents h1 {
   font-size: 20px;
   font-weight: bold;

@@ -241,7 +241,11 @@ class ProductDescriptionContent extends React.Component {
                       : 'product-description__contents--trim-text'
                   }
                 >
-                  {parse(this.context.productDescription?.product?.description)}
+                  <div className="product-description__parsed">
+                    {parse(
+                      this.context.productDescription?.product?.description
+                    )}
+                  </div>
                 </span>
 
                 {/* //expand or collapse product description text if longer than 300 characters */}
