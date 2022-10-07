@@ -21,7 +21,7 @@ class CartOverlay extends React.Component {
           <div className="cart-overlay__items-container">
             <div className="cart-overlay__header">
               <h3>My Bag,</h3>
-              <span>{this.context.getCartItemsCount()} items</span>
+              <span>{this.context.getCartItemsCount()} {this.context.getCartItemsCount() === 1 ? 'item' : 'items'}</span>
             </div>
             {this.context.productCartContents.map((cartItem) => {
               return (
