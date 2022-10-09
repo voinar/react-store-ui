@@ -339,11 +339,12 @@ export class AppProvider extends Component {
         category: response.data.data.product.category,
         quantity: 1,
         attributesSelected: {
-          attributeSelectedColor: '',
-          attributeSelectedSize: '',
-          attributeSelectedCapacity: '',
+          attributeSelectedColor: response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Color'})]?.items[0].value,
+          attributeSelectedSize: response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Size'})]?.items[0].value,
+          attributeSelectedCapacity: response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Capacity'})]?.items[0].value,
         },
       };
+      console.log(response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Size'})]?.items[0].value);
 
       let updatedItem = this.state.productCartContents[findItemByIndex];
 

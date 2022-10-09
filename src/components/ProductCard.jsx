@@ -29,11 +29,14 @@ class ProductCard extends React.Component {
         {this.props.inStock ? (
           this.props.selectableAttributes ? (
             <>
-              <Link to={`/product/${this.props.productUrl}`}>
-                <div className="product-card__cart-add">
+              {/* <Link to={`/product/${this.props.productUrl}`}> */}
+                <div
+                  className="product-card__cart-add"
+                  onClick={() => this.context.addToCartFromPLP(this.props.id)}
+                >
                   <img src={ProductCartAdd} alt="add product to cart" />
                 </div>
-              </Link>
+              {/* </Link> */}
             </>
           ) : (
             <>
