@@ -10,6 +10,10 @@
   width: 340px;
   cursor: default;
 
+  button {
+    all: unset;
+  }
+
   .cart-overlay__items-container {
     position: absolute;
     right: -16px;
@@ -117,6 +121,7 @@
     }
 
     .cart-item__controls {
+
       .cart-item__controls__quantity {
         display: flex;
         height: auto;
@@ -139,7 +144,7 @@
         .cart-item__controls__quantity-button--minus:hover {
           background-color: black;
           color: white;
-          transition: .2s;
+          transition: 0.2s;
         }
 
         .cart-item__controls__quantity-amount {

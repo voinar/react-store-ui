@@ -125,12 +125,13 @@ class CartItem extends React.Component {
                                   : 'product-description__attributes-size'
                                 : 'product-description__attributes-size'
                             }
-                            onClick={(e) =>
-                              this.context.selectAttributeCapacityById(
-                                e,
-                                this.props.id
-                              )
-                            }
+                            //optional attribute selection from within cart
+                            // onClick={(e) =>
+                            //   this.context.selectAttributeCapacityById(
+                            //     e,
+                            //     this.props.id
+                            //   )
+                            // }
                           >
                             {attribute.value}
                           </div>
@@ -146,12 +147,13 @@ class CartItem extends React.Component {
                                   : 'product-description__attributes-size'
                                 : 'product-description__attributes-size'
                             }
-                            onClick={(e) =>
-                              this.context.selectAttributeSizeById(
-                                e,
-                                this.props.id
-                              )
-                            }
+                            //optional attribute selection from within cart
+                            // onClick={(e) =>
+                            //   this.context.selectAttributeSizeById(
+                            //     e,
+                            //     this.props.id
+                            //   )
+                            // }
                           >
                             {attribute.value}
                           </div>
@@ -189,12 +191,13 @@ class CartItem extends React.Component {
                               backgroundColor: `${colorOption.value}`,
                               color: 'rgba(0,0,0,0)',
                             }}
-                            onClick={(e) =>
-                              this.context.selectAttributeColorById(
-                                e,
-                                this.props.id
-                              )
-                            }
+                            //optional attribute selection from within cart
+                            // onClick={(e) =>
+                            //   this.context.selectAttributeColorById(
+                            //     e,
+                            //     this.props.id
+                            //   )
+                            // }
                           >
                             {colorOption.value}
                           </div>
@@ -206,18 +209,18 @@ class CartItem extends React.Component {
               </div>
               <div className="cart-item__controls">
                 <div className="cart-item__controls__quantity">
-                  <div
+                  <button
                     className="cart-item__controls__quantity-button"
                     onClick={() => {
                       this.context.cartItemAddOne(productDetails.cartItemId);
                     }}
                   >
                     +
-                  </div>
+                  </button>
                   <div className="cart-item__controls__quantity-amount">
                     <span>{this.props.productDetails.quantity}</span>
                   </div>
-                  <div
+                  <button
                     className="cart-item__controls__quantity-button cart-item__controls__quantity-button--minus"
                     onClick={() => {
                       this.context.cartItemSubtractOne(
@@ -226,7 +229,7 @@ class CartItem extends React.Component {
                     }}
                   >
                     -
-                  </div>
+                  </button>
                 </div>
                 <div className="cart-item__controls__preview">
                   <img

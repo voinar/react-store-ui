@@ -866,6 +866,17 @@ template {
   margin-bottom: 30px;
 }
 
+.cart-item .cart-item__controls .cart-item__controls__quantity button {
+  all: unset;
+}
+
+.cart-item .cart-item__controls .cart-item__controls__quantity button:hover {
+  background-color: #1D1F22;
+  color: #FFFFFF;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
 .cart-item .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-button {
   cursor: pointer;
   border: 1px solid black;
@@ -873,7 +884,7 @@ template {
   height: 42px;
   font-size: 44px;
   font-weight: 100;
-  line-height: 42px;
+  line-height: 46px;
   text-align: center;
 }
 
@@ -905,11 +916,13 @@ template {
   cursor: pointer;
 }
 
-.cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-prev, .cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-next {
+.cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-prev,
+.cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-next {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-prev img, .cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-next img {
+.cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-prev img,
+.cart-item .cart-item__controls .cart-item__controls__preview .cart-item__controls__preview-next img {
   height: 28px;
   width: 28px;
   padding: 6px 10px;
@@ -1009,6 +1022,10 @@ template {
   height: 70vh;
   width: 340px;
   cursor: default;
+}
+
+.cart-overlay button {
+  all: unset;
 }
 
 .cart-overlay .cart-overlay__items-container {
@@ -1142,8 +1159,8 @@ template {
 .cart-overlay .cart-overlay__items-container .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-button--minus:hover {
   background-color: black;
   color: white;
-  -webkit-transition: .2s;
-  transition: .2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
 .cart-overlay .cart-overlay__items-container .cart-item__controls .cart-item__controls__quantity .cart-item__controls__quantity-amount {
@@ -1378,11 +1395,6 @@ template {
   cursor: pointer;
   -webkit-transition: 0.1s;
   transition: 0.1s;
-}
-
-.product-description__attributes-select-size-options .product-description__attributes-size:hover {
-  background-color: #1D1F22;
-  color: #FFFFFF;
 }
 
 .product-description__attributes-select-size-options .product-description__attributes-size--selected {
