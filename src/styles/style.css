@@ -1253,22 +1253,6 @@ template {
   background-color: #1D1F22;
 }
 
-.cart-overlay::-webkit-scrollbar {
-  width: 10px;
-}
-
-.cart-overlay::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.cart-overlay::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-.cart-overlay::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 .product-listing h1 {
   text-transform: capitalize;
 }
@@ -1319,6 +1303,10 @@ template {
       -ms-flex-direction: column;
           flex-direction: column;
   gap: 40px;
+  max-height: 900px;
+  overflow: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
 }
 
 .product-description__images-small img {
@@ -1631,7 +1619,15 @@ a {
   color: inherit;
 }
 
-span, p, h1, h2, h3, h4, h5, h6, a {
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
@@ -1643,7 +1639,23 @@ span, p, h1, h2, h3, h4, h5, h6, a {
 }
 
 hr {
-  border-top: 1px solid #E5E5E5;
+  border-top: 1px solid #e5e5e5;
   margin: 0 0 36px 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #999;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 /*# sourceMappingURL=style.css.map */
