@@ -38,9 +38,9 @@ export class AppProvider extends Component {
     });
   };
 
-  getProductCategories = async () => {
+  getProductCategories = () => {
     try {
-      await axios(GET_PRODUCT_CATEGORIES).then((result) => {
+      axios(GET_PRODUCT_CATEGORIES).then((result) => {
         this.setState((prevState) => ({
           loading: (prevState.loading = false),
           productCategories: (prevState.productCategories =
@@ -50,6 +50,7 @@ export class AppProvider extends Component {
     } catch (err) {
       console.log(err);
     }
+    console.log('CONTEXT getProductCategories');
   };
 
   loadProductCategory = (e) => {
@@ -62,9 +63,9 @@ export class AppProvider extends Component {
     }));
   };
 
-  getProducts = async () => {
+  getProducts = () => {
     try {
-      await axios(GET_PRODUCTS).then((result) => {
+      axios(GET_PRODUCTS).then((result) => {
         this.setState((prevState) => ({
           productsDataLoading: (prevState.productsDataLoading = false),
           productsData: (prevState.productsData = result.data.data),
@@ -100,7 +101,7 @@ export class AppProvider extends Component {
     this.forceUpdate();
   };
 
-  getCurrencies = async () => {
+  getCurrencies = () => {
     let currencyIndex = () => {
       //if currency in initialState is undefined then pick 0-index as default, else persist selected currency from state in localStorage
       if (this.state.currency === '') {
@@ -113,7 +114,7 @@ export class AppProvider extends Component {
     };
 
     try {
-      await axios(GET_CURRENCIES).then((result) => {
+      axios(GET_CURRENCIES).then((result) => {
         this.setState((prevState) => ({
           currencies: (prevState.currencies = result.data.data.currencies),
           currency: (prevState.currency =
@@ -204,7 +205,7 @@ export class AppProvider extends Component {
     this.handleStateUpdate();
   };
 
-  clearAttributeCache = async () => {
+  clearAttributeCache = () => {
     let emptyValue = '';
 
     this.setState((prevState) => ({
@@ -224,7 +225,7 @@ export class AppProvider extends Component {
     }));
   };
 
-  selectDefaultAttributes = async () => {
+  selectDefaultAttributes = () => {
     //select first value in list of attributes by default
     this.clearAttributeCache();
 
@@ -339,12 +340,33 @@ export class AppProvider extends Component {
         category: response.data.data.product.category,
         quantity: 1,
         attributesSelected: {
-          attributeSelectedColor: response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Color'})]?.items[0].value,
-          attributeSelectedSize: response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Size'})]?.items[0].value,
-          attributeSelectedCapacity: response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Capacity'})]?.items[0].value,
+          attributeSelectedColor:
+            response.data.data.product.attributes[
+              response.data.data.product.attributes.findIndex((attribute) => {
+                return attribute.id === 'Color';
+              })
+            ]?.items[0].value,
+          attributeSelectedSize:
+            response.data.data.product.attributes[
+              response.data.data.product.attributes.findIndex((attribute) => {
+                return attribute.id === 'Size';
+              })
+            ]?.items[0].value,
+          attributeSelectedCapacity:
+            response.data.data.product.attributes[
+              response.data.data.product.attributes.findIndex((attribute) => {
+                return attribute.id === 'Capacity';
+              })
+            ]?.items[0].value,
         },
       };
-      console.log(response.data.data.product.attributes[response.data.data.product.attributes.findIndex(attribute => {return attribute.id === 'Size'})]?.items[0].value);
+      console.log(
+        response.data.data.product.attributes[
+          response.data.data.product.attributes.findIndex((attribute) => {
+            return attribute.id === 'Size';
+          })
+        ]?.items[0].value
+      );
 
       let updatedItem = this.state.productCartContents[findItemByIndex];
 
