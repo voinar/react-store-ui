@@ -9,6 +9,7 @@ import initialState from './InitialState'; //default state used for initializati
 import {
   GET_PRODUCT_CATEGORIES,
   GET_PRODUCTS,
+  GET_PRODUCT_CATEGORY,
   GET_PRODUCT_DETAILS,
   GET_CURRENCIES,
 } from '../graphql/Queries';
@@ -54,13 +55,18 @@ export class AppProvider extends Component {
   };
 
   loadProductCategory = (e) => {
-    const productCategoryIndex = this.state.productCategories
-      .map((category) => category.name)
-      .indexOf(e.target.textContent);
     this.setState((prevState) => ({
-      productCategoryIndex: (prevState.productCategoryIndex =
-        productCategoryIndex),
+      productsDataLoading: true,
     }));
+    //old solution
+    // const productCategoryIndex = this.state.productCategories
+    //   .map((category) => category.name)
+    //   .indexOf(e.target.textContent);
+
+    //   this.setState((prevState) => ({
+    //   productCategoryIndex: (prevState.productCategoryIndex =
+    //     productCategoryIndex),
+    // }));
   };
 
   getProducts = () => {
@@ -73,6 +79,27 @@ export class AppProvider extends Component {
       });
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  getProductCategory = (input) => {
+    if (window.location.pathname.substring(1) !== '') {
+      // console.log('not ')
+      try {
+        axios(GET_PRODUCT_CATEGORY(window.location.pathname.substring(1))).then(
+          (result) => {
+            console.log('getProductCategory' + console.dir(result));
+            this.setState((prevState) => ({
+              productsDataLoading: (prevState.productsDataLoading = false),
+              productsData: (prevState.productsData =
+                result.data.data.category.products),
+            }));
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      
+    }
     }
   };
 
@@ -492,6 +519,7 @@ export class AppProvider extends Component {
       getProductCategories,
       loadProductCategory,
       getProducts,
+      getProductCategory,
       getProductDescription,
       getCurrencies,
       handleCurrencyChange,
@@ -535,6 +563,7 @@ export class AppProvider extends Component {
           getProductCategories,
           loadProductCategory,
           getProducts,
+          getProductCategory,
           getProductDescription,
           getCurrencies,
           handleCurrencyChange,

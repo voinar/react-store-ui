@@ -12,6 +12,7 @@ class Products extends React.Component {
 
   render() {
     const { productsData } = this.context || null;
+    this.context.productsDataLoading && this.context.getProductCategory() //fetch product data on first render
 
     //load all products [0 index] if root route, else find category index by route pathname substring
     const productCategoryIndex =
@@ -30,13 +31,15 @@ class Products extends React.Component {
 
     return (
       <div>
-        {this.context.productsDataLoading || !this.context.productsData ? (
+        {
+          this.context.productsDataLoading || !this.context.productsData ? (
           <div>
             <LoadingSpinner />
           </div>
-        ) : (
+        ) :
+        (
           <div className="product-listing__cards-container">
-            {productsData.categories[productCategoryIndex].products.map(
+            {productsData.map(
               (product) => {
                 return (
                   <ProductCard
@@ -63,7 +66,8 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-    this.context.getProducts();
+    // this.context.getProducts();
+    // console.log('pathname ' +  window.location.pathname.substring(1))
   }
 }
 

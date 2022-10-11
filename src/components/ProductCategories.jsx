@@ -1,6 +1,5 @@
 import React from 'react';
 import AppContext from '../context/AppContext';
-
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -16,6 +15,7 @@ class ProductCategories extends React.Component {
           {this.context.loading || !this.context.productCategories ? (
             <div>
               <LoadingSpinner />
+              Choose a category
             </div>
           ) : (
             <div>

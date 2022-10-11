@@ -1,10 +1,9 @@
-export const serverUrl =
-"http://localhost:4000/" //local server
+export const serverUrl = 'http://localhost:4000/'; //local server
 // "https://632766e69c51cc6838f771aa--coruscating-torte-94cbee.netlify.app/" //remote server
 
 export const GET_PRODUCT_CATEGORIES = {
   url: serverUrl,
-  method: "POST",
+  method: 'POST',
   data: {
     query: `
         query GET_PRODUCT_CATEGORIES {
@@ -17,7 +16,7 @@ export const GET_PRODUCT_CATEGORIES = {
 
 export const GET_PRODUCTS = {
   url: serverUrl,
-  method: "POST",
+  method: 'POST',
   data: {
     query: `
     query GET_PRODUCTS {
@@ -57,7 +56,7 @@ export const GET_PRODUCTS = {
 
 export const GET_CURRENCIES = {
   url: serverUrl,
-  method: "POST",
+  method: 'POST',
   data: {
     query: `
     query Currencies {
@@ -73,7 +72,7 @@ export const GET_CURRENCIES = {
 export const GET_PRODUCT_DETAILS = (productId) => {
   return {
     url: serverUrl,
-    method: "POST",
+    method: 'POST',
     data: {
       query: `
     query GET_PRODUCT_DETAILS($productId: String!) {
@@ -112,6 +111,51 @@ export const GET_PRODUCT_DETAILS = (productId) => {
   };
 };
 
+export const GET_PRODUCT_CATEGORY = (input) => {
+  return {
+    url: serverUrl,
+    method: 'POST',
+    data: {
+      query: `
+      query GET_PRODUCT_CATEGORY($input: CategoryInput) {
+        category(input: $input) {
+          name
+          products {
+            id
+            name
+            inStock
+            category
+            gallery
+            attributes {
+              id
+              name
+              type
+              items {
+                displayValue
+                value
+                id
+              }
+            }
+            brand
+            prices {
+              currency {
+                label
+                symbol
+              }
+              amount
+            }
+          }
+        }
+      }
+    `,
+      variables: {
+        input: {
+          title: input,
+        },
+      },
+    },
+  };
+};
 
 // FETCH API
 
