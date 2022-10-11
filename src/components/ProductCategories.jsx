@@ -15,7 +15,6 @@ class ProductCategories extends React.Component {
           {this.context.loading || !this.context.productCategories ? (
             <div>
               <LoadingSpinner />
-              Choose a category
             </div>
           ) : (
             <div>
@@ -37,7 +36,10 @@ class ProductCategories extends React.Component {
     );
   }
   componentDidMount() {
-    this.context.getProductCategories();
+    // this.context.getProductCategories();
+    this.context.contextReducer(this.state, {
+      type: 'GET_PRODUCT_CATEGORIES',
+    });
   }
 }
 

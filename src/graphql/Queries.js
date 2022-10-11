@@ -111,7 +111,7 @@ export const GET_PRODUCT_DETAILS = (productId) => {
   };
 };
 
-export const GET_PRODUCT_CATEGORY = (input) => {
+export const GET_PRODUCT_CATEGORY = (category) => {
   return {
     url: serverUrl,
     method: 'POST',
@@ -150,7 +150,7 @@ export const GET_PRODUCT_CATEGORY = (input) => {
     `,
       variables: {
         input: {
-          title: input,
+          title: category,
         },
       },
     },

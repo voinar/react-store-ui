@@ -8,9 +8,11 @@ class CartOverlay extends React.Component {
 
   outsideRef = React.createRef();
 
-  handleClickOutside = (e) => {
+  handleClickOutside = (e) => { //handle click outside overlay container
     if (!this.outsideRef.current.contains(e.target)) {
-      this.context.toggleCartOverlay();
+      this.context.contextReducer(this.state, {
+        type: 'TOGGLE_CART_OVERLAY',
+      });
     }
   };
 
@@ -21,7 +23,10 @@ class CartOverlay extends React.Component {
           <div className="cart-overlay__items-container">
             <div className="cart-overlay__header">
               <h3>My Bag,</h3>
-              <span>{this.context.getCartItemsCount()} {this.context.getCartItemsCount() === 1 ? 'item' : 'items'}</span>
+              <span>
+                {this.context.getCartItemsCount()}{' '}
+                {this.context.getCartItemsCount() === 1 ? 'item' : 'items'}
+              </span>
             </div>
             {this.context.productCartContents.map((cartItem) => {
               return (

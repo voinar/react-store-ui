@@ -18,57 +18,17 @@ import './styles/style.css';
 class App extends React.Component {
   static contextType = AppContext;
 
-  state = {
-    // loading: true,
-    // productCategories: [],
-  };
-
-  // getProductCategories = () => {
-  //   try {
-  //     axios({
-  //       url: serverUrl,
-  //       method: 'POST',
-  //       data: {
-  //         query: `
-  //         query GET_CATEGORIES {
-  //           categories {
-  //             name
-  //           }
-  //         }
-  //         `,
-  //       },
-  //     }).then((result) => {
-  //       this.setState({
-  //         loading: false,
-  //         productCategories: result.data.data.categories,
-  //       });
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   render() {
     return (
       <>
         <AppProvider>
-          {/* {this.state.loading === true ? (
-            <LoadingSpinner />
-          ) : ( */}
           <BrowserRouter>
             <Navbar />
             <CategoryRoutes />
           </BrowserRouter>
-          {/* )} */}
         </AppProvider>
       </>
     );
-  }
-
-  componentDidMount() {
-    // this.getProductCategories();
-    // console.log('APP getProductCategories')
-    // this.context.getProductCategories();
   }
 }
 

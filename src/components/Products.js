@@ -32,9 +32,10 @@ class Products extends React.Component {
     return (
       <div>
         {
-          this.context.productsDataLoading || !this.context.productsData ? (
+          !this.context.productsData ? (
           <div>
-            <LoadingSpinner />
+            {/* <LoadingSpinner /> */}
+            Please select a product category from the list above
           </div>
         ) :
         (

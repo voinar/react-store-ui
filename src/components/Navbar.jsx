@@ -14,6 +14,13 @@ import IconCart from '../../src/assets/icon_empty-cart.svg';
 class Navbar extends React.Component {
   static contextType = AppContext;
 
+  toggleCartOverlay = () => {
+    this.context.contextReducer(this.state, {
+        type: 'TOGGLE_CART_OVERLAY',
+        // payload: 'null',
+      })
+  }
+
   render() {
     return (
       <>
@@ -37,7 +44,8 @@ class Navbar extends React.Component {
                 className="navbar-cart-icon"
                 src={IconCart}
                 alt="view cart"
-                onClick={this.context.toggleCartOverlay}
+                onClick={this.toggleCartOverlay}
+                // onClick={}
               />
 
               <ProductCartItemsCount />

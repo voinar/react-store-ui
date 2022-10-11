@@ -17,27 +17,50 @@ import {
 const AppContext = React.createContext();
 
 export class AppProvider extends Component {
-  static contextType = AppContext;
+  // static contextType = AppContext;
 
   state = JSON.parse(localStorage.getItem('appState')) ?? initialState; //load state from localStorage or from initialState default
 
-  //state setter functions
-  toggleCartOverlay = () => {
-    this.setState((prevState) => {
-      return {
-        cartOverlayVisibility: !prevState.cartOverlayVisibility,
-        modalOverlayMaskVisibility: !prevState.modalOverlayMaskVisibility,
-      };
-    });
+  contextReducer = (state, action) => {
+    switch (action.type) {
+      case 'TOGGLE_CART_OVERLAY':
+        // console.log('run TOGGLE_CART_OVERLAY', action.payload);
+        this.setState((prevState) => {
+          return {
+            // ...prevState,
+            cartOverlayVisibility: !prevState.cartOverlayVisibility,
+            modalOverlayMaskVisibility: !prevState.modalOverlayMaskVisibility,
+          };
+        });
+        break;
+      case 'GET_PRODUCT_CATEGORIES':
+        try {
+          axios(GET_PRODUCT_CATEGORIES).then((result) => {
+            this.setState((prevState) => ({
+              loading: (prevState.loading = false),
+              productCategories: (prevState.productCategories =
+                result.data.data.categories),
+            }));
+          });
+        } catch (err) {
+          console.log(err);
+        }
+
+      default:
+        return state;
+    }
   };
 
-  toggleCurrencySelect = () => {
-    this.setState((prevState) => {
-      return {
-        currencySelectVisibility: !prevState.currencySelectVisibility,
-      };
-    });
-  };
+  //state setter functions
+  // toggleCartOverlay = () => {
+  //   this.setState((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       cartOverlayVisibility: !prevState.cartOverlayVisibility,
+  //       modalOverlayMaskVisibility: !prevState.modalOverlayMaskVisibility,
+  //     };
+  //   });
+  // };
 
   getProductCategories = () => {
     try {
@@ -51,7 +74,6 @@ export class AppProvider extends Component {
     } catch (err) {
       console.log(err);
     }
-    console.log('CONTEXT getProductCategories');
   };
 
   loadProductCategory = (e) => {
@@ -82,13 +104,11 @@ export class AppProvider extends Component {
     }
   };
 
-  getProductCategory = (input) => {
+  getProductCategory = () => {
     if (window.location.pathname.substring(1) !== '') {
-      // console.log('not ')
       try {
         axios(GET_PRODUCT_CATEGORY(window.location.pathname.substring(1))).then(
           (result) => {
-            console.log('getProductCategory' + console.dir(result));
             this.setState((prevState) => ({
               productsDataLoading: (prevState.productsDataLoading = false),
               productsData: (prevState.productsData =
@@ -98,8 +118,7 @@ export class AppProvider extends Component {
         );
       } catch (err) {
         console.log(err);
-      
-    }
+      }
     }
   };
 
@@ -538,6 +557,7 @@ export class AppProvider extends Component {
       cartItemSubtractOne,
       getCartItemsCount,
       getCartTotal,
+      contextReducer,
     } = this;
     return (
       <AppContext.Provider
@@ -582,6 +602,7 @@ export class AppProvider extends Component {
           cartItemSubtractOne,
           getCartItemsCount,
           getCartTotal,
+          contextReducer,
         }}
       >
         {this.props.children}
@@ -592,6 +613,11 @@ export class AppProvider extends Component {
   componentDidMount() {
     let currentState = this.state;
     localStorage.setItem('appState', JSON.stringify(currentState)); //save state to localStorage
+
+    // this.contextReducer(this.state, {
+    //   type: 'TOGGLE_CART_OVERLAY',
+    //   payload: 'null',
+    // });
   }
 }
 

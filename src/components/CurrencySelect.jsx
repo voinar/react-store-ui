@@ -12,7 +12,6 @@ class CurrencySelect extends React.Component {
   state = { currencySelectVisibility: false };
 
   toggleCurrencySelect = () => {
-    console.log('clock');
     this.setState((prevState) => {
       return {
         currencySelectVisibility: !prevState.currencySelectVisibility,
