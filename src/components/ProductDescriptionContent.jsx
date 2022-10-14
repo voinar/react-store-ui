@@ -230,15 +230,13 @@ class ProductDescriptionContent extends React.Component {
                         .indexOf(this.context.currency)
                     ].currency.symbol
                   }
-                  {
-                    this.context.productDescription?.product?.prices[
-                      this.context.currencies
-                        .map((element) => {
-                          return element.symbol;
-                        })
-                        .indexOf(this.context.currency)
-                    ].amount
-                  }
+                  {(this.context.productDescription?.product?.prices[
+                    this.context.currencies
+                      .map((element) => {
+                        return element.symbol;
+                      })
+                      .indexOf(this.context.currency)
+                  ].amount).toFixed(2)}
                 </span>
               </div>
               <button

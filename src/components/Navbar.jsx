@@ -36,7 +36,11 @@ class Navbar extends React.Component {
 
           <Link to="/">
             <div className="navbar-logo">
-              <img src={Logo} alt="site logo" onClick={this.clearProductListingData}/>
+              <img
+                src={Logo}
+                alt="site logo"
+                onClick={this.clearProductListingData}
+              />
             </div>
           </Link>
 

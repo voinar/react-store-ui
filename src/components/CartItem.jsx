@@ -83,7 +83,7 @@ class CartItem extends React.Component {
                           .indexOf(this.context.currency)
                       ].currency.symbol
                     }
-                    {parseFloat(
+                    {(
                       productDetails.prices[
                         this.context.currencies
                           .map((element) => {
@@ -197,7 +197,7 @@ class CartItem extends React.Component {
                       });
                     }}
                   >
-                    +
+                    <span>+</span>
                   </button>
                   <div className="cart-item__controls__quantity-amount">
                     <span>{this.props.productDetails.quantity}</span>
@@ -211,7 +211,7 @@ class CartItem extends React.Component {
                       });
                     }}
                   >
-                    -
+                    <span>-</span>
                   </button>
                 </div>
                 <div className="cart-item__controls__preview">

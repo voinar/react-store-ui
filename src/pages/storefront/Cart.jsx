@@ -70,8 +70,7 @@ class Cart extends React.Component {
                     {this.context.currency}
                     {(() => {
                       return Number(
-                        parseFloat(this.context.cartTotal) +
-                          (parseFloat(this.context.cartTotal) * 21) / 100
+                        parseFloat(this.context.cartTotal)
                       ).toFixed(2);
                     })()}
                   </span>

@@ -18,6 +18,10 @@ const AppContext = React.createContext();
 export class AppProvider extends Component {
   state = JSON.parse(localStorage.getItem('appState')) ?? initialState; //load state from localStorage or from initialState default
 
+  //----------------------------------------------------------------
+  //context reducer
+  //----------------------------------------------------------------
+
   contextReducer = (state, action) => {
     switch (action.type) {
       case 'TOGGLE_CART_OVERLAY':
@@ -67,6 +71,12 @@ export class AppProvider extends Component {
           } catch (err) {
             console.log(err);
           }
+        } else {
+          this.setState((prevState) => ({
+            ...prevState,
+            productsDataLoading: false,
+            productsData: []
+          }));
         }
         break;
 
@@ -431,7 +441,10 @@ export class AppProvider extends Component {
     }
   };
 
+  //----------------------------------------------------------------
   //utility functions
+  //----------------------------------------------------------------
+
   getCartItemsCount = () => {
     let cartCount = this.state.productCartContents
       .map((cartItem) => cartItem.quantity)

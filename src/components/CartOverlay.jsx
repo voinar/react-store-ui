@@ -8,11 +8,33 @@ class CartOverlay extends React.Component {
 
   outsideRef = React.createRef();
 
-  handleClickOutside = (e) => { //handle click outside overlay container
+  handleClickOutside = (e) => {
+    //handle click outside overlay container
     if (!this.outsideRef.current.contains(e.target)) {
       this.context.contextReducer(this.state, {
         type: 'TOGGLE_CART_OVERLAY',
       });
+    }
+  };
+
+  toggleCartOverlay = () => {
+    this.context.contextReducer(this.state, {
+      type: 'TOGGLE_CART_OVERLAY',
+    });
+  };
+
+  cartCount = (count) => {
+    count = this.context.getCartItemsCount();
+
+    switch (count) {
+      case 0:
+        console.log(count);
+        return <>empty</>;
+      case 1:
+        console.log(count);
+        return <>{this.context.getCartItemsCount()} item</>;
+      default:
+        return <>{this.context.getCartItemsCount()} items</>;
     }
   };
 
@@ -23,10 +45,7 @@ class CartOverlay extends React.Component {
           <div className="cart-overlay__items-container">
             <div className="cart-overlay__header">
               <h3>My Bag,</h3>
-              <span>
-                {this.context.getCartItemsCount()}{' '}
-                {this.context.getCartItemsCount() === 1 ? 'item' : 'items'}
-              </span>
+              <span>{this.cartCount()}</span>
             </div>
             {this.context.productCartContents.map((cartItem) => {
               return (
@@ -61,7 +80,7 @@ class CartOverlay extends React.Component {
                 <Link to="/cart">
                   <button
                     className="cart-overlay__summary__view-bag"
-                    onClick={this.context.toggleCartOverlay}
+                    onClick={this.toggleCartOverlay}
                   >
                     View bag
                   </button>
@@ -69,7 +88,7 @@ class CartOverlay extends React.Component {
                 <Link to="/cart">
                   <button
                     className="cart-overlay__summary__checkout"
-                    onClick={this.context.toggleCartOverlay}
+                    onClick={this.toggleCartOverlay}
                   >
                     Check out
                   </button>

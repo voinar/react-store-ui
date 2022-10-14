@@ -30,14 +30,17 @@
         border: 1px solid black;
         width: 42px;
         height: 42px;
-        font-size: 44px;
+        font-size: 40px;
         font-weight: 100;
-        line-height: 46px;
+        line-height: 6px;
         text-align: center;
       }
 
       .cart-item__controls__quantity-button--minus {
-        line-height: 34px;
+        span {
+          position: relative;
+          bottom: 2px;
+        }
       }
 
       .cart-item__controls__quantity-amount {
