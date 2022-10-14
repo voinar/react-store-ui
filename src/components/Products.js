@@ -1,6 +1,6 @@
 import React from 'react';
 import AppContext from '../context/AppContext';
-import LoadingSpinner from '../components/LoadingSpinner';
+// import LoadingSpinner from '../components/LoadingSpinner';
 import ProductCard from './ProductCard';
 
 //------------------------------
@@ -18,14 +18,6 @@ class Products extends React.Component {
     const { productsData } = this.context || null;
 
     this.context.productsDataLoading && this.getProductCategory(); //fetch product data on first render
-
-    //load all products [0 index] if root route, else find category index by route pathname substring
-    // const productCategoryIndex =
-    //   window.location.pathname.length === 1
-    //     ? 0
-    //     : this.context.productCategories
-    //         .map((category) => category.name)
-    //         .indexOf(String(window.location.pathname.substring(1)));
 
     //load display currency from state
     const currencySelectedIndex = this.context.currencies

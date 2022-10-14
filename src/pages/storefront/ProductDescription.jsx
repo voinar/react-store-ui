@@ -19,7 +19,6 @@ class ProductDescription extends React.Component {
   }
 
   componentDidMount() {
-    // this.context.getProductDescription();
     this.context.contextReducer(this.state, {type: 'GET_PRODUCT_DESCRIPTION'});
   }
 }

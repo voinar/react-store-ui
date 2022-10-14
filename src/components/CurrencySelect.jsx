@@ -7,9 +7,8 @@ import ChevronDown from '../../src/assets/icon_chevron-down.svg';
 class CurrencySelect extends React.Component {
   static contextType = AppContext;
 
-  outsideRef = React.createRef();
-
-  state = { currencySelectVisibility: false };
+  outsideRef = React.createRef(); //ref for handling of click events outside of currency overlay
+  state = { currencySelectVisibility: false }; //currency overlay visibility
 
   toggleCurrencySelect = () => {
     this.setState((prevState) => {
@@ -60,7 +59,6 @@ class CurrencySelect extends React.Component {
                       value={currency.symbol}
                       onClick={(e) => {
                         this.toggleCurrencySelect();
-                        // this.context.handleCurrencyChange(e);
                         this.context.contextReducer(this.state, {
                           type: 'HANDLE_CURRENCY_CHANGE',
                           payload: e,
@@ -80,11 +78,10 @@ class CurrencySelect extends React.Component {
   }
 
   componentDidMount() {
-    // this.context.getCurrencies(); //load currencies from API & populate dropdown menu
+    //load currencies to state on mount
     this.context.contextReducer(this.state, {
       type: 'GET_CURRENCIES',
     });
-
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 

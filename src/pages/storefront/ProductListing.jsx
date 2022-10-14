@@ -16,7 +16,6 @@ class ProductListing extends React.Component {
     );
   }
   componentDidMount() {
-    // this.context.loadDefaultProductDescription();
     this.context.contextReducer(this.state, {
       type: 'CLEAR_PRODUCT_DESCRIPTION_CACHE',
     });

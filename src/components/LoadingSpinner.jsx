@@ -17,8 +17,6 @@ class LoadingSpinner extends React.Component {
       </div>
     );
   }
-
-  componentDidMount() {}
 }
 
 export default LoadingSpinner;

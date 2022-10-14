@@ -29,10 +29,8 @@ class ProductCard extends React.Component {
         {this.props.inStock ? (
           this.props.selectableAttributes ? (
             <>
-              {/* <Link to={`/product/${this.props.productUrl}`}> */}
               <div
                 className="product-card__cart-add"
-                // onClick={() => this.context.addToCartFromPLP(this.props.id)}
                 onClick={() =>
                   this.context.contextReducer(this.state, {
                     type: 'ADD_TO_CART_FROM_PLP',
@@ -42,13 +40,11 @@ class ProductCard extends React.Component {
               >
                 <img src={ProductCartAdd} alt="add product to cart" />
               </div>
-              {/* </Link> */}
             </>
           ) : (
             <>
               <div
                 className="product-card__cart-add"
-                // onClick={() => this.context.addToCartFromPLP(this.props.id)}
                 onClick={() =>
                   this.context.contextReducer(this.state, {
                     type: 'ADD_TO_CART_FROM_PLP',

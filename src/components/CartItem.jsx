@@ -125,13 +125,6 @@ class CartItem extends React.Component {
                                   : 'product-description__attributes-size'
                                 : 'product-description__attributes-size'
                             }
-                            //optional attribute selection from within cart
-                            // onClick={(e) =>
-                            //   this.context.selectAttributeCapacityById(
-                            //     e,
-                            //     this.props.id
-                            //   )
-                            // }
                           >
                             {attribute.value}
                           </div>
@@ -147,13 +140,6 @@ class CartItem extends React.Component {
                                   : 'product-description__attributes-size'
                                 : 'product-description__attributes-size'
                             }
-                            //optional attribute selection from within cart
-                            // onClick={(e) =>
-                            //   this.context.selectAttributeSizeById(
-                            //     e,
-                            //     this.props.id
-                            //   )
-                            // }
                           >
                             {attribute.value}
                           </div>
@@ -191,13 +177,6 @@ class CartItem extends React.Component {
                               backgroundColor: `${colorOption.value}`,
                               color: 'rgba(0,0,0,0)',
                             }}
-                            //optional attribute selection from within cart
-                            // onClick={(e) =>
-                            //   this.context.selectAttributeColorById(
-                            //     e,
-                            //     this.props.id
-                            //   )
-                            // }
                           >
                             {colorOption.value}
                           </div>
@@ -211,9 +190,6 @@ class CartItem extends React.Component {
                 <div className="cart-item__controls__quantity">
                   <button
                     className="cart-item__controls__quantity-button"
-                    // onClick={() => {
-                    //   this.context.cartItemAddOne(productDetails.cartItemId);
-                    // }}
                     onClick={() => {
                       this.context.contextReducer(this.state, {
                         type: 'CART_ITEM_ADD_ONE',
@@ -228,11 +204,6 @@ class CartItem extends React.Component {
                   </div>
                   <button
                     className="cart-item__controls__quantity-button cart-item__controls__quantity-button--minus"
-                    // onClick={() => {
-                    //   this.context.cartItemSubtractOne(
-                    //     productDetails.cartItemId
-                    //   );
-                    // }}
                     onClick={() => {
                       this.context.contextReducer(this.state, {
                         type: 'CART_ITEM_SUBTRACT_ONE',

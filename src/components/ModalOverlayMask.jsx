@@ -9,7 +9,6 @@ class ModalOverlayMask extends React.Component {
       <>
         <div
           className="modal-overlay-mask"
-          onClick={this.context.toggleCartOverlay}
         />
       </>
     );

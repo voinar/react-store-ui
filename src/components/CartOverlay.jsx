@@ -84,7 +84,6 @@ class CartOverlay extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mousedown', this.handleClickOutside);
-    this.context.handleCartReset()
   }
 
   componentWillUnmount() {

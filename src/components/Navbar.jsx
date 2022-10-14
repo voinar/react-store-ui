@@ -50,7 +50,6 @@ class Navbar extends React.Component {
                 src={IconCart}
                 alt="view cart"
                 onClick={this.toggleCartOverlay}
-                // onClick={}
               />
 
               <ProductCartItemsCount />

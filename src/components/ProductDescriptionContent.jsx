@@ -64,7 +64,8 @@ class ProductDescriptionContent extends React.Component {
     ].name;
   };
 
-  addToCart = () => this.context.contextReducer(this.state, { type: 'ADD_TO_CART' });
+  addToCart = () =>
+    this.context.contextReducer(this.state, { type: 'ADD_TO_CART' });
 
   render() {
     return (
@@ -148,7 +149,6 @@ class ProductDescriptionContent extends React.Component {
                                 : 'product-description__attributes-size'
                               : 'product-description__attributes-size'
                           }
-                          // onClick={this.context.selectAttributeCapacity}
                           onClick={this.selectAttributeCapacity}
                         >
                           {attribute.value}
@@ -165,7 +165,6 @@ class ProductDescriptionContent extends React.Component {
                                 : 'product-description__attributes-size'
                               : 'product-description__attributes-size'
                           }
-                          // onClick={this.context.selectAttributeSize}
                           onClick={this.selectAttributeSize}
                         >
                           {attribute.value}
@@ -208,7 +207,6 @@ class ProductDescriptionContent extends React.Component {
                             backgroundColor: `${colorOption.value}`,
                             color: 'rgb(255,255,255,0)',
                           }}
-                          // onClick={this.context.selectAttributeColor}
                           onClick={this.selectAttributeColor}
                         >
                           {colorOption.value}
@@ -295,10 +293,7 @@ class ProductDescriptionContent extends React.Component {
   }
 
   componentDidMount() {
-    // this.context.clearAttributeCache();
     this.context.contextReducer(this.state, { type: 'CLEAR_ATTRIBUTE_CACHE' });
-
-    // this.context.selectDefaultAttributes();
     this.context.contextReducer(this.state, {
       type: 'SELECT_DEFAULT_ATTRIBUTES',
     });

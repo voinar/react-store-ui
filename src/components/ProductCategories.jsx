@@ -40,7 +40,6 @@ class ProductCategories extends React.Component {
     );
   }
   componentDidMount() {
-    // this.context.getProductCategories();
     this.context.contextReducer(this.state, {
       type: 'GET_PRODUCT_CATEGORIES',
     });
