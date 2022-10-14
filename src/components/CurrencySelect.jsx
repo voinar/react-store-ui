@@ -60,7 +60,11 @@ class CurrencySelect extends React.Component {
                       value={currency.symbol}
                       onClick={(e) => {
                         this.toggleCurrencySelect();
-                        this.context.handleCurrencyChange(e);
+                        // this.context.handleCurrencyChange(e);
+                        this.context.contextReducer(this.state, {
+                          type: 'HANDLE_CURRENCY_CHANGE',
+                          payload: e,
+                        });
                       }}
                     >
                       {currency.symbol} {currency.label}
@@ -76,7 +80,11 @@ class CurrencySelect extends React.Component {
   }
 
   componentDidMount() {
-    this.context.getCurrencies(); //load currencies from API & populate dropdown menu
+    // this.context.getCurrencies(); //load currencies from API & populate dropdown menu
+    this.context.contextReducer(this.state, {
+      type: 'GET_CURRENCIES',
+    });
+
     document.addEventListener('mousedown', this.handleClickOutside);
   }
 

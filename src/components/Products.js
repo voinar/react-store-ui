@@ -4,23 +4,28 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ProductCard from './ProductCard';
 
 //------------------------------
-// AXIOS + CONTEXT API
+// AXIOS + CONTEXT API + CONTEXT REDUCER
 //------------------------------
 
 class Products extends React.Component {
   static contextType = AppContext;
 
+  getProductCategory = () => {
+    this.context.contextReducer(this.state, { type: 'GET_PRODUCT_CATEGORY' });
+  };
+
   render() {
     const { productsData } = this.context || null;
-    this.context.productsDataLoading && this.context.getProductCategory() //fetch product data on first render
+
+    this.context.productsDataLoading && this.getProductCategory(); //fetch product data on first render
 
     //load all products [0 index] if root route, else find category index by route pathname substring
-    const productCategoryIndex =
-      window.location.pathname.length === 1
-        ? 0
-        : this.context.productCategories
-            .map((category) => category.name)
-            .indexOf(String(window.location.pathname.substring(1)));
+    // const productCategoryIndex =
+    //   window.location.pathname.length === 1
+    //     ? 0
+    //     : this.context.productCategories
+    //         .map((category) => category.name)
+    //         .indexOf(String(window.location.pathname.substring(1)));
 
     //load display currency from state
     const currencySelectedIndex = this.context.currencies
@@ -31,35 +36,31 @@ class Products extends React.Component {
 
     return (
       <div>
-        {
-          !this.context.productsData ? (
+        {!this.context.productsData ? (
           <div>
             {/* <LoadingSpinner /> */}
             Please select a product category from the list above
           </div>
-        ) :
-        (
+        ) : (
           <div className="product-listing__cards-container">
-            {productsData.map(
-              (product) => {
-                return (
-                  <ProductCard
-                    key={product.id}
-                    id={product.id}
-                    productUrl={product.id}
-                    name={product.name}
-                    brand={product.brand}
-                    image={product.gallery[0]}
-                    priceSymbol={
-                      product.prices[currencySelectedIndex].currency.symbol
-                    }
-                    priceAmount={product.prices[currencySelectedIndex].amount}
-                    selectableAttributes={product.attributes.length !== 0}
-                    inStock={product.inStock}
-                  />
-                );
-              }
-            )}
+            {productsData.map((product) => {
+              return (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  productUrl={product.id}
+                  name={product.name}
+                  brand={product.brand}
+                  image={product.gallery[0]}
+                  priceSymbol={
+                    product.prices[currencySelectedIndex].currency.symbol
+                  }
+                  priceAmount={product.prices[currencySelectedIndex].amount}
+                  selectableAttributes={product.attributes.length !== 0}
+                  inStock={product.inStock}
+                />
+              );
+            })}
           </div>
         )}
       </div>
@@ -67,12 +68,87 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-    // this.context.getProducts();
-    // console.log('pathname ' +  window.location.pathname.substring(1))
+    // get current products listing depending on catgory url on page reload
+    (() => {
+      this.context.contextReducer(this.state, {
+        type: 'GET_PRODUCT_CATEGORY',
+      });
+    })();
   }
 }
 
 export default Products;
+
+// //------------------------------
+// // AXIOS + CONTEXT API
+// //------------------------------
+
+// class Products extends React.Component {
+//   static contextType = AppContext;
+
+//   render() {
+//     const { productsData } = this.context || null;
+//     this.context.productsDataLoading && this.context.getProductCategory() //fetch product data on first render
+
+//     //load all products [0 index] if root route, else find category index by route pathname substring
+//     const productCategoryIndex =
+//       window.location.pathname.length === 1
+//         ? 0
+//         : this.context.productCategories
+//             .map((category) => category.name)
+//             .indexOf(String(window.location.pathname.substring(1)));
+
+//     //load display currency from state
+//     const currencySelectedIndex = this.context.currencies
+//       .map((element) => {
+//         return element.symbol;
+//       })
+//       .indexOf(this.context.currency);
+
+//     return (
+//       <div>
+//         {
+//           !this.context.productsData ? (
+//           <div>
+//             {/* <LoadingSpinner /> */}
+//             Please select a product category from the list above
+//           </div>
+//         ) :
+//         (
+//           <div className="product-listing__cards-container">
+//             {productsData.map(
+//               (product) => {
+//                 return (
+//                   <ProductCard
+//                     key={product.id}
+//                     id={product.id}
+//                     productUrl={product.id}
+//                     name={product.name}
+//                     brand={product.brand}
+//                     image={product.gallery[0]}
+//                     priceSymbol={
+//                       product.prices[currencySelectedIndex].currency.symbol
+//                     }
+//                     priceAmount={product.prices[currencySelectedIndex].amount}
+//                     selectableAttributes={product.attributes.length !== 0}
+//                     inStock={product.inStock}
+//                   />
+//                 );
+//               }
+//             )}
+//           </div>
+//         )}
+//       </div>
+//     );
+//   }
+
+//   componentDidMount() {
+//     // this.context.getProducts();
+//     // console.log('pathname ' +  window.location.pathname.substring(1))
+//   }
+// }
+
+// export default Products;
 
 // //------------------------------
 // // AXIOS

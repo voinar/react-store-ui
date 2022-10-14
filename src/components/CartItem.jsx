@@ -211,8 +211,14 @@ class CartItem extends React.Component {
                 <div className="cart-item__controls__quantity">
                   <button
                     className="cart-item__controls__quantity-button"
+                    // onClick={() => {
+                    //   this.context.cartItemAddOne(productDetails.cartItemId);
+                    // }}
                     onClick={() => {
-                      this.context.cartItemAddOne(productDetails.cartItemId);
+                      this.context.contextReducer(this.state, {
+                        type: 'CART_ITEM_ADD_ONE',
+                        payload: productDetails.cartItemId,
+                      });
                     }}
                   >
                     +
@@ -222,10 +228,16 @@ class CartItem extends React.Component {
                   </div>
                   <button
                     className="cart-item__controls__quantity-button cart-item__controls__quantity-button--minus"
+                    // onClick={() => {
+                    //   this.context.cartItemSubtractOne(
+                    //     productDetails.cartItemId
+                    //   );
+                    // }}
                     onClick={() => {
-                      this.context.cartItemSubtractOne(
-                        productDetails.cartItemId
-                      );
+                      this.context.contextReducer(this.state, {
+                        type: 'CART_ITEM_SUBTRACT_ONE',
+                        payload: productDetails.cartItemId,
+                      });
                     }}
                   >
                     -

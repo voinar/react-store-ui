@@ -16,10 +16,15 @@ class Navbar extends React.Component {
 
   toggleCartOverlay = () => {
     this.context.contextReducer(this.state, {
-        type: 'TOGGLE_CART_OVERLAY',
-        // payload: 'null',
-      })
-  }
+      type: 'TOGGLE_CART_OVERLAY',
+    });
+  };
+
+  clearProductListingData = () => {
+    this.context.contextReducer(this.state, {
+      type: 'CLEAR_PRODUCT_LISTING_DATA',
+    });
+  };
 
   render() {
     return (
@@ -31,7 +36,7 @@ class Navbar extends React.Component {
 
           <Link to="/">
             <div className="navbar-logo">
-              <img src={Logo} alt="site logo" />
+              <img src={Logo} alt="site logo" onClick={this.clearProductListingData}/>
             </div>
           </Link>
 

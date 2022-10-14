@@ -9,6 +9,12 @@ class ProductCategories extends React.Component {
   render() {
     const { productCategories } = this.context;
 
+    const loadProductCategory = () => {
+      this.context.contextReducer(this.state, {
+        type: 'LOAD_PRODUCT_CATEGORY',
+      });
+    };
+
     return (
       <>
         <div>
@@ -22,9 +28,7 @@ class ProductCategories extends React.Component {
                 {productCategories.map((category) => {
                   return (
                     <Link key={category.name} to={`${category.name}`}>
-                      <li onClick={this.context.loadProductCategory}>
-                        {category.name}
-                      </li>
+                      <li onClick={loadProductCategory}>{category.name}</li>
                     </Link>
                   );
                 })}

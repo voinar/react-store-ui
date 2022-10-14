@@ -25,6 +25,27 @@ class ProductDescriptionContent extends React.Component {
     });
   };
 
+  selectAttributeColor = (e) => {
+    this.context.contextReducer(this.state, {
+      type: 'SELECT_ATTRIBUTE_COLOR',
+      payload: e,
+    });
+  };
+
+  selectAttributeSize = (e) => {
+    this.context.contextReducer(this.state, {
+      type: 'SELECT_ATTRIBUTE_SIZE',
+      payload: e,
+    });
+  };
+
+  selectAttributeCapacity = (e) => {
+    this.context.contextReducer(this.state, {
+      type: 'SELECT_ATTRIBUTE_CAPACITY',
+      payload: e,
+    });
+  };
+
   getAttributeType = () => {
     //distinguish between size & capacity: find the property's index in attributes, then return the name of appropriate attribute
     return this.context.productDescription?.product?.attributes[
@@ -42,6 +63,8 @@ class ProductDescriptionContent extends React.Component {
       )
     ].name;
   };
+
+  addToCart = () => this.context.contextReducer(this.state, { type: 'ADD_TO_CART' });
 
   render() {
     return (
@@ -125,7 +148,8 @@ class ProductDescriptionContent extends React.Component {
                                 : 'product-description__attributes-size'
                               : 'product-description__attributes-size'
                           }
-                          onClick={this.context.selectAttributeCapacity}
+                          // onClick={this.context.selectAttributeCapacity}
+                          onClick={this.selectAttributeCapacity}
                         >
                           {attribute.value}
                         </div>
@@ -141,7 +165,8 @@ class ProductDescriptionContent extends React.Component {
                                 : 'product-description__attributes-size'
                               : 'product-description__attributes-size'
                           }
-                          onClick={this.context.selectAttributeSize}
+                          // onClick={this.context.selectAttributeSize}
+                          onClick={this.selectAttributeSize}
                         >
                           {attribute.value}
                         </div>
@@ -183,7 +208,8 @@ class ProductDescriptionContent extends React.Component {
                             backgroundColor: `${colorOption.value}`,
                             color: 'rgb(255,255,255,0)',
                           }}
-                          onClick={this.context.selectAttributeColor}
+                          // onClick={this.context.selectAttributeColor}
+                          onClick={this.selectAttributeColor}
                         >
                           {colorOption.value}
                         </div>
@@ -225,8 +251,8 @@ class ProductDescriptionContent extends React.Component {
                 }
                 onClick={
                   this.context.productDescription?.product?.inStock
-                    ? this.context.addToCart
-                    : this.context.addToCart
+                    ? this.addToCart
+                    : this.addToCart
                   // : null
                 } //add item to cart along with its properties using item data from context. null if item is not in stock
               >
@@ -269,8 +295,13 @@ class ProductDescriptionContent extends React.Component {
   }
 
   componentDidMount() {
-    this.context.clearAttributeCache();
-    this.context.selectDefaultAttributes();
+    // this.context.clearAttributeCache();
+    this.context.contextReducer(this.state, { type: 'CLEAR_ATTRIBUTE_CACHE' });
+
+    // this.context.selectDefaultAttributes();
+    this.context.contextReducer(this.state, {
+      type: 'SELECT_DEFAULT_ATTRIBUTES',
+    });
   }
 }
 
